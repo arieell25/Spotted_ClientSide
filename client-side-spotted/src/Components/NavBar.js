@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 });
 
 const navLinks = [
-  { title: `Report Encounter`, path: `/Form` },
+  { title: `Report Encounter`, path: `/AddEncounter` },
   { title: `MY Encounters`, path: `/` },
   { title: `Encounters`, path: `/` },
   { title: `Notifications`, path: `/` },
@@ -44,7 +44,7 @@ const NavBar = () => {
     <AppBar position="static" style={{ backgroundColor: `#373a40` }}>
       <Toolbar className="toolBar">
         <List component="nav" aria-labelledby="main navigation">
-          <Link to="/">
+          <Link to="/HeaderTitle">
             <IconButton
               className="linkHomePage"
               edge="start"

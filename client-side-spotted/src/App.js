@@ -1,18 +1,21 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import NavBar from './Components/NavBar'
-import { HeaderTitle } from './Components/HeaderTitle'
-import Form from './Components/Encounters/Form'
+import TypeUpload from './Components/Encounters/TypeUpload'
+import AddEncounter from './Components/Encounters/AddEncounter'
+import UploadPhoto from './Components/Encounters/UploadPhoto'
+import {HeaderTitle} from './Components/HeaderTitle'
 
 const App = () => {
   return (
     <Router>
       <div className='body'>
         <NavBar />
-        <HeaderTitle />
+        {/* <HeaderTitle /> */}
         <div className='container'>
-          { <Route path='/Form' component={Form} /> }
-          {/* <Route path='/' component={name_component} /> */}
-          {/* <Route path='/' component={name_component} /> */}
+          { <Route path='/HeaderTitle' component={HeaderTitle} /> }
+          { <Route path='/AddEncounter' component={AddEncounter} /> }
+          { <Route path='/TypeUpload' component={TypeUpload} /> }
+          { <Route path='/UploadPhoto' component={UploadPhoto} /> }
         </div>
       </div>
 
