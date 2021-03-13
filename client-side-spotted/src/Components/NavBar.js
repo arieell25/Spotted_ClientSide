@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 const navLinks = [
   { title: `Report Encounter`, path: `/AddEncounter` },
   { title: `MY Encounters`, path: `/` },
-  { title: `Encounters`, path: `/` },
+  { title: `Encounters`, path: `/EncountersBoard` },
   { title: `Notifications`, path: `/` },
 ];
 
