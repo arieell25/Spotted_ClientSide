@@ -5,6 +5,7 @@ import AddEncounter from './Components/Encounters/AddEncounter'
 import UploadPhoto from './Components/Encounters/UploadPhoto'
 import {HeaderTitle} from './Components/HeaderTitle'
 import EncountersBoard from './Components/Encounters/showEncounters/EncountersBoard'
+import AddIdentifiedEncounter from './Components/Encounters/AddIdentifiedEncounter'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           { <Route path='/TypeUpload' component={TypeUpload} /> }
           { <Route path='/UploadPhoto' component={UploadPhoto} /> }
           { <Route path='/EncountersBoard' component={EncountersBoard}/>}
+          { <Route path='/AddIdentifiedEncounter' component={AddIdentifiedEncounter}/>}
         </div>
       </div>
 

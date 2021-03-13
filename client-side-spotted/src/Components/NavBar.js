@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core";
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
-//import { Form } from "./Encounters/Form";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
