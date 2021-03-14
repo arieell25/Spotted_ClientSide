@@ -50,16 +50,6 @@ class AddEncounter extends React.Component {
           </div>
           <div className="row">
             <TextField
-              id="nickName"
-              label="Nick Name*"
-              value={this.state.nickName}
-              onChange={this.handleChange("nickName")}
-              margin="normal"
-              halfWidth
-            />
-          </div>
-          <div className="row">
-            <TextField
               id="dateOfTheEncounter"
               label="Date of the encounter*"
               value={this.state.dateOfTheEncounter}
@@ -125,28 +115,8 @@ class AddEncounter extends React.Component {
               halfWidth
             />
           </div>
-
-          <div className="row">
-              <FormLabel component="legend">
-                Gender
-                  </FormLabel>
-              <div onChange={this.onChangeValue}>
-                <input type="radio" value="Male" name="gender" /> Male
-                <input type="radio" value="Female" name="gender" /> Female
-                <input type="radio" value="Other" name="gender" /> Other
-              </div>
-            </div>
-
-            <div className="row">
-              <FormLabel component="legend">
-              Pregnancy
-                  </FormLabel>
-              <div onChange={this.onChangeValue}>
-                <input type="radio" value="spotted" name="isSpotted" /> Spotted
-                <input type="radio" value="notSpotted" name="isSpotted" /> NotSpotted
-              </div>
-            </div>
-              <Link to='/TypeUpload'>
+          
+              <Link to='/AddIdentifiedEncounter'>
                 <button className='btn' type="button">NEXT</button>
               </Link>
               </div>
