@@ -55,7 +55,7 @@ class AddEncounter extends React.Component {
               value={this.state.dateOfTheEncounter}
               onChange={this.handleChange("dateOfTheEncounter")}
               margin="normal"
-              halfWidth
+              halfwidth="true"
             />
           </div>
           <div className="row">
@@ -65,7 +65,7 @@ class AddEncounter extends React.Component {
               value={this.state.timeOfTheEncounter}
               onChange={this.handleChange("timeOfTheEncounter")}
               margin="normal"
-              halfWidth
+              halfwidth="true"
             />
           </div>
           <div className="row">
@@ -73,7 +73,7 @@ class AddEncounter extends React.Component {
               select
               value={this.state.site}
               onChange={this.handleChange("site")}
-              halfWidth
+              halfwidth="true"
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -100,7 +100,7 @@ class AddEncounter extends React.Component {
               value={this.state.email}
               onChange={this.handleChange("email")}
               margin="normal"
-              halfWidth
+              halfwidth="true"
             />
           </div>
           {/* add checkbox */}
@@ -112,7 +112,7 @@ class AddEncounter extends React.Component {
               value={this.state.count}
               onChange={this.handleChange("count")}
               margin="normal"
-              halfWidth
+              halfwidth="true"
             />
           </div>
           

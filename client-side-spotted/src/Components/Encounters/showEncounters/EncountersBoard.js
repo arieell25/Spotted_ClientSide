@@ -12,7 +12,7 @@ export default function EncountersBoard() {
   }, [flag])
 
   const getEncounters = async () => {
-    const data = await EncounterService.show()
+    const data = await EncounterService.getEncounters()
     console.log(data)
     setEncounters(data)
   }
@@ -27,6 +27,9 @@ export default function EncountersBoard() {
                 <th>Encounter ID</th>
                 <th>Encounter Date</th>
                 <th>Site ID</th>
+                <th>Reported By</th>
+                <th>Total Spotted</th>
+
               </tr>
             </thead>
             <tbody>
