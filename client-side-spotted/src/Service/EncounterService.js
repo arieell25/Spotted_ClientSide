@@ -9,7 +9,7 @@ export const EncounterService = {
 }
 
 function getEncounters() {
-  return HttpService.get(`/encounters/getAllencounters`);
+  return HttpService.get(`api/encounters/getAllencounters`);
 }
 // function query() {
 //   let queryStr = '?';
@@ -28,9 +28,10 @@ function getEncounterById(encounterId) {
 // }
 
 async function addEncounter(encounter) {
-  if (encounter.id) {
-    return HttpService.put(`/encounters/getEncounter`, encounter)
-  } else {
-    return HttpService.post(`/encounters/addEncounter`, encounter);
-  }
+  console.log(encounter);
+  // if (encounter.id) {
+  //   return HttpService.put(`api/encounters/getEncounter`, encounter)
+  // } else {
+  //   return HttpService.post(`api/encounters/addEncounter`, encounter);
+  // }
 }
