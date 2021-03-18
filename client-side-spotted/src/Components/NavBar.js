@@ -58,7 +58,7 @@ const NavBar = () => {
   };
   function handleLogoutClick(e) {
     userService.logout();
-    window.location.reload(false);
+    window.location.reload();
 
   }
 

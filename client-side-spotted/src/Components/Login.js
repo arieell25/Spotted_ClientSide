@@ -17,11 +17,7 @@ const Login = forwardRef((props, ref) => {
         onSubmitC();
         console.log('SUCCESS!');
       })
-    //   .catch(err => {
-    //     setError(err);
-    //     console.log(error);
-    //     console.log(errors);
-    //   });
+
   };
 
   return (

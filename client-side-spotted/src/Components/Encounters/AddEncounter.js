@@ -1,13 +1,24 @@
-import React from "react";
+import React, { Fragment, useState }  from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormLabel from "@material-ui/core/FormLabel";
+import {EncounterService} from '../../Service/EncounterService';
 import { Link } from 'react-router-dom';
+import { useForm, Controller  } from 'react-hook-form';
+import StatusDialog from './StatusDialog';
+
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogContentText,
+//   IconButton,
+//   DialogTitle,
+//   Grid,
+// } from '@material-ui/core';
 
 
-
-const site = [
+const sitesName = [
   {
     value: "Eilat",
     label: "Eilat"
@@ -26,20 +37,48 @@ const site = [
   }
 ];
 
-class AddEncounter extends React.Component {
-  state = {
-    nickName: "",
-    dateOfTheEncounter: "",
-    timeOfTheEncounter: "",
-    site: "",
-    email: ""
+// class AddEncounter extends React.Component {
+  export default function AddEncounter(){
+  //  var state = {
+  //   nickName: "",
+  //   dateOfTheEncounter: "",
+  //   // timeOfTheEncounter: "",
+  //   site: "",
+  //   email: "",
+  //   spottedCount: ""
+  // };
+  const [status, setStatus] = useState([]);
+  const [openRespons, setOpenRespons] = useState(false);
+
+  const [site, setSite] = useState("Eilat");
+   const { register, handleSubmit, errors, control } = useForm();
+
+  // const handleChange = prop => event => {
+  //   this.setState({ [prop]: event.target.value });
+  // };
+  const handleCloseRespons = () => {
+    setOpenRespons(false);
   };
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
+  const onSubmit = data => {
+    console.log(data);
+    EncounterService
+      .addEncounter(data)
+      .then(result=>{
+        console.log('added auccesfully new encounter!')
+        setStatus('Encounter was added successfuly!');
+        setOpenRespons(true);
+
+      })
+      .catch(err => {
+        this.setState({ message: err.toString() });
+        setStatus('Oops... Somthing went wrong, try again.');
+        setOpenRespons(true);
+        console.log(errors);
+      });
   };
 
-  render() {
-    console.log("state", this.state);
+  
+    // console.log("state", this.state);
     return (
       <div className="animated slideInUpTiny animation-duration-3">
         <div className="m-5">
@@ -48,85 +87,77 @@ class AddEncounter extends React.Component {
               <Link to='/' style={{ 'textDecoration': 'none' }}><h2>New Encounter Info</h2></Link>
             </div>
           </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row">
             <TextField
-              id="dateOfTheEncounter"
+              required
+              inputRef={register}
+              name="EncounterDate"
               label="Date of the encounter*"
-              value={this.state.dateOfTheEncounter}
-              onChange={this.handleChange("dateOfTheEncounter")}
               margin="normal"
               halfwidth="true"
             />
           </div>
           <div className="row">
             <TextField
-              id="timeOfTheEncounter"
-              label="Time of the encounter*"
-              value={this.state.timeOfTheEncounter}
-              onChange={this.handleChange("timeOfTheEncounter")}
-              margin="normal"
-              halfwidth="true"
-            />
-          </div>
-          <div className="row">
-            <TextField
+               inputRef={register}
               select
-              value={this.state.site}
-              onChange={this.handleChange("site")}
+              required
+              name="SiteID"
+              value={site}
               halfwidth="true"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    Site
-                  </InputAdornment>
-                )
-              }}
+              label="Site"
+              // onChange={event => {
+              //   setSite(event.target.value);
+              // }}
+              // InputProps={{
+              //   startAdornment: (
+              //     <InputAdornment position="start">
+              //       Site*
+              //     </InputAdornment>
+              //   )
+              // }}
             >
-              {site.map(option => (
+              {sitesName.map(option => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
               ))}
             </TextField>
-            <FormLabel component="legend">
-              *Required
-            </FormLabel>
           </div>
 
           <div className="row">
             <TextField
-              id="email"
+              inputRef={register}
+              name="Email"
               label="Your Email*"
-              value={this.state.email}
-              onChange={this.handleChange("email")}
               margin="normal"
               halfwidth="true"
             />
           </div>
-          {/* add checkbox */}
 
           <div className="row">
             <TextField
-              id="count"
+              inputRef={register}
+              name="SpottedCountReported"
               label="How many bluespotted?"
-              value={this.state.count}
-              onChange={this.handleChange("count")}
               margin="normal"
               halfwidth="true"
             />
           </div>
           
-              <Link to='/AddIdentifiedEncounter'>
-                <button className='btn' type="button">NEXT</button>
-              </Link>
+              {/* <Link to='/AddIdentifiedEncounter'> */}
+                <button className='btn' type="submit" >NEXT</button>
+              {/* </Link> */}
+              </form>
               </div>
-
+              <StatusDialog
+                open={openRespons}
+                status={status}
+                onClose={handleCloseRespons}
+        />
           </div>
-       
-
-
     );
-  }
 }
 
-export default AddEncounter;
+// export default AddEncounter;
