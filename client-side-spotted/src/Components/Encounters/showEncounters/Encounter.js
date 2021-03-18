@@ -14,6 +14,12 @@ export default function Encounter({ encounter }) {
             <td>
                 {encounter.SiteID}
             </td>
+            <td>
+                {encounter.ReporterEmail}
+            </td>
+            <td>
+                {encounter.SpottedCountReported}
+            </td>
         </tr>
     )
 }

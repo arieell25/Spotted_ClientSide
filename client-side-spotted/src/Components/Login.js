@@ -1,3 +1,55 @@
+import React, { useState, forwardRef } from 'react';
+import { TextField, Button } from '@material-ui/core';
+import { useForm } from 'react-hook-form';
+// import { MuiThemeProvider } from '@material-ui/core/styles';
+// import theme from './Theme/newTheme';
+// import { StyledButton } from './Theme/Button.styled';
+import { userService } from '../Service/UserService'
+
+const Login = forwardRef((props, ref) => {
+  const { onSubmitC } = props;
+  const [error, setError] = useState('');
+  const { register, handleSubmit, errors } = useForm();
+  const onSubmit = data => {
+    userService
+      .login(data.email, data.password)
+      .then( () => {
+        onSubmitC();
+        console.log('SUCCESS!');
+      })
+    //   .catch(err => {
+    //     setError(err);
+    //     console.log(error);
+    //     console.log(errors);
+    //   });
+  };
+
+  return (
+    // <MuiThemeProvider >
+      <div className="Login">
+        <form className="form_login" onSubmit={handleSubmit(onSubmit)}>
+          <h2>Login</h2>
+          <TextField
+            fullWidth
+            inputRef={register}
+            label="Email"
+            name="email"
+          />
+          <TextField
+            fullWidth
+            inputRef={register}
+            label="Password"
+            name="password"
+          />
+          <Button type="submit">Login</Button>
+        </form>
+        {error && <div className="info info-danger">{error}</div>}
+      </div>
+    // </MuiThemeProvider>
+  );
+});
+export default Login;
+
 // import PropTypes from "prop-types";
 // import React, { Component } from "react";
 // import GoogleButton from 'react-google-button'

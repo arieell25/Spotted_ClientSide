@@ -5,6 +5,9 @@ import AddEncounter from './Components/Encounters/AddEncounter'
 import UploadPhoto from './Components/Encounters/UploadPhoto'
 import {HeaderTitle} from './Components/HeaderTitle'
 import EncountersBoard from './Components/Encounters/showEncounters/EncountersBoard'
+// import Encounters from './Components/Encounters/Encounters'
+import SignUp from './Components/SignUp/SignUp'
+
 import AddIdentifiedEncounter from './Components/Encounters/AddIdentifiedEncounter'
 
 const App = () => {
@@ -14,6 +17,7 @@ const App = () => {
         <NavBar />
         {/* <HeaderTitle /> */}
         <div className='container'>
+        { <Route path='/SignUp' component={SignUp} /> }
           { <Route path='/HeaderTitle' component={HeaderTitle} /> }
           { <Route path='/AddEncounter' component={AddEncounter} /> }
           { <Route path='/TypeUpload' component={TypeUpload} /> }

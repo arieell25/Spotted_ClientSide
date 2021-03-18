@@ -1,4 +1,4 @@
-import * as React from "react";
+import  React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -6,10 +6,17 @@ import {
   List,
   ListItem,
   ListItemText,
+  Button
 } from "@material-ui/core";
+
+import Menu from '@material-ui/core/Menu';
+import { userService } from '../Service/UserService'
+
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import SignUp from './SignUp/SignUp';
+import Login from './Login'
 
 const useStyles = makeStyles({
   MuiAppBarColorPrimary: {
@@ -38,7 +45,23 @@ const navLinks = [
 ];
 
 const NavBar = () => {
+  const [anchorElL, setAnchorElL] = useState(null);
+  const [islogin, setislogin] = useState(null);
+
   const classes = useStyles();
+
+  const handleClickL = event => {
+    setAnchorElL(event.currentTarget);
+  };
+  const handleCloseL = () => {
+    setAnchorElL(null);
+  };
+  function handleLogoutClick(e) {
+    userService.logout();
+    window.location.reload(false);
+
+  }
+
   return (
     <AppBar position="static" style={{ backgroundColor: `#373a40` }}>
       <Toolbar className="toolBar">
@@ -67,7 +90,46 @@ const NavBar = () => {
               ))}
             </List>
           }
+ 
         </List>
+        
+        {!userService.isLoggedIn()  && (
+         <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleClickL}
+              size="small"
+              style={{left: '50%'}}
+            >
+              Login 
+            </Button>)}
+        {userService.isLoggedIn()  && (
+         <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleLogoutClick}
+              size="small"
+              style={{left: '50%'}}
+            >
+              Logout
+        </Button>)}
+            {userService.isLoggedIn()  && (
+            <Button
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              size="small"
+              style={{left: '40%'}}>
+              {userService.getLocalStorageUser()}          
+            </Button>)}
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorElL}
+              keepMounted
+              open={Boolean(anchorElL)}
+              onClose={handleCloseL}
+            >
+            <Login onSubmitC={handleCloseL}/> 
+          </Menu>
       </Toolbar>
     </AppBar>
   );
