@@ -9,7 +9,7 @@ export const EncounterService = {
 }
 
 function getEncounters() {
-  return HttpService.get(`api/encounters/getAllencounters`);
+  return HttpService.get(`/api/encounters/getAllencounters`);
 }
 // function query() {
 //   let queryStr = '?';
@@ -20,7 +20,7 @@ function getEncounters() {
 // }
 
 function getEncounterById(encounterId) {
-  return HttpService.get(`encounters/${encounterId}`)
+  return HttpService.get(`/api/encounter?id=${encounterId}`)
 }
 
 // function remove(encounterId) {
@@ -29,9 +29,15 @@ function getEncounterById(encounterId) {
 
 async function addEncounter(encounter) {
   console.log(encounter);
-  // if (encounter.id) {
-  //   return HttpService.put(`api/encounters/getEncounter`, encounter)
-  // } else {
-  //   return HttpService.post(`api/encounters/addEncounter`, encounter);
+  // return HttpService.post(`/pub/addEncounter`, encounter)
+
+  // if(localStorage.getItem('token')){
+  //    return HttpService.put(`/api/addEncounter`, encounter)
   // }
+  if (encounter) {
+    return HttpService.post(`/api/addEncounter`, encounter)
+  } else {
+    console.log("no encounter data");
+    // return HttpService.post(`api/addEncounter`, encounter);
+  }
 }

@@ -72,7 +72,7 @@ async function save(user) {
       console.log('log in respons:' + res)
       // If we have localStorage.getItem('user') saved, the application will consider we are loggedin
       localStorage.setItem('user', JSON.stringify(res.data.user));
-      localStorage.setItem('token', JSON.stringify(res.data.token));
+      localStorage.setItem('token', res.data.token);
 
       return res.data;
     })
