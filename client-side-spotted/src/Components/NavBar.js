@@ -42,6 +42,7 @@ const navLinks = [
   { title: `MY Encounters`, path: `/` },
   { title: `Encounters`, path: `/EncountersBoard` },
   { title: `Notifications`, path: `/` },
+  { title: `EncounterProfile`, path: `/EncounterProfile` },
 ];
 
 const NavBar = () => {
