@@ -7,8 +7,8 @@ import {HeaderTitle} from './Components/HeaderTitle'
 import EncountersBoard from './Components/Encounters/showEncounters/EncountersBoard'
 // import Encounters from './Components/Encounters/Encounters'
 import SignUp from './Components/SignUp/SignUp'
-
 import AddIdentifiedEncounter from './Components/Encounters/AddIdentifiedEncounter'
+import EncounterProfile from './Components/Encounters/showEncounters/EncounterProfile'
 
 const App = () => {
   return (
@@ -24,6 +24,8 @@ const App = () => {
           { <Route path='/UploadPhoto' component={UploadPhoto} /> }
           { <Route path='/EncountersBoard' component={EncountersBoard}/>}
           { <Route path='/AddIdentifiedEncounter' component={AddIdentifiedEncounter}/>}
+          { <Route path='/EncounterProfile' component={EncounterProfile}/>}
+
         </div>
       </div>
 
