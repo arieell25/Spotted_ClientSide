@@ -70,7 +70,7 @@ const sitesName = [
 
       })
       .catch(err => {
-        this.setState({ message: err.toString() });
+        // setState({ message: err.toString() });
         setStatus('Oops... Somthing went wrong, try again.');
         setOpenRespons(true);
         console.log(errors);
