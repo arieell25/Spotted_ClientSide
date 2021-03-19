@@ -9,7 +9,7 @@ import { userService } from '../Service/UserService'
 const Login = forwardRef((props, ref) => {
   const { onSubmitC } = props;
   const [error, setError] = useState('');
-  const { register, handleSubmit, errors } = useForm();
+  const { register, handleSubmit } = useForm();
   const onSubmit = data => {
     userService
       .login(data.email, data.password)

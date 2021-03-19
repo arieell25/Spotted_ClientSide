@@ -1,8 +1,8 @@
-import React, { Fragment, useState }  from "react";
+import React, { useState }  from "react";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import {EncounterService} from '../../Service/EncounterService';
-import { Link, history } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useForm, Controller  } from 'react-hook-form';
 import StatusDialog from './StatusDialog';
 
@@ -49,7 +49,7 @@ const sitesName = [
   const [openRespons, setOpenRespons] = useState(false);
 
   const [site, setSite] = useState("Eilat");
-   const { register, handleSubmit, errors, control } = useForm();
+   const { register, handleSubmit, control } = useForm();
 
   // const handleChange = prop => event => {
   //   this.setState({ [prop]: event.target.value });
@@ -143,13 +143,9 @@ const sitesName = [
               halfwidth="true"
             />
           </div>
-          
-              {/* <Link to='/UploadPhoto'> */}
                 <button className='btn' type="submit" >
                   NEXT
-                  {/* <Link to='/UploadPhoto'/>  */}
-                  </button>
-              {/* </Link> */}
+                </button>
               </form>
               </div>
               <StatusDialog

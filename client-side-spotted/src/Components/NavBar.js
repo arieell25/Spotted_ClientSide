@@ -14,8 +14,8 @@ import { userService } from '../Service/UserService'
 
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
-import { Link, NavLink } from "react-router-dom";
-import SignUp from './SignUp/SignUp';
+import { Link } from "react-router-dom";
+// import SignUp from './SignUp/SignUp';
 import Login from './Login'
 
 const useStyles = makeStyles({
@@ -91,16 +91,14 @@ const NavBar = () => {
               ))}
             </List>
           }
- 
         </List>
-        
         {!userService.isLoggedIn()  && (
          <Button
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={handleClickL}
               size="small"
-              style={{left: '50%'}}
+              style={{left: '30%'}}
             >
               Login 
             </Button>)}
@@ -110,7 +108,7 @@ const NavBar = () => {
               aria-haspopup="true"
               onClick={handleLogoutClick}
               size="small"
-              style={{left: '50%'}}
+              style={{left: '30%'}}
             >
               Logout
         </Button>)}
@@ -119,7 +117,7 @@ const NavBar = () => {
               aria-controls="simple-menu"
               aria-haspopup="true"
               size="small"
-              style={{left: '40%'}}>
+              style={{left: '20%'}}>
               {userService.getLocalStorageUser()}          
             </Button>)}
             <Menu

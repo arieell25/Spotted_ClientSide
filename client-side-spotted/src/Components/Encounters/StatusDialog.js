@@ -46,7 +46,7 @@ export default function StatusDialog(props) {
           <DialogTitle style={{textAlign: 'center'}} id="form-dialog-title">{status}</DialogTitle>
           <DialogActions style={{alignSelf: 'center'}}>
             <Button onClick={onClose} color="primary">
-              Upload Media
+              OK
             </Button>
           </DialogActions>
         </Dialog>
