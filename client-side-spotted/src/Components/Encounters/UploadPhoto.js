@@ -1,34 +1,74 @@
-import React from 'react';
+import React, {Component, useState} from 'react';
 import ImageUploader from 'react-images-upload';
+import {EncounterService} from '../../Service/EncounterService';
+import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
+import StatusDialog from '../Encounters/StatusDialog';
 
 
+function useQuery() {
+    return new URLSearchParams(useLocation().search);
+  }
+// class UploadPhoto extends Component {
+    function UploadPhoto(){
+        const [pictures, setPictures] = useState([]);
+        const [status, setStatus] = useState('');
+        const [openRespons, setOpenRespons] = useState(false);
 
-class UploadPhoto extends React.Component {
- 
-        constructor(props) {
-            super(props);
-             this.state = { pictures: [] };
-             this.onDrop = this.onDrop.bind(this);
+        let query = useQuery();
+        // const addMessage = (newMessage) => setMessages(state => [...state, newMessage])
+
+        const onDrop = (picture) => {
+            console.log(picture);
+            //  setPictures(prevState=>[...prevState, picture]);
+            const newState = [picture];
+            setPictures(newState);
         }
-     
-        onDrop(picture) {
-            this.setState({
-                pictures: this.state.pictures.concat(picture),
+
+        const handleCloseRespons = () => {
+            setOpenRespons(false);
+          };
+
+        const uploadHandler= () =>{
+            console.log(pictures);
+            var id = query.get("id");
+            console.log(id);
+            const fd = new FormData();
+            fd.append('image', pictures[0][0], pictures[0][0].name);
+            EncounterService
+            .addPhoto(fd, id)
+            .then(data => {
+                console.log('Added photo: ' + data);
+                setStatus('Photo uploaded successfuly!');
+                setOpenRespons(true);
+            })
+            .catch(err => {
+                console.log(err);
+                setStatus('Photo upload faild');
+                setOpenRespons(true);
             });
         }
      
-        render() {
             return (
+                <div>
                 <ImageUploader
                     withIcon={true}
                     buttonText='Choose images'
-                    onChange={this.onDrop}
+                    onChange={onDrop}
                     imgExtension={['.jpg', '.gif', '.png', '.gif']}
                     maxFileSize={5242880}
                 />
-            );
+                <button className='btn' onClick={uploadHandler} >
+                  UPLOAD
+                </button> 
+                <StatusDialog
+                    open={openRespons}
+                    status={status}
+                    onClose={handleCloseRespons}
+                />
+                </div>           
+                );
         }
-    }
+    
 
 // const UploadPhoto = () => {
 //    return (

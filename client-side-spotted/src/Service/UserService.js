@@ -34,7 +34,7 @@ async function save(user) {
  function isResearcher() {
   let status = false;
   if (localStorage.getItem('user') != null) {
-    if( JSON.parse(localStorage.getItem('user')).UserTypeID == 2)
+    if( JSON.parse(localStorage.getItem('user')).UserTypeID === 2)
       status = true;;
   }
   return status;
