@@ -33,7 +33,7 @@ async function connectApi(endpoint, method = 'get', data = null) {
                 'x-token': token 
             } ,
             data,
-            withCredentials: true,
+            // withCredentials: true,
         })
         return res.data;
     } catch (err) {

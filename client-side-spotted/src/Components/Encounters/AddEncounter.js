@@ -1,10 +1,8 @@
 import React, { Fragment, useState }  from "react";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormLabel from "@material-ui/core/FormLabel";
 import {EncounterService} from '../../Service/EncounterService';
-import { Link } from 'react-router-dom';
+import { Link, history } from 'react-router-dom';
 import { useForm, Controller  } from 'react-hook-form';
 import StatusDialog from './StatusDialog';
 
@@ -67,13 +65,13 @@ const sitesName = [
         console.log('added auccesfully new encounter!')
         setStatus('Encounter was added successfuly!');
         setOpenRespons(true);
-
+        window.location.href = "/UploadPhoto?id=" + JSON.stringify(result.data.newEncounter.EncounterID);
       })
       .catch(err => {
         // setState({ message: err.toString() });
         setStatus('Oops... Somthing went wrong, try again.');
         setOpenRespons(true);
-        console.log(errors);
+        console.log(err);
       });
   };
 
@@ -146,8 +144,11 @@ const sitesName = [
             />
           </div>
           
-              {/* <Link to='/AddIdentifiedEncounter'> */}
-                <button className='btn' type="submit" >NEXT</button>
+              {/* <Link to='/UploadPhoto'> */}
+                <button className='btn' type="submit" >
+                  NEXT
+                  {/* <Link to='/UploadPhoto'/>  */}
+                  </button>
               {/* </Link> */}
               </form>
               </div>
