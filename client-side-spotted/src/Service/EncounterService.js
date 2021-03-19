@@ -29,11 +29,7 @@ function getEncounterById(encounterId) {
 
 async function addEncounter(encounter) {
   console.log(encounter);
-  // return HttpService.post(`/pub/addEncounter`, encounter)
 
-  // if(localStorage.getItem('token')){
-  //    return HttpService.put(`/api/addEncounter`, encounter)
-  // }
   if (encounter) {
     return HttpService.post(`/api/addEncounter`, encounter)
   } else {
