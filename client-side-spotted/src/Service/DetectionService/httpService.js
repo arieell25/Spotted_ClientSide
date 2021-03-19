@@ -1,8 +1,6 @@
 import Axios from 'axios';
 
-const BASE_URL = process.env.NODE_ENV === 'production' ?
-    '' :
-    '//localhost:8081'
+const BASE_URL = 'http://40.91.223.174:5000'
 
 var axios = Axios;
 
@@ -27,11 +25,10 @@ async function connectApi(endpoint, method = 'get', data = null) {
         const res = await axios({
             url: `${BASE_URL}${endpoint}`,
             method,
-            headers:{
-                'x-token': token 
-            } ,
+            // headers:{
+            //     'x-token': token 
+            // } ,
             data,
-            // withCredentials: true,
         })
         return res.data;
     } catch (err) {

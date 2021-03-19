@@ -1,6 +1,8 @@
 import React, {Component, useState} from 'react';
 import ImageUploader from 'react-images-upload';
 import {EncounterService} from '../../Service/EncounterService';
+import {speciesDetectionService} from '../../Service/DetectionService/photoDetectService';
+
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import StatusDialog from '../Encounters/StatusDialog';
 
@@ -19,33 +21,81 @@ function useQuery() {
 
         const onDrop = (picture) => {
             console.log(picture);
-            //  setPictures(prevState=>[...prevState, picture]);
-            const newState = [picture];
-            setPictures(newState);
+            // setPictures(picture);
+            setPictures(prevState=>[picture, ...prevState]);
+            // const newState = [picture];
+            // setPictures(newState);
         }
 
         const handleCloseRespons = () => {
             setOpenRespons(false);
           };
 
-        const uploadHandler= () =>{
+        const uploadHandler= async () =>{
             console.log(pictures);
             var id = query.get("id");
             console.log(id);
             const fd = new FormData();
             fd.append('image', pictures[0][0], pictures[0][0].name);
-            EncounterService
-            .addPhoto(fd, id)
-            .then(data => {
-                console.log('Added photo: ' + data);
-                setStatus('Photo uploaded successfuly!');
-                setOpenRespons(true);
-            })
-            .catch(err => {
-                console.log(err);
-                setStatus('Photo upload faild');
-                setOpenRespons(true);
-            });
+            try{
+                await speciesDetectionService
+                .detectSpecies(fd)
+                .then( res => {
+                    //Check if confidence > 70%
+                    console.log(res);
+                    var bBox = res.data;
+                    var url, photoId;
+                    var count = res.counts;
+                    var confidence = (res.data[0][0].confidences).toString().substring(0,4);
+                    if(res.counts > 0 && confidence > 0.61){
+                     EncounterService
+                    .uploadPhoto(fd, id)
+                    .then(data => {
+                        console.log('Added photo: ' + data.url);
+                        url = data.url;
+                        EncounterService.addPhoto(id, url, count)
+                        .then(res=>{
+                            photoId = res.data.newPhoto.PhotoID;
+                            EncounterService.addBoundingBox(bBox, photoId)
+                            .then(res=> console.log('added bounding box status: '+ JSON.stringify(res) ))
+                        } )
+                        .catch(err=> console.log(err));
+                        setStatus(`Detected ${count} BlueSpotted with ${confidence} and saved photo!`);
+                        setOpenRespons(true);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        setStatus('Photo upload faild');
+                        setOpenRespons(true);
+                    });
+
+                   
+                    }else{
+                        setStatus('Sorry we did not detect any BlueSpotted.... try with a diffrent photo.');
+                        setOpenRespons(true)
+                    }
+                }).catch(err=>{
+                        console.log(err);
+                        setStatus('Oops...Something went wrong....');
+                        setOpenRespons(true)
+                }); 
+               
+            }catch(err){
+                console.log(err)
+            }
+            // var result = 
+            // EncounterService
+            // .uploadPhoto(fd, id)
+            // .then(data => {
+            //     console.log('Added photo: ' + data);
+            //     setStatus('Photo uploaded successfuly!');
+            //     setOpenRespons(true);
+            // })
+            // .catch(err => {
+            //     console.log(err);
+            //     setStatus('Photo upload faild');
+            //     setOpenRespons(true);
+            // });
         }
      
             return (
