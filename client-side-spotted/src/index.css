@@ -73,6 +73,10 @@ h2{
 
 }
 
+.toolBar{
+
+}
+
 .logOut{
   position:absolute;
   font-size: small;
@@ -86,11 +90,7 @@ h2{
   margin-left: 100%;
 } 
 
-.googleButten{
-  position: relative;
-  bottom: 30px;
-  left: 1350px;
-}
+
 .weatherCard{
   text-align: center;
 	color:linear-gradient(to top,#C5F836, #3AA4D1);
