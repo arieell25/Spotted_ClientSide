@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormLabel from "@material-ui/core/FormLabel";
+import {IdentifiedEncounterService} from '../../Service/IdentifiedEncounterService';
 import { Link } from 'react-router-dom';
+import { useForm, Controller  } from 'react-hook-form';
+import StatusDialog from './StatusDialog';
 
 
 
@@ -26,20 +29,42 @@ const lifeStage = [
   }
 ];
 
-class AddIdentifiedEncounter extends React.Component {
-  state = {
-    Photographer: "",
-    dateOfTheEncounter: "",
-    timeOfTheEncounter: "",
-    site: "",
-    email: ""
-  };
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
+export default function AddIdentifiedEncounter() {
+  // state = {
+  //   Photographer: "",
+  //   dateOfTheEncounter: "",
+  //   timeOfTheEncounter: "",
+  //   site: "",
+  //   email: ""
+  // };
+  const [status, setStatus] = useState([]);
+  const [openRespons, setOpenRespons] = useState(false);
+  const [stage, setstage] = useState("Eilat");
+  const { register, handleSubmit, control } = useForm();
+
+  const handleCloseRespons = () => {
+    setOpenRespons(false);
   };
 
-  render() {
-    console.log("state", this.state);
+  const onSubmit = data => {
+    console.log(data);
+    IdentifiedEncounterService
+      .addIdentifiedEncounter(data)
+      .then(result=>{
+        console.log('added auccesfully new encounter!')
+        setStatus('Identified Encounter was added successfuly!');
+        setOpenRespons(true);
+        JSON.stringify(result.data.newIdentifiedEncounter.IdentifiedEncounterID);
+      })
+      .catch(err => {
+        // setState({ message: err.toString() });
+        setStatus('Oops... Somthing went wrong, try again.');
+        setOpenRespons(true);
+        console.log(err);
+      });
+  };
+
+    // console.log("state", this.state);
     return (
       <div className="animated slideInUpTiny animation-duration-3">
         <div className="m-5">
@@ -48,39 +73,36 @@ class AddIdentifiedEncounter extends React.Component {
               <Link to='/' style={{ 'textDecoration': 'none' }}><h2>New Identified Encounter Info</h2></Link>
             </div>
           </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row">
             <TextField
-              id="Photographer"
+              required
+              inputRef={register}
+              name="Photographer"
               label="Photographer"
-              value={this.state.photographer}
-              onChange={this.handleChange("photographer")}
               margin="normal"
-              halfWidth
+              fullWidth="true"
             />
           </div>
-          <div className="row">
+          {/* <div className="row">
             <TextField
-              id="ReportType"
+              required
+              inputRef={register}
+              name="ReportType"
               label="ReportType"
-              value={this.state.timeOfTheEncounter}
-              onChange={this.handleChange("timeOfTheEncounter")}
               margin="normal"
-              halfWidth
+              fullWidth="true"
             />
-          </div>
-          <div className="row">
+          </div> */}
+          {/* <div className="row">
             <TextField
+              inputRef={register}
               select
-              value={this.state.lifeStage}
-              onChange={this.handleChange("lifeStage")}
-              halfWidth
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    LifeStage
-                  </InputAdornment>
-                )
-              }}
+              required
+              name="lifeStage"
+              value={stage}
+              fullWidth="true"
+              label="Stage"
             >
               {lifeStage.map(option => (
                 <MenuItem key={option.value} value={option.value}>
@@ -88,161 +110,152 @@ class AddIdentifiedEncounter extends React.Component {
                 </MenuItem>
               ))}
             </TextField>
-          </div>
+          </div> */}
+          {/* <div className="row">
+            <TextField
+              inputRef={register}
+              name="Sex"
+              label="Sex"
+              margin="normal"
+              fullWidth="true"
+            />
+          </div> */}
 
           <div className="row">
             <TextField
-              id="isAlive"
+              inputRef={register}
+              name="isAlive"
               label="Is Alive?"
-              value={this.state.isAlive}
-              onChange={this.handleChange("isAlive")}
               margin="normal"
-              halfWidth
+              fullWidth="true"
             />
           </div>
 
           <div className="row">
             <TextField
-              id="tl"
+              inputRef={register}
+              name="TL"
               label="TL"
-              value={this.state.tl}
-              onChange={this.handleChange("tl")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
           </div>
 
           <div className="row">
             <TextField
-              id="dl"
+              inputRef={register}
+              name="DL"
               label="DL"
-              value={this.state.dl}
-              onChange={this.handleChange("dl")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
           </div>
 
           <div className="row">
             <TextField
-              id="dw"
+              inputRef={register}
+              name="DW"
               label="DW"
-              value={this.state.dw}
-              onChange={this.handleChange("dw")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
           </div>
 
           <div className="row">
             <TextField
-              id="maxDepth"
+              inputRef={register}
+              name="MaxDepth"
               label="Max Depth (m)"
-              value={this.state.maxDepth}
-              onChange={this.handleChange("maxDepth")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
           </div>
 
           <div className="row">
             <TextField
-              id="distance"
+              inputRef={register}
+              name="Distance"
               label="Distance (m)"
-              value={this.state.distance}
-              onChange={this.handleChange("distance")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
           </div>
 
           <div className="row">
             <TextField
-              id="temp"
+              inputRef={register}
+              name="Temp"
               label="Temp (C)"
-              value={this.state.temp}
-              onChange={this.handleChange("temp")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
           </div>
 
           <div className="row">
             <TextField
-              id="description"
+              inputRef={register}
+              name="Description"
               label="Description"
-              value={this.state.description}
-              onChange={this.handleChange("description")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
           </div>
 
-          <div className="row">
+          {/* <div className="row">
             <TextField
-              id="comments"
+              inputRef={register}
+              name="Comments"
               label="Comments"
-              value={this.state.comments}
-              onChange={this.handleChange("comments")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
-          </div>
+          </div> */}
 
-          <div className="row">
-            <TextField
-              id="count"
-              label="How many bluespotted?"
-              value={this.state.count}
-              onChange={this.handleChange("count")}
-              margin="normal"
-              halfWidth
-            />
-          </div>
-
-          <div className="row">
+          {/* <div className="row">
               <FormLabel component="legend">
+              inputRef={register}
                 Gender
                   </FormLabel>
               <div onChange={this.onChangeValue}>
-                <input type="radio" value="Male" name="gender" /> Male
-                <input type="radio" value="Female" name="gender" /> Female
-                <input type="radio" value="Other" name="gender" /> Other
+                <input type="radio" value="Male" name="Male" /> Male
+                <input type="radio" value="Female" name="Female" /> Female
+                <input type="radio" value="Other" name="Other" /> Other
               </div>
             </div>
 
             <div className="row">
               <FormLabel component="legend">
+              inputRef={register}
               Pregnancy
                   </FormLabel>
               <div onChange={this.onChangeValue}>
                 <input type="radio" value="spotted" name="isSpotted" /> Spotted
                 <input type="radio" value="notSpotted" name="isSpotted" /> NotSpotted
               </div>
-            </div>
+            </div> */}
 
             <div className="row">
             <TextField
-              id="facebookLink"
+              inputRef={register}
+              name="Link"
               label="Facebook link"
-              value={this.state.facebookLink}
-              onChange={this.handleChange("facebookLink")}
               margin="normal"
-              halfWidth
+              halfWidth="true"
             />
             </div>
 
-              <Link to='/TypeUpload'>
-                <button className='btn' type="button">NEXT</button>
-              </Link>
+            <button className='btn' type="submit" >
+                  SAVE
+                </button>
+              </form>
               </div>
-
+              <StatusDialog
+                open={openRespons}
+                status={status}
+                onClose={handleCloseRespons}
+        />
           </div>
-       
-
-
     );
   }
-}
 
-export default AddIdentifiedEncounter;
+

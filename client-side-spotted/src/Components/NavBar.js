@@ -43,6 +43,7 @@ const navLinks = [
   { title: `Encounters`, path: `/EncountersBoard` },
   { title: `Notifications`, path: `/` },
   { title: `EncounterProfile`, path: `/EncounterProfile` },
+  { title: `Report Identified Encounter`, path: `/AddIdentifiedEncounter` },
 ];
 
 const NavBar = () => {
