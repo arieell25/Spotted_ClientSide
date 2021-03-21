@@ -60,7 +60,7 @@ h2{
   text-decoration: none;
   color: #CBCFD4;
   position: relative;
-  top: 20px;
+  top: 10px;
 }
 
 .name{
@@ -73,10 +73,16 @@ h2{
 
 }
 
-.toolBar{
-
+.Login{
+  width: 400px;
+  padding: 20px
 }
 
+.logindiv{
+  position: absolute;
+  right: 50px;
+  color: #CBCFD4;
+}
 .logOut{
   position:absolute;
   font-size: small;

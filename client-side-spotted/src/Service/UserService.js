@@ -51,12 +51,16 @@ async function save(user) {
 
 // This method signs up and logs in the user
  function register(userInfo) {
-     HttpService
-    .post('/pub/register', userInfo)
+   const body = {
+    email: userInfo.email, password: userInfo.password, firstName: userInfo.firstName, lastName: userInfo.lastName
+   }
+   return HttpService
+    .post('/pub/register', body)
     .then(res => {
       console.log(res);
+      login(userInfo.email, userInfo.password);
       // If we have localStorage.getItem('user') saved, the application will consider we are loggedin
-      localStorage.setItem('user', JSON.stringify(res.data));
+      // localStorage.setItem('user', JSON.stringify(res.data));
       return res.data;
     })
 

@@ -1,4 +1,4 @@
-import  React, { useState } from "react";
+import  React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -15,7 +15,7 @@ import { userService } from '../Service/UserService'
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
-// import SignUp from './SignUp/SignUp';
+import Signup from './Signuup';
 import Login from './Login'
 
 const useStyles = makeStyles({
@@ -27,7 +27,7 @@ const useStyles = makeStyles({
     justifyContent: `space-between`,
     position: `relative`,
     left: `70px`,
-    bottom: `20px`,
+    // bottom: `20px`,
   },
   linkText: {
     textDecoration: `none`,
@@ -47,16 +47,28 @@ const navLinks = [
 
 const NavBar = () => {
   const [anchorElL, setAnchorElL] = useState(null);
+  const [anchorSignup, setAnchorSignup] = useState(null);
+
   const [islogin, setislogin] = useState(null);
 
   const classes = useStyles();
+  useEffect(() => {}, [islogin]);
 
   const handleClickL = event => {
     setAnchorElL(event.currentTarget);
   };
-  const handleCloseL = () => {
-    setAnchorElL(null);
+
+  const handleClickS = event => {
+    setAnchorSignup(event.currentTarget);
+    setislogin(true);
   };
+
+  const handleCloseS = () => { 
+    setislogin(true);
+    setAnchorSignup(null);  
+  }
+  const handleCloseL = () => { setAnchorElL(null); }
+  
   function handleLogoutClick(e) {
     userService.logout();
     window.location.reload();
@@ -93,33 +105,48 @@ const NavBar = () => {
           }
         </List>
         {!userService.isLoggedIn()  && (
+          <div className="logindiv">
          <Button
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={handleClickL}
               size="small"
-              style={{left: '30%'}}
+              // style={{left: '30%'}}
             >
               Login 
-            </Button>)}
+            </Button>
+             <Button
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClickS}
+                size="small"
+                // style={{left: '25%'}}
+              >
+                Signup 
+           </Button>
+           </div>)}
         {userService.isLoggedIn()  && (
+         <div className="logindiv">
          <Button
               aria-controls="simple-menu"
               aria-haspopup="true"
               onClick={handleLogoutClick}
               size="small"
-              style={{left: '30%'}}
+              // style={{left: '30%'}}
             >
               Logout
-        </Button>)}
-            {userService.isLoggedIn()  && (
+        </Button>
             <Button
               aria-controls="simple-menu"
               aria-haspopup="true"
               size="small"
-              style={{left: '20%'}}>
+              // style={{color: 'white'}}
+              >
               {userService.getLocalStorageUser()}          
-            </Button>)}
+            </Button>
+            </div>
+    
+            )}
             <Menu
               id="simple-menu"
               anchorEl={anchorElL}
@@ -128,6 +155,15 @@ const NavBar = () => {
               onClose={handleCloseL}
             >
             <Login onSubmitC={handleCloseL}/> 
+          </Menu>
+          <Menu
+              id="simple-menu"
+              anchorEl={anchorSignup}
+              keepMounted
+              open={Boolean(anchorSignup)}
+              onClose={handleCloseS}
+            >
+            <Signup onSubmitC={handleCloseS}/> 
           </Menu>
       </Toolbar>
     </AppBar>

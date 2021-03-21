@@ -11,7 +11,14 @@ export const EncounterService = {
 }
 
 function getEncounters() {
-  return HttpService.get(`/api/getAllencounters`);
+  // return HttpService.get(`/api/getAllencounters`);
+  return HttpService
+  .get(`/api/getAllEncounters`)
+  .then(res => {
+    console.log('in func data: ' + JSON.stringify(res.data.encounters.rows));
+    return res.data.encounters.rows;
+  } );
+
 }
 // function query() {
 //   let queryStr = '?';
@@ -22,7 +29,9 @@ function getEncounters() {
 // }
 
 function getEncounterById(encounterId) {
-  return HttpService.get(`/api/encounter?id=${encounterId}`)
+  var result = HttpService.get(`/api/getEncounter?id=${encounterId}`)
+  console.log(result);
+  return 0;
 }
 
 // function remove(encounterId) {

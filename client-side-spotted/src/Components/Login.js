@@ -1,9 +1,6 @@
 import React, { useState, forwardRef } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { useForm } from 'react-hook-form';
-// import { MuiThemeProvider } from '@material-ui/core/styles';
-// import theme from './Theme/newTheme';
-// import { StyledButton } from './Theme/Button.styled';
 import { userService } from '../Service/UserService'
 
 const Login = forwardRef((props, ref) => {
