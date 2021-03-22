@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function CouponCard(props) {
+export default function EncounterCard(props) {
   const classes = useStyles();
   const { index, encounter } = props;
   const [editing, setEditing] = useState(false);
@@ -54,11 +54,11 @@ export default function CouponCard(props) {
 
  
   return (
-    <Grid item xs={12} lg={2} md={3} sm={4} xl={2}>
+    <Grid item xs={12}  md={3} sm={6} xl={2}>
       <Card className={classes.root}>
         <NavLink
           to={{
-            pathname: '/coupon',
+            pathname: '/EncounterProfile',
             search: '?id=' + index,
           }}
         >
@@ -80,19 +80,21 @@ export default function CouponCard(props) {
             title={coupon.title}
             subheader={coupon.discount + ' off'}
           /> */}
+        </NavLink>
+
           <CardActionArea>
-            {/* <CardMedia
+            <CardMedia
               className={classes.img}
               component="img"
-              alt="Coupon"
+              alt="Encounter"
               height="140"
               image={
-                coupon.imgUrl
-                  ? coupon.imgUrl
+                encounter.ProfilePicture
+                  ? encounter.ProfilePicture
                   : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTCWnEg-zPrA6JZIXqfN7vxCdSWgORuP3b3jycKv1_3oZYODAeF'
               }
               title="Contemplative Reptile"
-            /> */}
+            />
             <CardContent>
               <Typography variant="body2" color="textSecondary" component="h5">
                 Encounter ID: {encounter.EncounterID}
@@ -102,9 +104,11 @@ export default function CouponCard(props) {
               </Typography>
             </CardContent>
           </CardActionArea>
-        </NavLink>
 
         <CardActions>
+        <button className='btn' >
+          PROFILE
+         </button> 
           {/* <IconButton className={classes.lable} size="small">
             <RateReviewIcon />
           </IconButton> */}

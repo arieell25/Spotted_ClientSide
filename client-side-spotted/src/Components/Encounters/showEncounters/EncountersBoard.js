@@ -9,7 +9,7 @@ import {
 export default function EncountersBoard() {
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
-  const [limit, setLimit] = useState(16);
+  const [limit, setLimit] = useState(8);
 
 
   // const [encounterAdd, setencounterAdd] = useState(false)
@@ -53,19 +53,23 @@ export default function EncountersBoard() {
 
   const renderEachEncounter = (item, i) => {
     return (
-      <EncounterCard index={item._id} encounter={item} key={item.EncounterID}></EncounterCard>
+      <EncounterCard index={item.EncounterID} encounter={item} key={item.EncounterID}></EncounterCard>
     );
   };
 
   if (!encounters) return <div>Loading...</div>
   else {
+    return(
       <Grid container className="Encounters">
         {encounters
           .map(renderEachEncounter)
           .reverse()
-          .slice(0, limit)}
+          .slice(0, limit)
+        }
       </Grid>
-    
+    )
+        }
+      }
     // return (
     //   <div className='encounterList'>
     //       <table className='table'>
@@ -86,5 +90,5 @@ export default function EncountersBoard() {
     //     </div>
       
     // )
-  }
-}
+  // }
+// }
