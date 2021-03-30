@@ -15,7 +15,7 @@ import { userService } from '../Service/UserService'
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import Signup from './Signuup';
+import Signup from './Signup';
 import Login from './Login'
 
 const useStyles = makeStyles({
@@ -39,11 +39,11 @@ const useStyles = makeStyles({
 
 const navLinks = [
   { title: `Report Encounter`, path: `/AddEncounter` },
-  { title: `MY Encounters`, path: `/` },
-  { title: `Encounters`, path: `/EncountersBoard` },
-  { title: `Notifications`, path: `/` },
-  { title: `EncounterProfile`, path: `/EncounterProfile` },
-  { title: `Report Identified Encounter`, path: `/AddIdentifiedEncounter` },
+  { title: `My Encounters`, path: `/` },
+  { title: `All Encounters`, path: `/EncountersBoard` },
+  { title: `All Identified `, path: `/IdentifiedBoard` },
+  // { title: `EncounterProfile`, path: `/EncounterProfile` },
+  // { title: `Report Identified Encounter`, path: `/AddIdentifiedEncounter` },
 ];
 
 const NavBar = () => {

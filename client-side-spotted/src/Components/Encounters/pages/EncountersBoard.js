@@ -1,7 +1,7 @@
 import { useState, useEffect, React } from 'react'
 import { EncounterService } from '../../../Service/EncounterService'
 // import Encounter from './Encounter'
-import EncounterCard from './Encounter'
+import EncounterCard from '../components/EncounterCard'
 import {
   Grid
 } from '@material-ui/core';
@@ -52,9 +52,16 @@ export default function EncountersBoard() {
   // }
 
   const renderEachEncounter = (item, i) => {
+    if(item.IdentifiedEncounterID){
+      return (
+        <EncounterCard index={item.IdentifiedEncounterID} encounter={item} key={item.EncounterID}></EncounterCard>
+      );
+    }
+    else{
     return (
       <EncounterCard index={item.EncounterID} encounter={item} key={item.EncounterID}></EncounterCard>
     );
+  }
   };
 
   if (!encounters) return <div>Loading...</div>
