@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 // import { MuiThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
-// import theme from '../Theme/newTheme';
+import { NavLink } from 'react-router-dom';
 
 import { Dialog, DialogActions, DialogTitle, Grid, Button} from '@material-ui/core';
 // import { StyledButton } from '../Theme/Button.styled';
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function StatusDialog(props) {
   const classes = useStyles;
-  const { open, status, onClose } = props;
+  const { open, status, onClose, id } = props;
 
   return (
     // <MuiThemeProvider theme={theme}>
@@ -45,9 +45,18 @@ export default function StatusDialog(props) {
 
           <DialogTitle style={{textAlign: 'center'}} id="form-dialog-title">{status}</DialogTitle>
           <DialogActions style={{alignSelf: 'center'}}>
-            <Button onClick={onClose} color="primary">
+            {id && 
+                  <NavLink
+                  to={{
+                    pathname: '/EncounterProfile',
+                    search: '?id=' + id,
+                  }}
+                ><Button className='btn' onClick={onClose} color="primary">
               OK
-            </Button>
+            </Button></NavLink>}
+            {/* <Button className='btn' onClick={onClose} color="primary">
+              OK
+            </Button> */}
           </DialogActions>
         </Dialog>
       </Fragment>

@@ -3,10 +3,10 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormLabel from "@material-ui/core/FormLabel";
-import {IdentifiedEncounterService} from '../../Service/IdentifiedEncounterService';
+import {IdntEncService} from '../../../Service/IdentifiedEncounterService';
 import { Link } from 'react-router-dom';
 import { useForm, Controller  } from 'react-hook-form';
-import StatusDialog from './StatusDialog';
+import StatusDialog from '../components/StatusDialog';
 
 
 
@@ -48,7 +48,7 @@ export default function AddIdentifiedEncounter() {
 
   const onSubmit = data => {
     console.log(data);
-    IdentifiedEncounterService
+    IdntEncService
       .addIdentifiedEncounter(data)
       .then(result=>{
         console.log('added auccesfully new encounter!')
@@ -70,7 +70,7 @@ export default function AddIdentifiedEncounter() {
         <div className="m-5">
           <div className="d-flex justify-content-center title">
             <div>
-              <Link to='/' style={{ 'textDecoration': 'none' }}><h2>New Identified Encounter Info</h2></Link>
+              <Link to='/' style={{ 'textDecoration': 'none' }}><h2>Edit Identified Encounter Info</h2></Link>
             </div>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>

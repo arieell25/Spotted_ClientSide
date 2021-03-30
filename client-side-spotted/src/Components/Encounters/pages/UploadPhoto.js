@@ -1,10 +1,10 @@
 import React, {Component, useState} from 'react';
 import ImageUploader from 'react-images-upload';
-import {EncounterService} from '../../Service/EncounterService';
-import {speciesDetectionService} from '../../Service/DetectionService/photoDetectService';
+import {EncounterService} from '../../../Service/EncounterService';
+import {speciesDetectionService} from '../../../Service/DetectionService/photoDetectService';
 
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
-import StatusDialog from '../Encounters/StatusDialog';
+import StatusDialog from '../components/StatusDialog';
 
 
 function useQuery() {
@@ -15,6 +15,7 @@ function useQuery() {
         const [pictures, setPictures] = useState([]);
         const [status, setStatus] = useState('');
         const [openRespons, setOpenRespons] = useState(false);
+        const [newId, setId] = useState(null);
 
         let query = useQuery();
         // const addMessage = (newMessage) => setMessages(state => [...state, newMessage])
@@ -34,6 +35,7 @@ function useQuery() {
         const uploadHandler= async () =>{
             console.log(pictures);
             var id = query.get("id");
+            setId(id);
             console.log(id);
             const fd = new FormData();
             fd.append('image', pictures[0][0], pictures[0][0].name);
@@ -70,15 +72,16 @@ function useQuery() {
                     });
 
                    
-                    }else{
+                    }else if(res.counts == 0){
                         setStatus('Sorry we did not detect any BlueSpotted.... try with a diffrent photo.');
                         setOpenRespons(true)
                     }
-                }).catch(err=>{
-                        console.log(err);
-                        setStatus('Oops...Something went wrong....');
-                        setOpenRespons(true)
-                }); 
+                })
+                // .catch(err=>{
+                //         console.log(err);
+                //         setStatus('Oops...Something went wrong....');
+                //         setOpenRespons(true)
+                // }); 
                
             }catch(err){
                 console.log(err)
@@ -100,6 +103,9 @@ function useQuery() {
      
             return (
                 <div>
+                    <div>
+                        <h2>Upload Encounter Photo</h2>
+                    </div>
                 <ImageUploader
                     withIcon={true}
                     buttonText='Choose images'
@@ -113,6 +119,7 @@ function useQuery() {
                 <StatusDialog
                     open={openRespons}
                     status={status}
+                    id={newId}
                     onClose={handleCloseRespons}
                 />
                 </div>           

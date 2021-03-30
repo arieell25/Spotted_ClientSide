@@ -39,12 +39,13 @@ const useStyles = makeStyles(theme => ({
 
 export default function EncounterCard(props) {
   const classes = useStyles();
-  const { index, encounter } = props;
+  const { index, encounter, identFlag } = props;
   const [editing, setEditing] = useState(false);
   const [commentCount, setComments] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
+      
     //   setComments(coupon.comments.length);
       setEditing(false);
     }
@@ -57,7 +58,11 @@ export default function EncounterCard(props) {
     <Grid item xs={12}  md={3} sm={6} xl={2}>
       <Card className={classes.root}>
         <NavLink
-          to={{
+          to={identFlag? 
+            {
+              pathname: '/IdentifiedProfile',
+              search: '?id=' + index,
+            } : {
             pathname: '/EncounterProfile',
             search: '?id=' + index,
           }}
@@ -80,7 +85,6 @@ export default function EncounterCard(props) {
             title={coupon.title}
             subheader={coupon.discount + ' off'}
           /> */}
-        </NavLink>
 
           <CardActionArea>
             <CardMedia
@@ -104,6 +108,7 @@ export default function EncounterCard(props) {
               </Typography>
             </CardContent>
           </CardActionArea>
+          </NavLink>
 
         <CardActions>
         <button className='btn' >

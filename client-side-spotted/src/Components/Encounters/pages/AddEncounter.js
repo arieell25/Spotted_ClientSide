@@ -1,19 +1,33 @@
-import React, { useState }  from "react";
+import React, { useState, useStyles }  from "react";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
-import {EncounterService} from '../../Service/EncounterService';
+import {EncounterService} from '../../../Service/EncounterService';
 import { Link } from 'react-router-dom';
 import { useForm, Controller  } from 'react-hook-form';
-import StatusDialog from './StatusDialog';
+import StatusDialog from '../components/StatusDialog';
+import {withStyles} from '@material-ui/core/styles';
 
-// import {
-//   Dialog,
-//   DialogContent,
-//   DialogContentText,
-//   IconButton,
-//   DialogTitle,
-//   Grid,
-// } from '@material-ui/core';
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'white',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'white',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&:hover fieldset': {
+        borderColor: 'white',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'white',
+      },
+    },
+  },
+})(TextField);
 
 
 const sitesName = [
@@ -37,14 +51,7 @@ const sitesName = [
 
 // class AddEncounter extends React.Component {
   export default function AddEncounter(){
-  //  var state = {
-  //   nickName: "",
-  //   dateOfTheEncounter: "",
-  //   // timeOfTheEncounter: "",
-  //   site: "",
-  //   email: "",
-  //   spottedCount: ""
-  // };
+    // const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
 

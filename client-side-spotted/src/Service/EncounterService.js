@@ -6,8 +6,9 @@ export const EncounterService = {
   getEncounterById,
   uploadPhoto,
   addBoundingBox,
-  addPhoto
-  // save
+  addPhoto,
+  updateEncounter,
+  deleteEncounter
 }
 
 function getEncounters() {
@@ -15,28 +16,35 @@ function getEncounters() {
   return HttpService
   .get(`/api/getAllEncounters`)
   .then(res => {
-    console.log('in func data: ' + JSON.stringify(res.data.encounters.rows));
+    // console.log('in func data: ' + JSON.stringify(res.data.encounters.rows));
     return res.data.encounters.rows;
   } );
 
 }
-// function query() {
-//   let queryStr = '?';
-//   for (const key in filterBy) {
-//     queryStr += `${key}=${filterBy[key]}&`;
-//   }
-//   return HttpService.get(`encounters${queryStr || ''}`);
-// }
 
-function getEncounterById(encounterId) {
-  var result = HttpService.get(`/api/getEncounter?id=${encounterId}`)
-  console.log(result);
-  return 0;
+function updateEncounter(id, data) {
+  return HttpService
+  .put(`/api/updateEncounter?id:${id}`)
+  .then(res => {
+    return res;
+  } );
 }
 
-// function remove(encounterId) {
-//   return HttpService.delete(`encounters/${encounterId}`)
-// }
+
+function deleteEncounter(id) {
+  return HttpService
+  .delete(`/api/deleteEncounter?id=${id}`)
+  .then(res => {
+    return res;
+  } );
+}
+
+function getEncounterById(encounterId) {
+  return HttpService.get(`/api/getEncounter?id=${encounterId}`)
+  .then(res=> {
+    return res.data.encounter;
+  })
+}
 
 async function addEncounter(encounter) {
   console.log(encounter);
