@@ -11,15 +11,15 @@
   position: absolute;
   width: 100%;
   min-height: 100vh;
-	background: #3C444C
+	background: #252529
 }
 /******************** MAIN ********************/
 .container {
   max-width: 85%;
-  margin: 30px auto;
+  margin: 1px auto;
   overflow: auto;
   min-height: 300px;
-  padding: 40px;
+  padding: 0px 40px 20px;
 }
 
 /******************** TITLE ********************/
@@ -41,6 +41,13 @@ h2{
 	font-size: 320%;
 }
 
+h3{
+  padding: 10px;
+	font-size: 300%;
+  background: -webkit-linear-gradient(45deg,#C5F836, #3AA4D1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .btn {
   display: inline-block;
 	background:linear-gradient(45deg,#C5F836, #3AA4D1);
@@ -75,7 +82,7 @@ h2{
 
 .Login{
   width: 400px;
-  padding: 20px
+  padding: 20px;
 }
 
 .logindiv{
@@ -90,20 +97,20 @@ h2{
   bottom: 40px;
 }
 
-.loginOut{
+/* .loginOut{
   list-style: none;
   position:relative;
   margin-left: 100%;
-} 
+}  */
 
 
-.weatherCard{
+/* .weatherCard{
   text-align: center;
 	color:linear-gradient(to top,#C5F836, #3AA4D1);
   width: 550px;
   flex-wrap: wrap;
   margin: 0 auto;
-}
+} */
 
 /* .MuiPaper-root{
   height: 80px;

@@ -20,7 +20,7 @@ const Login = forwardRef((props, ref) => {
   return (
     // <MuiThemeProvider >
       <div className="Login">
-        <form className="form_login" onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <h2>Login</h2>
           <TextField
             fullWidth
