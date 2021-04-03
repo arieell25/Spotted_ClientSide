@@ -23,17 +23,18 @@ import {
 const useStyles = makeStyles(theme => ({
   root: {
     margin: '30px 25px 10px 0px',
-    // minWidth: 289,
-    // maxWidth: 289,
+    padding: '10%'
+  },
+  linkText:{
+    textDecoration: 'none'
   },
   img: {
     width: '100%',
-    objectFit: 'contain',
     paddingTop: 4,
+    borderRadius: 10
   },
-
   lable: {
-    color: '#bdbdbd',
+    color: '#e0e0e7',
   },
 }));
 
@@ -58,6 +59,7 @@ export default function EncounterCard(props) {
     <Grid item xs={12}  md={3} sm={6} xl={2}>
       <Card className={classes.root}>
         <NavLink
+          className={classes.linkText}
           to={identFlag? 
             {
               pathname: '/IdentifiedProfile',
@@ -100,15 +102,14 @@ export default function EncounterCard(props) {
               title="Contemplative Reptile"
             />
             <CardContent>
-              <Typography variant="body2" color="textSecondary" component="h5">
+              <Typography variant="body2" color="secondary" component="h5">
                 Encounter ID: {encounter.EncounterID}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
+              <Typography variant="body2" color="secondary" component="p">
                 {encounter.EncounterDate}
               </Typography>
             </CardContent>
           </CardActionArea>
-          </NavLink>
 
         <CardActions>
         <button className='btn' >
@@ -118,6 +119,8 @@ export default function EncounterCard(props) {
             <RateReviewIcon />
           </IconButton> */}
         </CardActions>
+        </NavLink>
+
       </Card>
     </Grid>
   );

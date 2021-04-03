@@ -1,6 +1,6 @@
 import { useState, useEffect, React } from 'react'
 import { IdntEncService } from '../../../Service/IdentifiedEncounterService'
-// import Encounter from './Encounter'
+import GradientCircularProgress from '../components/CircularProgress'
 import EncounterCard from '../components/EncounterCard'
 import {
   Grid
@@ -57,7 +57,7 @@ export default function IdentifiedBoard() {
     );
   };
 
-  if (!encounters) return <div>Loading...</div>
+  if (!encounters) return <GradientCircularProgress />
   else {
     return(
       <Grid container className="Encounters">

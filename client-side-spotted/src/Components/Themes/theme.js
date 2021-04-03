@@ -1,15 +1,32 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
+    palette: {
+        secondary: {
+            main: "#ffffff"
+        },
+        textSecondary:{
+            color: "#ffffff"
+        }
+     },
   typography: {
     body1: {
       fontFamily: "'Montserrat', sans-serif",
       fontWeight: 400,
       fontSize: 16,
       color: "white"
+    },
+    body2: {
+        fontFamily: "'Montserrat', sans-serif",
     }
   },
   overrides: {
+    MuiButtonBase:{
+        root:
+        {
+            color: "white"
+        }
+    },
     MuiButton:{
         label:{
             color: "white",
@@ -29,15 +46,14 @@ const theme = createMuiTheme({
     },
     MuiListItem:{
         button:{
-            // backgroundColor: "#ffff"
         },
         root: {
             "&$selected:hover": {
-                backgroundColor: 'linear-gradient(179.58deg, #C5F836 -13.56%, #3AA4D1 158.3%)',
+                backgroundColor: '#91d88e87',
                 color: "white"
               },
               "&$selected": {
-                backgroundColor: 'linear-gradient(179.58deg, #C5F836 -13.56%, #3AA4D1 158.3%)',
+                backgroundColor: '#91d88e87',
                 color: "white"
               },
         }
@@ -54,11 +70,12 @@ const theme = createMuiTheme({
             }
           }
     },
+    MuiInputBase:{
+        root:{
+            color: "white"
+        }
+    },
     MuiInput:{
-            label:{
-
-
-            },
             underline: {
                 '&:before': {
                     borderBottom: '1px solid rgba(203, 207, 212, 1)'
@@ -71,10 +88,14 @@ const theme = createMuiTheme({
                 }
             }
         },
-    'Mui-selected': {
-        backgroundColor: 'linear-gradient(179.58deg, #C5F836 -13.56%, #3AA4D1 158.3%)',
-        //   -webkit-linear-gradient(45deg,#C5F836, #3AA4D1)
-      },
+    MuiCardContent:{
+        root:{
+            color: "#ffffff",
+            fontFamily: "'Montserrat', sans-serif",
+
+        }
+    }
+    
   }
 })
 

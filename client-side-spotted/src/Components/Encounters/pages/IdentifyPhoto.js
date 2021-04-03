@@ -1,20 +1,22 @@
 import React, {Component, useState} from 'react';
-import ImageUploader from 'react-images-upload';
+// import ImageUploader from 'react-images-upload';
 import {EncounterService} from '../../../Service/EncounterService';
 import {speciesDetectionService} from '../../../Service/DetectionService/photoDetectService';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import GradientCircularProgress from '../components/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
-import StatusDialog from '../components/StatusDialog';
+// import StatusDialog from '../components/StatusDialog';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      display: 'flex',
-      '& > * + *': {
-        marginLeft: theme.spacing(2),
-      },
-    },
+    // root: {
+    //   display: 'flex',
+    //   '& > * + *': {
+    //     marginLeft: theme.spacing(2),
+    //   },
+    //   justifyContent: 'center',
+    //   padding: '120px'
+    // },
   }));
 
 function useQuery() {
@@ -118,9 +120,7 @@ function useQuery() {
                     <div>
                         <h2>Detecting Identity</h2>
                     </div>
-                    <div className={classes.root}>
-                        <CircularProgress />
-                    </div>
+                        <GradientCircularProgress />
                 {/* <ImageUploader
                     withIcon={true}
                     buttonText='Choose images'
