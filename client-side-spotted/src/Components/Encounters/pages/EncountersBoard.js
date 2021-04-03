@@ -2,11 +2,26 @@ import { useState, useEffect, React } from 'react'
 import { EncounterService } from '../../../Service/EncounterService'
 // import Encounter from './Encounter'
 import EncounterCard from '../components/EncounterCard'
+import GradientCircularProgress from '../components/CircularProgress'
 import {
-  Grid
+  Grid,
+  makeStyles
 } from '@material-ui/core';
 
+const useStyles = makeStyles((theme) => ({
+  // root: {
+  //   display: 'flex',
+  //   '& > * + *': {
+  //     marginLeft: theme.spacing(3),
+  //   },
+  //   justifyContent: 'center',
+  //   padding: '120px'
+  // },
+
+}));
 export default function EncountersBoard() {
+  const classes = useStyles();
+
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
   const [limit, setLimit] = useState(8);
@@ -64,7 +79,9 @@ export default function EncountersBoard() {
   }
   };
 
-  if (!encounters) return <div>Loading...</div>
+  if (!encounters) return (
+      <GradientCircularProgress />
+    )
   else {
     return(
       <Grid container className="Encounters">

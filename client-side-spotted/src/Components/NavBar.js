@@ -4,6 +4,7 @@ import {
   Toolbar,
   IconButton,
   List,
+  Typography,
   ListItem,
   ListItemText,
   Button
@@ -11,7 +12,6 @@ import {
 
 import Menu from '@material-ui/core/Menu';
 import { userService } from '../Service/UserService'
-
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
@@ -19,21 +19,23 @@ import Signup from './Signup';
 import Login from './Login'
 
 const useStyles = makeStyles({
-  MuiAppBarColorPrimary: {
-    backgroundColor: `silver`,
+  logo: {
+    fontSize: `24px`,
+    textDecoration: `none`,
+    color: `linear-gradient(45deg,#C5F836, #3AA4D1)`,
+    textDecoration: `none`,
+    textTransform: `uppercase`,
   },
   navDisplayFlex: {
     display: `flex`,
-    justifyContent: `space-between`,
-    position: `relative`,
-    left: `70px`,
+    // justifyContent: `space-between`,
+    // position: `relative`,
+    // left: `70px`,
     // bottom: `20px`,
   },
   linkText: {
     textDecoration: `none`,
     textTransform: `uppercase`,
-    color: `white`,
-    fontFamily: `cursive`,
   },
 });
 
@@ -77,17 +79,10 @@ const NavBar = () => {
   }
 
   return (
-    <AppBar position="static" style={{ backgroundColor: `#373a40` }}>
+    <AppBar position="static" style={{ backgroundColor: `#252529` }}> 
       <Toolbar className="toolBar">
-        <List component="nav" aria-labelledby="main navigation">
-          <Link to="/HeaderTitle">
-            <IconButton
-              className="linkHomePage"
-              edge="start"
-              color="inherit"
-              aria-label="home">
-              <Home className="linkHomePage" fontSize="large" />
-            </IconButton>
+          <Link className={classes.logo} to="/HeaderTitle">
+            <h3>spotted</h3>
           </Link>
           {
             <List
@@ -104,7 +99,6 @@ const NavBar = () => {
               ))}
             </List>
           }
-        </List>
         {!userService.isLoggedIn()  && (
           <div className="logindiv">
          <Button

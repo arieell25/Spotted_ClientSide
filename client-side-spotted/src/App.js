@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { ThemeProvider } from '@material-ui/styles'
 import NavBar from './Components/NavBar'
 import TypeUpload from './Components/Encounters/components/TypeUpload'
 import AddEncounter from './Components/Encounters/pages/AddEncounter'
@@ -12,9 +13,11 @@ import EditIdentifiedEncounter from './Components/Encounters/pages/EditIdentifie
 import AddIdentifiedEncounter from './Components/Encounters/pages/AddIdentifiedEncounter'
 import EncounterProfile from './Components/Encounters/components/EncounterProfile'
 import IdentifiedProfile from './Components/Encounters/components/IdentifiedProfile'
+import theme from './Components/Themes/theme';
 
 const App = () => {
   return (
+  <ThemeProvider theme={theme}>
     <Router>
       <div className='body'>
         <NavBar />
@@ -38,6 +41,8 @@ const App = () => {
       </div>
 
     </Router>
+    </ThemeProvider>
+
   )
 }
 

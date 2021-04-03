@@ -12,17 +12,28 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import qs from 'qs';
 import { IconButton, Typography, Grid, Avatar, Card, CardActionArea,CardMedia, CardContent, Button, CardActions  } from '@material-ui/core';
-
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    padding: 20,
+    padding: 50,
+    width: 800,
+    margin: `0 auto`
   },
   media:{
-    height: '300px',
-    width: '300px'
-  }
+    flex: 1,
+    width: 500,
+    height: 300,
+    margin: `0 auto`,
+    borderRadius: 10
+  },
+  actions:{
+    justifyContent: 'flex-end'
+  },
+  cardtitle :{
+    fontSize:30
+  },
 }));
 
 export default function IdentifiedProfile(props) {
@@ -109,37 +120,37 @@ else {
           <h2>Identified Encounter Profile</h2>
         </div>
         <Card className={classes.root}>
-  <CardActionArea>
-    <CardMedia
-      className={classes.media}
-      image={encounter.ProfilePicture}
-      title="Contemplative Reptile"
-    />
-    <CardContent>
-      <Typography gutterBottom variant="h5" component="h2">
-        BlueSpotted - {encounter.EncounterID}
-      </Typography>
-      <div className ="detailsEncounter">
-      <h4>SpottedBy: {encounter.Photographer}</h4>
-      <h4> Status: is {encounter.isAlive? 'Alive' : 'Dead'}</h4>
-      <h4>Encounter ID: {encounter.EncounterID}</h4>
-      <h4>TL: {encounter.TL} cm</h4>
-      <h4>DL: {encounter.DL} cm</h4>
-      <h4>DW: {encounter.DW}</h4>
-      <h4>Max Depth: {encounter.MaxDepth} meter</h4>
-      <h4>Water temperature: {encounter.Temp} </h4>
-      <h4>Link to source: {encounter.Link ? encounter.Link : ''}</h4>
-     <h4> Last Updates By: {encounter.UpdateBy ? encounter.UpdateBy : ''} at:  {encounter.UpdateAt ? encounter.UpdateAt : ''}</h4>
-      </div>
-    <IconButton onClick={event =>  window.location.href=`/EditIdentifiedEncounter?id=${encounter.IdentifiedEncounterID}`}><EditIcon /></IconButton>
-  
-    <IconButton><DeleteIcon /></IconButton>
-
-    </CardContent>
-  </CardActionArea>
-  <CardActions>
-  </CardActions>
-</Card>
+          <CardMedia
+            className={classes.media}
+            image={encounter.ProfilePicture}
+            title="Contemplative Reptile"
+          />
+        <CardContent>
+          <Typography gutterBottom className={classes.cardtitle} component="h2">
+            BlueSpotted #{encounter.EncounterID}
+          </Typography>
+          <CardActions className={classes.actions}>
+            <IconButton color="secondary" onClick={event =>  window.location.href=`/EditIdentifiedEncounter?id=${encounter.IdentifiedEncounterID}`}><EditIcon /></IconButton>
+            <IconButton color="secondary"><DeleteIcon  /></IconButton>
+          </CardActions>
+          <div className ="detailsEncounter">
+          <p>SpottedBy: {encounter.Photographer}</p>
+          <p> Status: is {encounter.isAlive? 'Alive' : 'Dead'}</p>
+          <p>Encounter ID: {encounter.EncounterID}</p>
+          <p>TL: {encounter.TL} cm</p>
+          <p>DL: {encounter.DL} cm</p>
+          <p>DW: {encounter.DW}</p>
+          <p>Max Depth: {encounter.MaxDepth} meter</p>
+          <p>Water temperature: {encounter.Temp} </p>
+          <p>Link to source: {encounter.Link ? encounter.Link : ''}</p>
+          <p> {encounter.UpdateBy ? 'Last Updates By: ' + encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at ' + encounter.UpdateAt : ''}</p>
+          </div>
+          </CardContent>
+            <button className='iconbtn' >
+             <div ><PhotoLibraryIcon color="secondary"/></div>
+              PHOTOS
+          </button> 
+      </Card>
       </div>
     
     </div>

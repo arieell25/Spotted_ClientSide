@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
+
 import StatusDialog from './StatusDialog';
 import EditiDialog from './EditDialog';
 import { Link } from 'react-router-dom';
@@ -17,16 +19,27 @@ import { IconButton, Typography, Grid, Avatar, Card, CardActionArea,CardMedia, C
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    padding: 20,
+    padding: 50,
+    width: 800,
+    margin: `0 auto`
   },
-  img:{
-    height: '300px',
-    width: '300px'
-  },
+  // img:{
+  //   height: '300px',
+  //   width: '300px'
+  // },
   media:{
-    height: '300px',
-    width: '300px'
-  }
+    flex: 1,
+    width: 500,
+    height: 300,
+    margin: `0 auto`,
+    borderRadius: 10
+  },
+  actions:{
+    justifyContent: 'flex-end'
+  },
+  cardtitle :{
+    fontSize:30
+  },
 }));
 
 export default function EncounterProfile(props) {
@@ -38,9 +51,6 @@ export default function EncounterProfile(props) {
     const [encounter, setEncounter] = useState([]);
     var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
 
-  // const [coupon, setCoupon] = useState();
-
-//   useEffect(() => {
     useEffect(() => {
     EncounterService
           .getEncounterById(id)
@@ -48,9 +58,7 @@ export default function EncounterProfile(props) {
             setEncounter(encounter);
           })
           .catch(err => console.log(err));
-        // eslint-disable-next-line
       }, []);
-//   }, [encounter]);
 
   const handleDelete = () => {
     setOpen(true);
@@ -115,38 +123,40 @@ else {
           <h2>Encounter Profile</h2>
         </div>
         <Card className={classes.root}>
-    <CardMedia
-      className={classes.media}
-      image={encounter.ProfilePicture}
-      title="Contemplative Reptile"
-    />
-    <CardContent>
-      <Typography gutterBottom variant="h5" component="h2">
-        BlueSpotted
-      </Typography>
-      <div className ="detailsEncounter">
-      <h4>Encounter Date: {encounter.EncounterDate}</h4>
-      <h4>Spotted At:</h4>
-      <h4>Encounter ID: {encounter.EncounterID}</h4>
-      <h4>Original ID: {encounter.OriginalID}</h4>
-      <h4>Total Bluespotted Reported: {encounter.SpottedCountReported}:</h4>
-      <h4>Actually Detected: {encounter.SpottedCount? encounter.SpottedCount : ''}</h4>
-      <h4>MediaType:</h4>
-      <h4>Reported By: {encounter.ReporterEmail}</h4>
-     <h4> Last Updates By: {encounter.UpdateBy ? encounter.UpdateBy : ''} at:  {encounter.UpdateAt ? encounter.UpdateAt : ''}</h4>
-      </div>
+        <CardMedia
+          className={classes.media}
+          image={encounter.ProfilePicture}
+          title="Contemplative Reptile"
+        />
+        <CardContent>
+            <Typography gutterBottom className={classes.cardtitle} component="h2">
+              Encounter #{encounter.EncounterID}
+            </Typography>
+            <CardActions className={classes.actions}>
+              {/* edit event listner */}
+              
+              <IconButton color="secondary"><PhotoLibraryIcon/></IconButton>
+                <IconButton color="secondary" onClick={event =>  window.location.href=`/EditIdentifiedEncounter?id=${encounter.IdentifiedEncounterID}`}><EditIcon /></IconButton>
+                <IconButton color="secondary"><DeleteIcon  /></IconButton>
+            </CardActions>
+            <div className ="detailsEncounter">
+            <p>Encounter Date: {encounter.EncounterDate}</p>
+            <p>Spotted At:</p>
+            <p>Encounter ID: {encounter.EncounterID}</p>
+            <p>Original ID: {encounter.OriginalID}</p>
+            <p>Total Bluespotted Reported: {encounter.SpottedCountReported}:</p>
+            <p>Actually Detected: {encounter.SpottedCount? encounter.SpottedCount : ''}</p>
+            <p>MediaType:</p>
+            <p>Reported By: {encounter.ReporterEmail}</p>
+            <p>{encounter.UpdateBy ? 'Last Updates By: '+encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at: ' + encounter.UpdateAt : ''}</p>
+            </div>
+          </CardContent>
+          <button className='btn'onClick={event =>  window.location.href='/IdentifyPhoto'} >
+                  IDENITFY
+          </button> 
 
-    <IconButton><EditIcon /></IconButton>
-    <IconButton><DeleteIcon /></IconButton>
-    <button className='btn'     onClick={event =>  window.location.href='/IdentifyPhoto'} >
-            Identify
-    </button> 
-    </CardContent>
-    <CardActionArea>
-  </CardActionArea>
-  <CardActions>
-  </CardActions>
-</Card>
+
+    </Card>
       </div>
     
     </div>
