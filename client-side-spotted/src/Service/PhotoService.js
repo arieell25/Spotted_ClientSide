@@ -1,9 +1,10 @@
 import HttpService from './httpService'
 
 export const PhotoService = {
-//   getPhotosofEncounter,
+  getEncounterPhotos,
   uploadPhoto,
   addPhoto,
+  getIdntEncounterPhotos
 //   updateEncounter,
 //   deletephoto
 }
@@ -27,4 +28,18 @@ async function uploadPhoto(fd, id) {
       console.log("no photo data");
       // return HttpService.post(`api/addEncounter`, encounter);
     }
+  }
+
+  function getEncounterPhotos(encounterId) {
+    return HttpService.get(`/api/getEncounterPhotos?id=${encounterId}`)
+    .then(res=> {
+      return res.data.photos;
+    })
+  }
+
+  function getIdntEncounterPhotos(id) {
+    return HttpService.get(`/api/getIdntEncounterPhotos?id=${id}`)
+    .then(res=> {
+      return res.data.photos;
+    })
   }

@@ -4,14 +4,13 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import StatusDialog from './StatusDialog';
 import EditiDialog from './EditDialog';
-import AddAlertIcon from '@material-ui/icons/AddAlert';
+import GradientCircularProgress from './CircularProgress';
 import {IdntEncService} from '../../../Service/IdentifiedEncounterService';
 import {userService} from '../../../Service/UserService';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import { PhotoService } from '../../../Service/PhotoService';
+import PhotosGrid from '../../Photos/PhotosGrid';
 import qs from 'qs';
-import { IconButton, Typography, Grid, Avatar, Card, CardActionArea,CardMedia, CardContent, Button, CardActions  } from '@material-ui/core';
+import { IconButton, Typography,  Card, CardMedia, CardContent, CardActions} from '@material-ui/core';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 
 const useStyles = makeStyles(theme => ({
@@ -42,6 +41,8 @@ export default function IdentifiedProfile(props) {
   const [status, setStatus] = useState([]);
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [openPhotos, setOpenPhotos] = useState(false);
+  const [photos, setPhotos] = useState([]);
   var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
   const [encounter, setEncounter] = useState([]);
 
@@ -53,64 +54,56 @@ export default function IdentifiedProfile(props) {
         setEncounter(encounter);
       })
       .catch(err => console.log(err));
+    
+    PhotoService.getIdntEncounterPhotos(id)
+      .then(photos => setPhotos(photos))
+      .catch(err=> console.log(err));
   }, []);
 
-  const handleDelete = () => {
-    setOpen(true);
-    setStatus('Deleted coupon succesfully');
-    try {
-        IdntEncService.deleteIdentified(id)
-      .then(response => {
-          console.log(response)
-          setStatus('Deleted Successfully.');
-          setOpen(true);});
-    } catch (err) {
-      console.log('error fetching...:', err);
-      setStatus('Something is wrong... try again');
-      setOpen(true);
-    }
-  };
   const handleClose = () => {
     setEdit(false);
     setOpen(false);
   };
-  const handleEdit = () => {
-    setEdit(true);
-  };
-  const handleSave = (title, couponName, link, discount) => {
-    var body = {
-    //   title: title,
-    //   couponName: couponName,
-    //   discount: discount,
-    //   link: link,
-    //   publisherImg: api.getLocalStorageUser().img,
-    };
-    try {
-        IdntEncService.updateIdentified(id, body).then(response => console.log(response));
-      setStatus('All changes were saved');
-      setOpen(true);
-    } catch (err) {
-      console.log('error fetching...:', err);
-      setStatus('Something is wrong... try again');
-      setOpen(true);
-    }
-  };
 
-//   const addAlert = () => {
-//     try {
-//         IdntEncService.couponNotify(index).then(response => console.log(response));
-//       setStatus(
-//         'Alert was created, you will be notified when we find a better price.'
-//       );
-//       setOpen(true);
-//     } catch (err) {
-//       console.log('error fetching...:', err);
-//       setStatus('Something is wrong... try again');
-//       setOpen(true);
-//     }
-//   };
+  // const handleDelete = () => {
+  //   setOpen(true);
+  //   setStatus('Deleted coupon succesfully');
+  //   try {
+  //       IdntEncService.deleteIdentified(id)
+  //     .then(response => {
+  //         console.log(response)
+  //         setStatus('Deleted Successfully.');
+  //         setOpen(true);});
+  //   } catch (err) {
+  //     console.log('error fetching...:', err);
+  //     setStatus('Something is wrong... try again');
+  //     setOpen(true);
+  //   }
+  // };
 
-if (!encounter) return <div>Loading...</div>
+  // const handleEdit = () => {
+  //   setEdit(true);
+  // };
+  // const handleSave = (title, couponName, link, discount) => {
+  //   var body = {
+  //   //   title: title,
+  //   //   couponName: couponName,
+  //   //   discount: discount,
+  //   //   link: link,
+  //   //   publisherImg: api.getLocalStorageUser().img,
+  //   };
+  //   try {
+  //       IdntEncService.updateIdentified(id, body).then(response => console.log(response));
+  //     setStatus('All changes were saved');
+  //     setOpen(true);
+  //   } catch (err) {
+  //     console.log('error fetching...:', err);
+  //     setStatus('Something is wrong... try again');
+  //     setOpen(true);
+  //   }
+  // };
+
+if (!encounter) return <GradientCircularProgress/>
 else {
   return (
     <div className="animated slideInUpTiny animation-duration-3">
@@ -119,37 +112,51 @@ else {
         <div>
           <h2>Identified Encounter Profile</h2>
         </div>
+        <StatusDialog
+        open={open}
+        status={status}
+        onClose={handleClose}/>
+
         <Card className={classes.root}>
+          {encounter.ProfilePicture?
           <CardMedia
             className={classes.media}
             image={encounter.ProfilePicture}
             title="Contemplative Reptile"
-          />
+          /> :
+          <GradientCircularProgress/>
+          }
+          {openPhotos &&
+            <PhotosGrid photos={photos}  />
+          }
+
         <CardContent>
           <Typography gutterBottom className={classes.cardtitle} component="h2">
             BlueSpotted #{encounter.EncounterID}
           </Typography>
           <CardActions className={classes.actions}>
+            <p>{photos.length}</p>
+            <IconButton color="secondary" onClick={ () => setOpenPhotos(openPhotos => !openPhotos)}><PhotoLibraryIcon/></IconButton>
             <IconButton color="secondary" onClick={event =>  window.location.href=`/EditIdentifiedEncounter?id=${encounter.IdentifiedEncounterID}`}><EditIcon /></IconButton>
             <IconButton color="secondary"><DeleteIcon  /></IconButton>
           </CardActions>
           <div className ="detailsEncounter">
-          <p>SpottedBy: {encounter.Photographer}</p>
-          <p> Status: is {encounter.isAlive? 'Alive' : 'Dead'}</p>
-          <p>Encounter ID: {encounter.EncounterID}</p>
-          <p>TL: {encounter.TL} cm</p>
-          <p>DL: {encounter.DL} cm</p>
-          <p>DW: {encounter.DW}</p>
-          <p>Max Depth: {encounter.MaxDepth} meter</p>
-          <p>Water temperature: {encounter.Temp} </p>
-          <p>Link to source: {encounter.Link ? encounter.Link : ''}</p>
-          <p> {encounter.UpdateBy ? 'Last Updates By: ' + encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at ' + encounter.UpdateAt : ''}</p>
+            <p>SpottedBy: {encounter.Photographer}</p>
+            <p> Status: is {encounter.isAlive? 'Alive' : 'Dead'}</p>
+            <p>Encounter ID: {encounter.EncounterID}</p>
+            <p>TL: {encounter.TL} cm</p>
+            <p>DL: {encounter.DL} cm</p>
+            <p>DW: {encounter.DW}</p>
+            <p>Max Depth: {encounter.MaxDepth} meter</p>
+            <p>Water temperature: {encounter.Temp} </p>
+            <p>Link to source: {encounter.Link ? encounter.Link : ''}</p>
+            <p> {encounter.UpdateBy ? 'Last Updates By: ' + encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at ' + encounter.UpdateAt : ''}</p>
           </div>
           </CardContent>
-            <button className='iconbtn' >
+            {/* <button className='iconbtn' >
              <div ><PhotoLibraryIcon color="secondary"/></div>
               PHOTOS
-          </button> 
+          </button>  */}
       </Card>
       </div>
     
