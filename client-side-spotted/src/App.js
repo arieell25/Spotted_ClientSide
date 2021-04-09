@@ -23,6 +23,7 @@ const App = () => {
         <NavBar />
         {/* <HeaderTitle /> */}
         <div className='container'>
+        { <Route path='/' /> }
         {/* { <Route path='/SignUp' component={SignUp} /> } */}
           { <Route path='/HeaderTitle' component={HeaderTitle} /> }
           { <Route path='/AddEncounter' component={AddEncounter} /> }
@@ -30,12 +31,10 @@ const App = () => {
           { <Route path='/UploadPhoto' component={UploadPhoto} /> }
           { <Route path='/EncountersBoard' component={EncountersBoard}/>}
           { <Route path='/IdentifiedBoard' component={IdentifiedBoard}/>}  
-
           { <Route path='/EncounterProfile' component={EncounterProfile}/>}
           { <Route path='/IdentifiedProfile' component={IdentifiedProfile}/>}  
           { <Route path='/IdentifyPhoto' component={IdentifyPhoto}/>}
           { <Route path='/EditIdentifiedEncounter' component={EditIdentifiedEncounter}/>}
-
           { <Route path='/AddIdentifiedEncounter' component={AddIdentifiedEncounter}/>}
         </div>
       </div>

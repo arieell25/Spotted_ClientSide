@@ -3,30 +3,25 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-
+import PhotosGrid from '../../Photos/PhotosGrid';
 import StatusDialog from './StatusDialog';
-import EditiDialog from './EditDialog';
-import { Link } from 'react-router-dom';
+// import EditiDialog from './EditDialog';
+import GradientCircularProgress from './CircularProgress';
 import {EncounterService} from '../../../Service/EncounterService';
-import {userService} from '../../../Service/UserService';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+// import {userService} from '../../../Service/UserService';
+import { PhotoService } from '../../../Service/PhotoService';
+
 import qs from 'qs';
 
-import { IconButton, Typography, Grid, Avatar, Card, CardActionArea,CardMedia, CardContent, Button, CardActions  } from '@material-ui/core';
+import { IconButton, Typography, Card,CardMedia, CardContent, Button, CardActions  } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     padding: 50,
     width: 800,
     margin: `0 auto`
   },
-  // img:{
-  //   height: '300px',
-  //   width: '300px'
-  // },
   media:{
     flex: 1,
     width: 500,
@@ -40,24 +35,39 @@ const useStyles = makeStyles(theme => ({
   cardtitle :{
     fontSize:30
   },
+  image: {
+    width: 30,
+    height: 30,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    borderRadius: 20,
+    margin: 'auto'
+  },
 }));
 
 export default function EncounterProfile(props) {
-  const { index } = props;
+  // const { index } = props;
+    const { index } = 5;
   const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [open, setOpen] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [openPhotos, setOpenPhotos] = useState(false);
+  const [photos, setPhotos] = useState([]);
     const [encounter, setEncounter] = useState([]);
     var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
 
     useEffect(() => {
-    EncounterService
-          .getEncounterById(id)
-          .then(encounter => {
-            setEncounter(encounter);
-          })
-          .catch(err => console.log(err));
+        const fetchData = async () => {
+          const encounterData = await EncounterService.getEncounterById(id);
+          const photosData = await PhotoService.getEncounterPhotos(id);
+          
+          setPhotos(photosData);
+          setEncounter(encounterData)
+        };
+        fetchData();        
+          console.log(photos[0]);
       }, []);
 
   const handleDelete = () => {
@@ -79,41 +89,28 @@ export default function EncounterProfile(props) {
   const handleClose = () => {
     setEdit(false);
     setOpen(false);
+    setOpenPhotos(false);
   };
-  const handleEdit = () => {
-    setEdit(true);
-  };
-  const handleSave = (title, couponName, link, discount) => {
-    var body = {
+  // const handleEdit = () => {
+  //   setEdit(true);
+  // };
+  // const handleSave = (title, couponName, link, discount) => {
+  //   var body = {
 
-    //   publisherImg: api.getLocalStorageUser().img,
-    };
-    try {
-        EncounterService.updateEncounter(index, body).then(response => console.log(response));
-      setStatus('All changes were saved');
-      setOpen(true);
-    } catch (err) {
-      console.log('error fetching...:', err);
-      setStatus('Something is wrong... try again');
-      setOpen(true);
-    }
-  };
+  //   //   publisherImg: api.getLocalStorageUser().img,
+  //   };
+  //   try {
+  //       EncounterService.updateEncounter(index, body).then(response => console.log(response));
+  //     setStatus('All changes were saved');
+  //     setOpen(true);
+  //   } catch (err) {
+  //     console.log('error fetching...:', err);
+  //     setStatus('Something is wrong... try again');
+  //     setOpen(true);
+  //   }
+  // };
 
-//   const addAlert = () => {
-//     try {
-//         IdntEncService.couponNotify(index).then(response => console.log(response));
-//       setStatus(
-//         'Alert was created, you will be notified when we find a better price.'
-//       );
-//       setOpen(true);
-//     } catch (err) {
-//       console.log('error fetching...:', err);
-//       setStatus('Something is wrong... try again');
-//       setOpen(true);
-//     }
-//   };
-
-if (!encounter) return <div>Loading...</div>
+if (!encounter) return <GradientCircularProgress />
 else {
   return (
     <div className="animated slideInUpTiny animation-duration-3">
@@ -122,21 +119,32 @@ else {
         <div>
           <h2>Encounter Profile</h2>
         </div>
+        <StatusDialog
+        open={open}
+        status={status}
+        onClose={handleClose}/>
+
         <Card className={classes.root}>
-        <CardMedia
+        {encounter.ProfilePicture? <CardMedia
+          component="img"
           className={classes.media}
           image={encounter.ProfilePicture}
           title="Contemplative Reptile"
-        />
+        /> :
+        <GradientCircularProgress />
+        }
+        {openPhotos &&
+        <PhotosGrid photos={photos}  />
+          }
         <CardContent>
             <Typography gutterBottom className={classes.cardtitle} component="h2">
               Encounter #{encounter.EncounterID}
             </Typography>
             <CardActions className={classes.actions}>
               {/* edit event listner */}
-              
-              <IconButton color="secondary"><PhotoLibraryIcon/></IconButton>
-                <IconButton color="secondary" onClick={event =>  window.location.href=`/EditIdentifiedEncounter?id=${encounter.IdentifiedEncounterID}`}><EditIcon /></IconButton>
+                <p>{photos.length}</p>
+                <IconButton color="secondary" onClick={ () => setOpenPhotos(openPhotos => !openPhotos)}><PhotoLibraryIcon/></IconButton>
+                <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditIdentifiedEncounter?id=${encounter.IdentifiedEncounterID}`}><EditIcon /></IconButton>
                 <IconButton color="secondary"><DeleteIcon  /></IconButton>
             </CardActions>
             <div className ="detailsEncounter">
@@ -161,6 +169,9 @@ else {
     
     </div>
 </div>
+  );
+}
+}
     // <Grid container className={classes.root} spacing={3}>
     //   <Grid item xs={12} lg={6}>
     //     {/* <ListItem>
@@ -216,6 +227,3 @@ else {
     //     onClose={handleClose}
     //   /> */}
     // </Grid>
-  );
-}
-}
