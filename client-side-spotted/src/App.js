@@ -13,7 +13,8 @@ import EditIdentifiedEncounter from './Components/Encounters/pages/EditIdentifie
 import AddIdentifiedEncounter from './Components/Encounters/pages/AddIdentifiedEncounter'
 import EncounterProfile from './Components/Encounters/components/EncounterProfile'
 import IdentifiedProfile from './Components/Encounters/components/IdentifiedProfile'
-import theme from './Components/Themes/theme';
+import theme from './Components/Themes/theme'
+import UploadVideo from './Components/Encounters/pages/video/UploadVideo'
 
 const App = () => {
   return (
@@ -36,6 +37,8 @@ const App = () => {
           { <Route path='/IdentifyPhoto' component={IdentifyPhoto}/>}
           { <Route path='/EditIdentifiedEncounter' component={EditIdentifiedEncounter}/>}
           { <Route path='/AddIdentifiedEncounter' component={AddIdentifiedEncounter}/>}
+          { <Route path='/UploadVideo' component={UploadVideo}/>}
+
         </div>
       </div>
 
