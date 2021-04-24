@@ -3,6 +3,7 @@ import HttpService from './httpService'
 export const PhotoService = {
   getEncounterPhotos,
   uploadPhoto,
+  uploadRawPhoto,
   addPhoto,
   getIdntEncounterPhotos
 //   updateEncounter,
@@ -27,6 +28,15 @@ async function uploadPhoto(fd, id) {
     } else {
       console.log("no photo data");
       // return HttpService.post(`api/addEncounter`, encounter);
+    }
+  }
+
+  async function uploadRawPhoto(fd, id) {
+    console.log('photo service id: ' + id +' fd: ' + fd);
+    if (fd) {
+      return HttpService.post(`/api/uploadrawphoto?id=${id}`, fd)
+    } else {
+      console.log("no photo data");
     }
   }
 

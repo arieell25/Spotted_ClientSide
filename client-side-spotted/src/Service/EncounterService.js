@@ -1,18 +1,17 @@
 import HttpService from './httpService'
+import {userService} from './UserService';
 
 export const EncounterService = {
   getEncounters,
   addEncounter,
   getEncounterById,
-  // uploadPhoto,
   addBoundingBox,
-  // addPhoto,
   updateEncounter,
-  deleteEncounter
+  deleteEncounter,
+  getIsraelSites,
 }
 
 function getEncounters() {
-  // return HttpService.get(`/api/getAllencounters`);
   return HttpService
   .get(`/api/getAllEncounters`)
   .then(res => {
@@ -50,23 +49,22 @@ async function addEncounter(encounter) {
   console.log(encounter);
 
   if (encounter) {
-    return HttpService.post(`/api/addEncounter`, encounter)
+    return HttpService.post(`/pub/addEncounter`, encounter)
   } else {
     console.log("no encounter data");
     // return HttpService.post(`api/addEncounter`, encounter);
   }
 }
 
-// async function uploadPhoto(fd, id) {
-//   console.log('photo service id: ' + id +' fd: ' + fd);
-//   if (fd) {
-//     return HttpService.post(`/api/uploadphoto?id=${id}`, fd)
-//   } else {
-//     console.log("no photo data");
-//     // return HttpService.post(`api/addEncounter`, encounter);
-//   }
-// }
-
+function getIsraelSites() {
+  // console.log(userService.isLoggedIn)
+  return HttpService
+  .get(`/pub/getAllIsraeliSites`)
+  .then(res => {
+    // console.log('in func data: ' + JSON.stringify(res.data.encounters.rows));
+    return res.data.sites;
+  } );
+}
 async function addBoundingBox(data, photoId) {
   console.log('addBoundingBox id : ' + photoId+ 'data: ' + data[0][0].confidences);
   var body ;
@@ -75,7 +73,6 @@ async function addBoundingBox(data, photoId) {
     return HttpService.post(`/api/addBoundingBox`, body)
   } else {
     console.log("no addBoundingBox data");
-    // return HttpService.post(`api/addEncounter`, encounter);
   }
 }
 

@@ -1,10 +1,10 @@
-/* eslint-disable import/no-anonymous-default-export */
 import Axios from 'axios';
 
-const BASE_URL = 'http://40.91.223.174:5000'
+const BASE_URL = 'http://65.52.144.46:5000'
 
 var axios = Axios;
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     get(endpoint, data) {
         return connectApi(endpoint, 'GET', data)

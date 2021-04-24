@@ -51,18 +51,18 @@ h3{
   -webkit-text-fill-color: transparent;
 }
 .btn {
-  /* display: inline-block; */
   display: flex;
 	background:linear-gradient(45deg,#C5F836, #3AA4D1);
   color: #ffff;
   border: none;
   padding: 10px 60px;
-  margin: 5px;
+  margin: 5px auto;
   border-radius: 30px;
   cursor: pointer;
   text-decoration: none;
   font-size: 15px;
-  font-family: inherit;
+  font-family: Montserrat, 'sans-serif';
+
 }
 
 .iconbtn {
