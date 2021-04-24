@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ImageUploader from 'react-images-upload';
 import {EncounterService} from '../../../Service/EncounterService';
-import {speciesDetectionService} from '../../../Service/DetectionService/photoDetectService';
+import {speciesDetectionService} from '../../../Service/DetectionService/speciesDetectionService';
 import {PhotoService} from '../../../Service/PhotoService';
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import StatusDialog from '../components/StatusDialog';

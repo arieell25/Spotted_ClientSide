@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 // import ImageUploader from 'react-images-upload';
 import {identificationService} from '../../../Service/IdentificationService/photoIdentService';
 import {EncounterService} from '../../../Service/EncounterService';
-import {speciesDetectionService} from '../../../Service/DetectionService/photoDetectService';
+import {speciesDetectionService} from '../../../Service/DetectionService/speciesDetectionService';
 import GradientCircularProgress from '../components/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles';
 

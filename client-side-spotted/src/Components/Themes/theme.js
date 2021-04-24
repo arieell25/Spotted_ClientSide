@@ -28,9 +28,24 @@ const theme = createMuiTheme({
         }
     },
     MuiButton:{
+        root:{
+            borderRadius: '30px',
+            padding: '5px 30px',
+            fonrSize: '15px'
+        },
         label:{
             color: "white",
             fontSize: "16px"
+        }
+    },
+    MuiTypography:{
+        h6:{
+            textTransform: "capitalize",
+            fontFamily: "'Montserrat', sans-serif",
+            fontSize:"26px"
+        },
+        colorTextSecondary:{
+            color:"white"
         }
     },
     MuiAppBar: {
@@ -41,7 +56,8 @@ const theme = createMuiTheme({
     },
     MuiPaper: {
         root: {
-            backgroundColor: "#252529"
+            backgroundColor: "#252529",
+            color: "white"
         }
     },
     MuiFormHelperText:{
@@ -51,6 +67,11 @@ const theme = createMuiTheme({
 
         }
     },
+    // MuiDialogTitle:{
+    //     root:{
+
+    //     }
+    // },
     MuiListItem:{
         button:{
         },

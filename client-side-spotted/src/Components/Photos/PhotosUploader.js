@@ -7,7 +7,7 @@ import { PhotoService } from '../../Service/PhotoService';
 import Done from '@material-ui/icons/Done';
 import { IconButton} from '@material-ui/core';
 import { useLocation } from "react-router-dom";
-import {speciesDetectionService} from '../../Service/DetectionService/photoDetectService';
+import {speciesDetectionService} from '../../Service/DetectionService/speciesDetectionService';
 import GradientCircularProgress from '../Encounters/components/CircularProgress';
 
 function useQuery() {
