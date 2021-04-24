@@ -132,7 +132,7 @@ else {
 
         <CardContent>
           <Typography gutterBottom className={classes.cardtitle} component="h2">
-            BlueSpotted #{encounter.EncounterID}
+            BlueSpotted ID {encounter.IdentifiedEncounterID}
           </Typography>
           <CardActions className={classes.actions}>
             <p>{photos.length}</p>
@@ -143,7 +143,7 @@ else {
           <div className ="detailsEncounter">
             <p>SpottedBy: {encounter.Photographer}</p>
             <p> Status: is {encounter.isAlive? 'Alive' : 'Dead'}</p>
-            <p>Encounter ID: {encounter.EncounterID}</p>
+            <p>Encounter no.: {encounter.EncounterID}</p>
             <p>TL: {encounter.TL} cm</p>
             <p>DL: {encounter.DL} cm</p>
             <p>DW: {encounter.DW}</p>

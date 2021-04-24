@@ -44,6 +44,13 @@ const theme = createMuiTheme({
             backgroundColor: "#252529"
         }
     },
+    MuiFormHelperText:{
+        root:{
+            color: "#faf7f791",
+            fontFamily: "'Montserrat', sans-serif",
+
+        }
+    },
     MuiListItem:{
         button:{
         },

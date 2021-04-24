@@ -103,7 +103,7 @@ export default function EncounterCard(props) {
             />
             <CardContent>
               <Typography variant="body2" color="secondary" component="h5">
-                Encounter ID: {encounter.EncounterID}
+                Encounter no.: {encounter.EncounterID}
               </Typography>
               <Typography variant="body2" color="secondary" component="p">
                 {encounter.EncounterDate}

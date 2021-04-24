@@ -20,7 +20,7 @@ async function save(user) {
 }
 
  function isLoggedIn() {
-   console.log(localStorage.getItem('user') );
+   console.log(localStorage.getItem('user'));
   return (localStorage.getItem('user'));
 }
  function isAdmin() {

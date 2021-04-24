@@ -1,5 +1,6 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 // import ImageUploader from 'react-images-upload';
+import {identificationService} from '../../../Service/IdentificationService/photoIdentService';
 import {EncounterService} from '../../../Service/EncounterService';
 import {speciesDetectionService} from '../../../Service/DetectionService/photoDetectService';
 import GradientCircularProgress from '../components/CircularProgress'
@@ -118,7 +119,7 @@ function useQuery() {
             return (
                 <div>
                     <div>
-                        <h2>Detecting Identity</h2>
+                        <h2>Individual Identification</h2>
                     </div>
                         <GradientCircularProgress />
                 {/* <ImageUploader

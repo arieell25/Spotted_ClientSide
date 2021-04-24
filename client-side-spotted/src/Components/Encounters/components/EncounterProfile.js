@@ -150,7 +150,7 @@ else {
             <div className ="detailsEncounter">
             <p>Encounter Date: {encounter.EncounterDate}</p>
             <p>Spotted At:</p>
-            <p>Encounter ID: {encounter.EncounterID}</p>
+            <p>Encounter no.: {encounter.EncounterID}</p>
             <p>Original ID: {encounter.OriginalID}</p>
             <p>Total Bluespotted Reported: {encounter.SpottedCountReported}:</p>
             <p>Actually Detected: {encounter.SpottedCount? encounter.SpottedCount : ''}</p>
