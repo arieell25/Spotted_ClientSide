@@ -41,6 +41,7 @@ h2{
 	font-size: 300%;
   font-weight: 300;
   text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
 h3{
@@ -69,9 +70,17 @@ h3{
     margin: 10px 60px
 }
 
-/* .videoForm{
-  margin: 20px 255px;
-} */
+.container {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  grid-gap: 10px;
+}
+.lowerContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
 .iconbtn {
   justify-content: space-evenly;
   display: flex;

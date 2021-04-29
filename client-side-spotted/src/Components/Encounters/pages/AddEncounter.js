@@ -1,6 +1,7 @@
 import React, { useState, useEffect }  from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
+import {Checkbox ,RadioGroup, Radio, FormControlLabel} from '@material-ui/core'
 import {MenuItem, Card} from "@material-ui/core";
 import {EncounterService} from '../../../Service/EncounterService';
 import { useForm, Controller  } from 'react-hook-form';
@@ -17,6 +18,8 @@ const useStyles = makeStyles(() => ({
 
   export default function AddEncounter(){
     const classes = useStyles();
+    const [value, setValue] = useState('unknown');
+    const [pValue, setpValue] = useState(true);
     const [status, setStatus] = useState([]);
     const [openRespons, setOpenRespons] = useState(false);
     const [site, setSite] = useState('');
@@ -74,6 +77,7 @@ const useStyles = makeStyles(() => ({
             </div>
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="container">
           <div className="row">
             <TextField
               required
@@ -113,22 +117,78 @@ const useStyles = makeStyles(() => ({
               <div className="row">
                 <TextField
                   inputRef={register}
-                  name="Email"
-                  label="Your Email"
-                  margin="normal"
-                  halfwidth="true"
-                />
-              </div>
-
-              <div className="row">
-                <TextField
-                  inputRef={register}
                   name="SpottedCountReported"
                   label="Number of Bluespotted"
                   margin="normal"
                   halfwidth="true"
                   helperText="Please enter number of Bluespotted"
                 />
+              </div>
+              <div className="lowerContainer">
+              <section>
+              <label>Gender</label>
+            <Controller
+              as={
+                <RadioGroup aria-label="gender" name="Gender" >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                  <FormControlLabel
+                    value="unknown"
+                    control={<Radio />}
+                    label="Unknown"
+                  />
+                </RadioGroup>
+              }
+              name="Gender"
+              control={control}
+              defaultValue={value}
+            />
+            </section>
+            <section>
+              
+            <label>Spotted Pregnancy?</label>
+            <Controller
+              as={
+                <RadioGroup aria-label="isPregnant" name="IsPregnant"  >
+                  <FormControlLabel
+                    value = "Yes"
+                    control={<Radio />}
+                    label="Yes"
+                  />
+                  <FormControlLabel
+                    value="No"
+                    control={<Radio />}
+                    label="No"
+                  />
+
+                </RadioGroup>
+              }
+              name="IsPregnant"
+              control={control}
+              defaultValue={pValue}
+            />
+            </section>
+            </div>
+
+              <div className="row">
+                <TextField
+                  inputRef={register}
+                  name="Email"
+                  label="Your Email"
+                  margin="normal"
+                  halfwidth="true"
+                  helperText="Would you like to recieve updates?"
+
+                />
+              </div>
               </div>
                 <button className='btn' type="submit" >
                   NEXT
