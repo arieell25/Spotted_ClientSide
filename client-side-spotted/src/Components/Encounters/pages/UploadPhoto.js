@@ -6,9 +6,13 @@ import {PhotoService} from '../../../Service/PhotoService';
 import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
 import StatusDialog from '../components/StatusDialog';
 import { makeStyles } from '@material-ui/core/styles';
-import {Card} from "@material-ui/core";
+import {Card, Button} from "@material-ui/core";
 import PhotosUploader from '../../Photos/PhotosUploader';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import UploadVideo from './video/UploadVideo';
 const useStyles = makeStyles(() => ({
     root: {
         flexGrow: 1,
@@ -16,6 +20,7 @@ const useStyles = makeStyles(() => ({
         margin: `50px auto`,
         width: 800,
     },
+
 }));
 
 function useQuery() {
@@ -24,14 +29,16 @@ function useQuery() {
 // class UploadPhoto extends Component {
     function UploadPhoto(){
         const classes = useStyles();
-
+        const [expanded, setExpanded] = useState(false);
         const [pictures, setPictures] = useState([]);
         const [status, setStatus] = useState('');
         const [openRespons, setOpenRespons] = useState(false);
         const [newId, setId] = useState(null);
 
         let query = useQuery();
-        // const addMessage = (newMessage) => setMessages(state => [...state, newMessage])
+        const handleExpandClick = () => {
+            setExpanded(!expanded);
+          };
 
         const onDrop = (picture) => {
             console.log(picture);
@@ -43,6 +50,10 @@ function useQuery() {
 
         const handleCloseRespons = () => {
             setOpenRespons(false);
+          };
+          const handleOpenRespons = (status) => {
+              setStatus(status);
+            setOpenRespons(true);
           };
 
         const uploadHandler= async () =>{
@@ -104,26 +115,42 @@ function useQuery() {
                 <Card className={classes.root}>
                  {console.log(pictures)}
 
+
                     <div>
-                        <h2>Upload Photos</h2>
+                        <h2>Upload Media</h2>
                     </div>
-                    <PhotosUploader/>
-                <ImageUploader
-                    withIcon={true}
-                    buttonText='Choose images'
-                    onChange={onDrop}
-                    imgExtension={['.jpg', '.gif', '.png', '.gif']}
-                    maxFileSize={5242880}
-                />
-                <button className='btn' onClick={uploadHandler} >
-                  UPLOAD
-                </button> 
-                <StatusDialog
-                    open={openRespons}
-                    status={status}
-                    id={newId}
-                    onClose={handleCloseRespons}
-                />
+                    <Button
+                        onClick={handleExpandClick}
+                        aria-expanded={!expanded}
+                        aria-label="upload video"
+                        endIcon={<ExpandMoreIcon />}
+                        >
+                        Upload Photos
+                        
+                    </Button>
+                    <Collapse in={!expanded} timeout="auto" unmountOnExit>
+                        <PhotosUploader 
+                          handleOpenRespons={handleOpenRespons}
+                          status={status}/>
+                    </Collapse>
+                    <Button
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="upload video"
+                        endIcon={<ExpandMoreIcon />}
+                        >
+                        Upload Video
+                        
+                    </Button>
+                    <Collapse in={expanded} timeout="auto" unmountOnExit>
+                        <UploadVideo/>
+                    </Collapse>
+                    <StatusDialog
+                        open={openRespons}
+                        status={status}
+                        id={newId}
+                        onClose={handleCloseRespons}
+                    />
                 </Card>           
                 );
         }

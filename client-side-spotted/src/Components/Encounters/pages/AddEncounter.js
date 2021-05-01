@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
-import {Checkbox ,RadioGroup, Radio, FormControlLabel} from '@material-ui/core'
+import {RadioGroup, Radio, FormControlLabel} from '@material-ui/core'
 import {MenuItem, Card} from "@material-ui/core";
 import {EncounterService} from '../../../Service/EncounterService';
 import { useForm, Controller  } from 'react-hook-form';
@@ -36,10 +36,7 @@ const useStyles = makeStyles(() => ({
   }, []);
   
   const handleChange = event => {
-    console.log("event: ", event.target.value);
     setSite(event.target.value);
-    console.log("site: ", site);
-
   };
   const handleCloseRespons = () => {
     setOpenRespons(false);
@@ -47,20 +44,16 @@ const useStyles = makeStyles(() => ({
   const onSubmit = data => {
     console.log(data);
     data.SiteID = site;
-    console.log("after: ", data);
     EncounterService
       .addEncounter(data)
       .then(result=>{
-        console.log('added auccesfully new encounter!')
         setStatus('Encounter was added successfuly!');
         setOpenRespons(true);
         window.location.href = "/UploadPhoto?id=" + JSON.stringify(result.data.newEncounter.EncounterID);
       })
       .catch(err => {
-        // setState({ message: err.toString() });
         setStatus('Oops... Somthing went wrong, try again.');
         setOpenRespons(true);
-        console.log(err);
       });
   };
 

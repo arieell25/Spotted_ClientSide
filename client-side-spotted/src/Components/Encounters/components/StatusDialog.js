@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function StatusDialog(props) {
   const classes = useStyles;
-  const { open, status, onClose, id } = props;
+  const { open, status, onClose, id, link } = props;
 
   return (
     // <MuiThemeProvider theme={theme}>
@@ -57,6 +57,16 @@ export default function StatusDialog(props) {
             {/* <Button className='btn' onClick={onClose} color="primary">
               OK
             </Button> */}
+            {link && 
+                    <NavLink
+                              to={{
+                            pathname: `/${link}`,
+                          }}
+                        ><Button onClick={onClose} color="primary">
+                          Back to Encounters
+                        </Button>
+                    </NavLink>
+              }
           </DialogActions>
         </Dialog>
       </Fragment>

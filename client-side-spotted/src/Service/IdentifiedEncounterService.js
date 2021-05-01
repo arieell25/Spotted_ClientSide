@@ -6,6 +6,7 @@ export const IdntEncService = {
   updateIdentified,
   addIdentifiedEncounter,
   deleteIdentified,
+  getLifeStages
 
 }
 
@@ -51,5 +52,13 @@ function deleteIdentified(id) {
   .delete(`/api/deleteIdentifiedEncounter?id=${id}`)
   .then(res => {
     return res;
+  } );
+}
+
+function getLifeStages() {
+  return HttpService
+  .get(`/api/getLifeStages`)
+  .then(res => {
+    return res.data.lifeStage.rows;
   } );
 }

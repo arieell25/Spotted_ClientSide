@@ -1,74 +1,80 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
+import { makeStyles } from '@material-ui/core/styles';
+import {RadioGroup, Radio, FormControlLabel} from '@material-ui/core'
+import {TextField, Card} from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormLabel from "@material-ui/core/FormLabel";
 import {IdntEncService} from '../../../Service/IdentifiedEncounterService';
 import { Link } from 'react-router-dom';
 import { useForm, Controller  } from 'react-hook-form';
 import StatusDialog from '../components/StatusDialog';
 import qs from 'qs';
 
-
-
-const lifeStage = [
-  {
-    value: "Eilat",
-    label: "Eilat"
+const useStyles = makeStyles(() => ({
+  root: {
+    flexGrow: 1,
+    padding: 50,
+    width: 800,
+    margin: `0 auto`
   },
-  {
-    value: "Katzaa",
-    label: "Katzaa"
-  },
-  {
-    value: "Reserve",
-    label: "Reserve"
-  },
-  {
-    value: "almogBeach",
-    label: "Almog Beach"
-  }
-];
+ }));
 
-export default function EditIdentifiedEncounter() {
-
+export default function EditIdentifiedEncounter(props) {
+  const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
-  const [stage, setstage] = useState("Eilat");
-  const { register, handleSubmit, control } = useForm();
-//   var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
+  const [stage, setstage] = useState([]);
+  const [alivevalue, setalivevalue] = useState("");
+  const [stages, setstages] = useState([]);
+  const [sex, setsex] = useState("female");
 
+  const { register, handleSubmit, control } = useForm();
+  var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
+
+useEffect(() => {
+  IdntEncService.getLifeStages().then(data => {
+      console.log(data)
+      setstages(data);
+    })
+    .catch(err => {
+      setStatus(err);
+      openRespons(true);
+    });
+    
+}, []);
   const handleCloseRespons = () => {
     setOpenRespons(false);
   };
 
+  const handleChange = (event) => {
+    setstage(event.target.value);
+
+  }
   const onSubmit = data => {
     console.log(data);
     IdntEncService
-      .updateIdentified(data)
+      .updateIdentified(id, data)
       .then(result=>{
-        console.log('added auccesfully new encounter!')
-        setStatus('Identified Encounter was added successfuly!');
+        setStatus(`Updated succesfully identified encounter #${id}!`);
         setOpenRespons(true);
-        JSON.stringify(result.data.newIdentifiedEncounter.IdentifiedEncounterID);
       })
       .catch(err => {
-        // setState({ message: err.toString() });
         setStatus('Oops... Somthing went wrong, try again.');
         setOpenRespons(true);
         console.log(err);
       });
   };
 
-    // console.log("state", this.state);
     return (
+
       <div className="animated slideInUpTiny animation-duration-3">
         <div className="m-5">
           <div className="d-flex justify-content-center title">
             <div>
-              <Link to='/' style={{ 'textDecoration': 'none' }}><h2>Edit Identified Encounter Info</h2></Link>
+              <h2>Edit Identified Encounter #{id}</h2>
             </div>
           </div>
+          <Card className={classes.root}>
           <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row">
             <TextField
@@ -77,7 +83,6 @@ export default function EditIdentifiedEncounter() {
               name="Photographer"
               label="Photographer"
               margin="normal"
-              fullWidth="true"
             />
           </div>
           {/* <div className="row">
@@ -90,50 +95,88 @@ export default function EditIdentifiedEncounter() {
               fullWidth="true"
             />
           </div> */}
-          {/* <div className="row">
-            <TextField
-              inputRef={register}
-              select
-              required
-              name="lifeStage"
-              value={stage}
-              fullWidth="true"
-              label="Stage"
-            >
-              {lifeStage.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-          </div> */}
-          {/* <div className="row">
-            <TextField
-              inputRef={register}
-              name="Sex"
-              label="Sex"
-              margin="normal"
-              fullWidth="true"
-            />
-          </div> */}
-
           <div className="row">
-            <TextField
-              inputRef={register}
-              name="isAlive"
-              label="Is Alive?"
-              margin="normal"
-              fullWidth="true"
-            />
-          </div>
+            <Controller
+                      render={
+                      ({field}) => <TextField
+                        select
+                        label="Life Stage"
+                        name = "lifeStage"
+                        value={stage}
+                        onChange={handleChange}
+                        helperText="Please select life stage"
+                        {...field}
+                      >
+                        {stages.map((option) => (
+                          <MenuItem key={option.LifeStageID} value={option.Stage}>
+                            {option.Stage}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                      }
+                      control={control}
+                      name="lifeStage"
+                      defaultValue={stage}
 
+                    />
+              </div>
+              <div className='lowerContainer'>
+              <section>
+              <label>Sex</label>
+            <Controller
+              as={
+                <RadioGroup aria-label="Sex" name="Sex" >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                  <FormControlLabel
+                    value="unknown"
+                    control={<Radio />}
+                    label="Unknown"
+                  />
+                </RadioGroup>
+              }
+              name="Sex"
+              control={control}
+              defaultValue={sex}
+            />
+            </section>
+            <section>
+              <label>Is Alive?</label>
+            <Controller
+              as={
+                <RadioGroup aria-label="isAlive" name="isAlive" >
+                  <FormControlLabel
+                    value="yes"
+                    control={<Radio />}
+                    label="Yes"
+                  />
+                  <FormControlLabel
+                    value="no"
+                    control={<Radio />}
+                    label="No"
+                  />
+                </RadioGroup>
+              }
+              name="isAlive"
+              control={control}
+              defaultValue={alivevalue}
+            />
+            </section>
+            </div>
           <div className="row">
             <TextField
               inputRef={register}
               name="TL"
               label="TL"
               margin="normal"
-              halfWidth="true"
             />
           </div>
 
@@ -143,7 +186,6 @@ export default function EditIdentifiedEncounter() {
               name="DL"
               label="DL"
               margin="normal"
-              halfWidth="true"
             />
           </div>
 
@@ -153,7 +195,7 @@ export default function EditIdentifiedEncounter() {
               name="DW"
               label="DW"
               margin="normal"
-              halfWidth="true"
+              halfwidth="true"
             />
           </div>
 
@@ -163,7 +205,7 @@ export default function EditIdentifiedEncounter() {
               name="MaxDepth"
               label="Max Depth (m)"
               margin="normal"
-              halfWidth="true"
+              halfwidth="true"
             />
           </div>
 
@@ -173,7 +215,7 @@ export default function EditIdentifiedEncounter() {
               name="Distance"
               label="Distance (m)"
               margin="normal"
-              halfWidth="true"
+              halfwidth="true"
             />
           </div>
 
@@ -183,7 +225,7 @@ export default function EditIdentifiedEncounter() {
               name="Temp"
               label="Temp (C)"
               margin="normal"
-              halfWidth="true"
+              halfwidth="true"
             />
           </div>
 
@@ -193,50 +235,25 @@ export default function EditIdentifiedEncounter() {
               name="Description"
               label="Description"
               margin="normal"
-              halfWidth="true"
+              halfwidth="true"
             />
           </div>
-
-          {/* <div className="row">
+          <div className="row">
             <TextField
               inputRef={register}
-              name="Comments"
-              label="Comments"
+              name="ProfilePicture"
+              label="Profile Picture link"
               margin="normal"
-              halfWidth="true"
+              halfwidth="true"
             />
-          </div> */}
-
-          {/* <div className="row">
-              <FormLabel component="legend">
-              inputRef={register}
-                Gender
-                  </FormLabel>
-              <div onChange={this.onChangeValue}>
-                <input type="radio" value="Male" name="Male" /> Male
-                <input type="radio" value="Female" name="Female" /> Female
-                <input type="radio" value="Other" name="Other" /> Other
-              </div>
-            </div>
-
-            <div className="row">
-              <FormLabel component="legend">
-              inputRef={register}
-              Pregnancy
-                  </FormLabel>
-              <div onChange={this.onChangeValue}>
-                <input type="radio" value="spotted" name="isSpotted" /> Spotted
-                <input type="radio" value="notSpotted" name="isSpotted" /> NotSpotted
-              </div>
-            </div> */}
-
+          </div>
             <div className="row">
             <TextField
               inputRef={register}
               name="Link"
               label="Facebook link"
               margin="normal"
-              halfWidth="true"
+              halfwidth="true"
             />
             </div>
 
@@ -244,6 +261,7 @@ export default function EditIdentifiedEncounter() {
                   SAVE
                 </button>
               </form>
+              </Card>
               </div>
               <StatusDialog
                 open={openRespons}

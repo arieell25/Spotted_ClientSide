@@ -7,13 +7,17 @@ import { PhotoService } from '../../Service/PhotoService';
 import Done from '@material-ui/icons/Done';
 import { IconButton} from '@material-ui/core';
 import { useLocation } from "react-router-dom";
+import {SystemResultsService} from '../../Service/SystemResultsService';
+import {EncounterService} from '../../Service/EncounterService';
 import {speciesDetectionService} from '../../Service/DetectionService/speciesDetectionService';
 import GradientCircularProgress from '../Encounters/components/CircularProgress';
+import { ControlCameraOutlined } from '@material-ui/icons';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
 export default function PhotosUploader(props) {
+    const {handleOpenRespons, status} = props;
     let query = useQuery();
     var id = query.get("id");
     const [images, setImages] = useState([]);
@@ -22,6 +26,8 @@ export default function PhotosUploader(props) {
     // const data = new FormData();
 
     const uploadHandler= async () =>{
+        let photoUrl;
+        let count = 0 ;
         try{
         const uploaders = await images.map(image => {
             const data = new FormData();
@@ -31,20 +37,32 @@ export default function PhotosUploader(props) {
             return PhotoService.uploadRawPhoto(data, id)
             .then( res => {
                 console.log(data);
+                count +=1;
                 imagesData=data;
                 setIsReady(true);
+                photoUrl = res.url;
+                handleOpenRespons(`Succesfully uploaded ${count} photos, Thank you!` );
                 console.log(res);
             })
-            .catch(err => console.log(err))
+            .catch(err => handleOpenRespons(`Upload faild please try again...${ err}`) )
+
         })
-        console.log(imagesData);
+                await EncounterService.updateEncounterPic(id, photoUrl)
+                .then( res => console.log(res));
+
+                // console.log(imagesData);
      
-            await speciesDetectionService
+            const detectionRes = await speciesDetectionService
             .detectSpeciesPhotos(imagesData)
             .then( res => {
                 console.log(res);
-                setIsReady(true);
-            })
+                 SystemResultsService
+                 .addFirstSystemResults(res, id)
+                 .then(res =>{
+                     setIsReady(true);
+                    } );
+                
+            }).catch(err =>handleOpenRespons('Species detection faild...Please try again' ))
 
         }catch(err){
             console.log(err);
@@ -56,6 +74,7 @@ export default function PhotosUploader(props) {
     }
     return <div>
         {console.log(images)}
+        {!isReady && (<GradientCircularProgress/>)}
         <RUG
             action={`http://localhost:8081/pub/uploadrawphoto?id=${id}`}
             source={response => response} // response image source
@@ -88,7 +107,6 @@ export default function PhotosUploader(props) {
                     </div>
                 </div> }
             </DragArea>
-            {!isReady && (<GradientCircularProgress/>)}
             <button className='btn' onClick={handleUploadClick} >
                 UPLOAD
             </button>

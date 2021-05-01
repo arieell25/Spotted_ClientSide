@@ -69,12 +69,15 @@ h3{
 .custom-file-label{
     margin: 10px 60px
 }
-
-.container {
-  display: grid;
-  /* grid-template-columns: 1fr 1fr; */
-  grid-gap: 10px;
+a{
+  text-decoration:none;
 }
+
+/* .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+} */
 .lowerContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;

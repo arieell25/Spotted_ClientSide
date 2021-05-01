@@ -36,6 +36,9 @@ const theme = createMuiTheme({
         label:{
             color: "white",
             fontSize: "16px"
+        },
+        text:{
+            padding: "6px 20px"
         }
     },
     MuiTypography:{

@@ -102,7 +102,7 @@ const UploadVideo = () => {
 
   return (
     <Fragment>
-      <Card className={classes.root}>
+      {/* <Card className={classes.root}> */}
       {/* {message ? <Message msg={message} /> : null} */}
       <StatusDialog
          open={openRespons}
@@ -157,7 +157,7 @@ const UploadVideo = () => {
           </div>
         </div>
       ) : null}
-       </Card>           
+       {/* </Card>            */}
      </Fragment>
   );
 };

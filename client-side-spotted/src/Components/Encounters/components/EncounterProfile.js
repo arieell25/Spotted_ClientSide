@@ -5,7 +5,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import PhotosGrid from '../../Photos/PhotosGrid';
 import StatusDialog from './StatusDialog';
-// import EditiDialog from './EditDialog';
 import GradientCircularProgress from './CircularProgress';
 import {EncounterService} from '../../../Service/EncounterService';
 // import {userService} from '../../../Service/UserService';
@@ -13,7 +12,7 @@ import { PhotoService } from '../../../Service/PhotoService';
 
 import qs from 'qs';
 
-import { IconButton, Typography, Card,CardMedia, CardContent, Button, CardActions  } from '@material-ui/core';
+import { IconButton, Typography, Card,CardMedia, CardContent, CardActions  } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -47,11 +46,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function EncounterProfile(props) {
-  // const { index } = props;
-    const { index } = 5;
+    // const { index } = 5;
   const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [open, setOpen] = useState(false);
+  const [linkpath, setlinkpath] = useState('')
   const [edit, setEdit] = useState(false);
   const [openPhotos, setOpenPhotos] = useState(false);
   const [photos, setPhotos] = useState([]);
@@ -70,18 +69,18 @@ export default function EncounterProfile(props) {
           console.log(photos[0]);
       }, []);
 
-  const handleDelete = () => {
-    setOpen(true);
-    setStatus('Deleted coupon succesfully');
+  const handleDelete = (e) => {
+    console.log('deleting')
     try {
-        EncounterService.deleteEncounter(index)
+        EncounterService.deleteEncounter(id)
       .then(response => {
           console.log(response)
           setStatus('Deleted Successfully.');
+          setlinkpath('EncountersBoard');
           setOpen(true);});
     } catch (err) {
       console.log('error fetching...:', err);
-      setStatus('Something is wrong... try again');
+      setStatus('Something went wrong... try again');
       setOpen(true);
     }
   };
@@ -122,6 +121,7 @@ else {
         <StatusDialog
         open={open}
         status={status}
+        link={linkpath}
         onClose={handleClose}/>
 
         <Card className={classes.root}>
@@ -144,8 +144,8 @@ else {
               {/* edit event listner */}
                 <p>{photos.length}</p>
                 <IconButton color="secondary" onClick={ () => setOpenPhotos(openPhotos => !openPhotos)}><PhotoLibraryIcon/></IconButton>
-                <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditIdentifiedEncounter?id=${encounter.IdentifiedEncounterID}`}><EditIcon /></IconButton>
-                <IconButton color="secondary"><DeleteIcon  /></IconButton>
+                <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditEncounter?id=${encounter.EncounterID}`}><EditIcon /></IconButton>
+                <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton>
             </CardActions>
             <div className ="detailsEncounter">
             <p>Encounter Date: {encounter.EncounterDate}</p>

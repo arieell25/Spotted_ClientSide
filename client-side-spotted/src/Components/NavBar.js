@@ -44,7 +44,6 @@ const navLinks = [
   { title: `My Encounters`, path: `/` },
   { title: `All Encounters`, path: `/EncountersBoard` },
   { title: `All Identified `, path: `/IdentifiedBoard` },
-  { title: `UploadVideo `, path: `/UploadVideo` },
 
   // { title: `EncounterProfile`, path: `/EncounterProfile` },
   // { title: `Report Identified Encounter`, path: `/AddIdentifiedEncounter` },
