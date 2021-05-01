@@ -21,14 +21,24 @@ export default {
 }
 
 async function connectApi(endpoint, method = 'get', data = null) {
-    var token = localStorage.getItem('token');
+    // var token = localStorage.getItem('token');
     try {
         const res = await axios({
             url: `${BASE_URL}${endpoint}`,
             method,
-            // headers:{
-            //     'x-token': token 
-            // } ,
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            } ,
+            // onUploadProgress: progressEvent => {
+            //         setUploadPercentage(
+            //           parseInt(
+            //             Math.round((progressEvent.loaded * 100) / progressEvent.total)
+            //           )
+            //         );
+          
+            //         // Clear percentage
+            //         setTimeout(() => setUploadPercentage(0), 10000);
+            //       },
             data,
         })
         return res.data;

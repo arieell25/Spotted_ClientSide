@@ -9,6 +9,8 @@ export const EncounterService = {
   updateEncounter,
   deleteEncounter,
   getIsraelSites,
+  updateEncounterPic,
+  getMediatypes
 }
 
 function getEncounters() {
@@ -23,12 +25,25 @@ function getEncounters() {
 
 function updateEncounter(id, data) {
   return HttpService
-  .put(`/api/updateEncounter?id:${id}`)
+  .put(`/api/updateEncounter?id:${id}`, data)
   .then(res => {
     return res;
   } );
 }
 
+function updateEncounterPic(id, data) {
+  if(data){
+    const body ={ url: data};
+    return HttpService
+    .put(`/api/updateEncounter?id=${id}`, body)
+    .then(res => {
+      return res;
+    } );
+  }else{
+    return ("No data was provided");
+  }
+
+}
 
 function deleteEncounter(id) {
   return HttpService
@@ -65,6 +80,17 @@ function getIsraelSites() {
     return res.data.sites;
   } );
 }
+
+function getMediatypes() {
+  // console.log(userService.isLoggedIn)
+  return HttpService
+  .get(`/api/getMediaTypes`)
+  .then(res => {
+    // console.log('in func data: ' + JSON.stringify(res.data.encounters.rows));
+    return res.data.MediaTypes.rows;
+  } );
+}
+
 async function addBoundingBox(data, photoId) {
   console.log('addBoundingBox id : ' + photoId+ 'data: ' + data[0][0].confidences);
   var body ;
