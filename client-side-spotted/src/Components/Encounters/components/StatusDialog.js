@@ -51,8 +51,8 @@ export default function StatusDialog(props) {
                     pathname: '/EncounterProfile',
                     search: '?id=' + id,
                   }}
-                ><Button className='btn' onClick={onClose} color="primary">
-              OK
+                ><Button onClick={onClose} color="primary">
+              View Encounter Profile
             </Button></NavLink>}
             {/* <Button className='btn' onClick={onClose} color="primary">
               OK

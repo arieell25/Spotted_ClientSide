@@ -6,6 +6,11 @@ import {MenuItem, Card} from "@material-ui/core";
 import {EncounterService} from '../../../Service/EncounterService';
 import { useForm, Controller  } from 'react-hook-form';
 import StatusDialog from '../components/StatusDialog';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -25,6 +30,7 @@ const useStyles = makeStyles(() => ({
     const [site, setSite] = useState('');
     const [sites, setSites] = useState([]);
     const { register, handleSubmit, control } = useForm();
+    const [selectedDate, setSelectedDate] = useState(new Date('2020-01-01T00:00:00'));
 
    useEffect(() => {
     EncounterService.getIsraelSites().then(data => {
@@ -35,6 +41,12 @@ const useStyles = makeStyles(() => ({
       
   }, []);
   
+  const handleDateChange = (date) => {
+    setSelectedDate(new Date(date));
+    console.log(selectedDate);
+
+  };
+
   const handleChange = event => {
     setSite(event.target.value);
   };
@@ -44,6 +56,7 @@ const useStyles = makeStyles(() => ({
   const onSubmit = data => {
     console.log(data);
     data.SiteID = site;
+    data.EncounterDate = selectedDate;
     EncounterService
       .addEncounter(data)
       .then(result=>{
@@ -71,7 +84,7 @@ const useStyles = makeStyles(() => ({
           </div>
           <form onSubmit={handleSubmit(onSubmit)}>
           <div className="container">
-          <div className="row">
+          {/* <div className="row">
             <TextField
               required
               inputRef={register}
@@ -81,7 +94,30 @@ const useStyles = makeStyles(() => ({
               halfwidth="true"
               helperText="Example: 2021-01-30"
             />
-          </div>
+          </div> */}
+           <Controller 
+          render={() => (
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <KeyboardDatePicker
+                  disableToolbar
+                  variant="inline"
+                  format="MM/dd/yyyy"
+                  margin="normal"
+                  id="EncounterDate"
+                  label="Encounter Date"
+                  value={selectedDate}
+                  onChange={handleDateChange}
+                  KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                  }}
+                />   
+            </MuiPickersUtilsProvider>
+                        
+          )}
+          name="EncounterDate"
+          control={control}
+          defaultValue={selectedDate}
+            />
           <div className="row">
             <Controller
                       render={

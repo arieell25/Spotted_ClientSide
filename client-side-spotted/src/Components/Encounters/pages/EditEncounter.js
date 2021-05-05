@@ -29,7 +29,7 @@ export default function EditIdentifiedEncounter(props) {
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
   const [mediatypes, setmediatypes] = useState([]);
-  const [media, setmedia] = useState('');
+  const [media, setmedia] = useState("");
   const [count, setcount] = useState([]);
   const [encounter, setencounter] = useState([]);
   const [verified, setVerified] = useState('no');
@@ -37,6 +37,7 @@ export default function EditIdentifiedEncounter(props) {
   const [gender, setgender] = useState('unknown');
   const [sites, setsites] = useState([]);
   const [site, setsite] = useState('');
+  const [originalid, setoriginalid] = useState('');
   const [profile, setprofile] = useState('');
   const [selectedDate, setSelectedDate] = useState(new Date('2020-01-01T21:11:54'));
   const { register, handleSubmit, control } = useForm();
@@ -52,21 +53,17 @@ export default function EditIdentifiedEncounter(props) {
       setSelectedDate(new Date(encounter.EncounterDate));
       setgender(encounter.Gender)
       setpvalue(encounter.IsPregnant ? 'yes' : 'no');
-      // setsite(encounter.SiteID);
+      setsite(encounter.SiteID);
+      setmedia(encounter.MediaType);
       setcount(encounter.SpottedCountReported);
       setprofile(encounter.ProfilePicture);
+      setoriginalid(encounter.OriginalID);
       setVerified(encounter.Verified === true ? 'yes' : 'no');
       setmediatypes(mediatypeData);
       setencounter(encounter);
 
     };
     fetchData();        
-    // EncounterService.getIsraelSites().then(data => {
-    //     console.log(data)
-    //     setsites(data);
-    //   })
-    //   .catch(err => console.log(err));
-      
   }, []);
 
   const handleCloseRespons = () => {
@@ -79,9 +76,6 @@ export default function EditIdentifiedEncounter(props) {
   const handleMediaChange = (event) => {
     setmedia(event.target.value);
   }
-  // const handleCountChange = (event) => {
-  //   setcount(event.target.value);
-  // }
   
   const handleDateChange = (date) => {
     console.log(date);
@@ -109,7 +103,7 @@ export default function EditIdentifiedEncounter(props) {
         <div className="m-5">
           <div className="d-flex justify-content-center title">
             <div>
-              <h2>Edit Identified Encounter #{id}</h2>
+              <h2>Edit Encounter #{id}</h2>
             </div>
           </div>
           <Card className={classes.root}>
@@ -158,7 +152,7 @@ export default function EditIdentifiedEncounter(props) {
                       }
                       control={control}
                       name="SiteID"
-                      defaultValue={encounter.SiteID}
+                      defaultValue={site}
 
                     />
               </div>
@@ -175,7 +169,7 @@ export default function EditIdentifiedEncounter(props) {
                         {...field}
                       >
                         {mediatypes.map((option) => (
-                          <MenuItem key={option.MediaTypeID} value={option.Title}>
+                          <MenuItem key={option.MediaTypeID} value={option.MediaTypeID}>
                             {option.Title}
                           </MenuItem>
                         ))}
@@ -268,7 +262,6 @@ export default function EditIdentifiedEncounter(props) {
               margin="normal"
               defaultValue={count}
               helperText={`Was reported ${count} Bluespotted`}
-
               style = {{width: 250}}             
               />
           </div>
@@ -279,7 +272,7 @@ export default function EditIdentifiedEncounter(props) {
               name="OriginalID"
               label="Original ID"
               margin="normal"
-              // halfwidth="true"
+              defaultValue={originalid}
             />
           </div>
           <div className="row">

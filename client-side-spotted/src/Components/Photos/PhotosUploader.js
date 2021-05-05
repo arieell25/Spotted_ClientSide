@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 
 import RUG, { Card, DragArea } from 'react-upload-gallery';
 import 'react-upload-gallery/dist/style.css'
-// import DoneIcon from '@material-ui/icons/Done';
 import { PhotoService } from '../../Service/PhotoService';
 import Done from '@material-ui/icons/Done';
 import { IconButton} from '@material-ui/core';
@@ -11,13 +10,13 @@ import {SystemResultsService} from '../../Service/SystemResultsService';
 import {EncounterService} from '../../Service/EncounterService';
 import {speciesDetectionService} from '../../Service/DetectionService/speciesDetectionService';
 import GradientCircularProgress from '../Encounters/components/CircularProgress';
-import { ControlCameraOutlined } from '@material-ui/icons';
+// import { ControlCameraOutlined } from '@material-ui/icons';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
 export default function PhotosUploader(props) {
-    const {handleOpenRespons, status} = props;
+    const {handleOpenRespons, setId} = props;
     let query = useQuery();
     var id = query.get("id");
     const [images, setImages] = useState([]);
@@ -28,42 +27,56 @@ export default function PhotosUploader(props) {
     const uploadHandler= async () =>{
         let photoUrl;
         let count = 0 ;
+        let photosBlboData=[];
         try{
         const uploaders = await images.map(image => {
             const data = new FormData();
             data.append("image", image.file);
             imagesData.append("image", image.file);
             // console.log(data);
-            return PhotoService.uploadRawPhoto(data, id)
+            return PhotoService.uploadPhoto(data, id)
             .then( res => {
                 console.log(data);
                 count +=1;
                 imagesData=data;
                 setIsReady(true);
-                photoUrl = res.url;
-                handleOpenRespons(`Succesfully uploaded ${count} photos, Thank you!` );
+                photosBlboData.push(res);
                 console.log(res);
+
             })
             .catch(err => handleOpenRespons(`Upload faild please try again...${ err}`) )
 
         })
-                await EncounterService.updateEncounterPic(id, photoUrl)
-                .then( res => console.log(res));
-
-                // console.log(imagesData);
-     
+                console.log(photosBlboData);
             const detectionRes = await speciesDetectionService
             .detectSpeciesPhotos(imagesData)
             .then( res => {
                 console.log(res);
                  SystemResultsService
-                 .addFirstSystemResults(res, id)
+                 .addFirstSystemResults(res, id, photosBlboData)
                  .then(res =>{
+                    photoUrl = res.photosResults[0].src;
+                    EncounterService.updateEncounterPic(id, photoUrl).then( res => {
+                // handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
+                        }).catch(err => {
+                            handleOpenRespons(`Failed updating encounter profile pic...` );
+
+                        });
+                     setId(id);
+                    handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
                      setIsReady(true);
-                    } );
-                
+                    } );                
             }).catch(err =>handleOpenRespons('Species detection faild...Please try again' ))
 
+            // const photo = await EncounterService
+            // .updateEncounterPic(id, photoUrl)
+            // .then( res => {
+            //     handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
+            // }).catch(err => {
+            //     handleOpenRespons(`Failed updating encounter profile pic...` );
+
+            // });
+                // console.log(imagesData);
         }catch(err){
             console.log(err);
         }
@@ -73,7 +86,6 @@ export default function PhotosUploader(props) {
         uploadHandler();
     }
     return <div>
-        {console.log(images)}
         {!isReady && (<GradientCircularProgress/>)}
         <RUG
             action={`http://localhost:8081/pub/uploadrawphoto?id=${id}`}

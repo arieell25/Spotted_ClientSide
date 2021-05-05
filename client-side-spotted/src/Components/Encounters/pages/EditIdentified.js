@@ -108,7 +108,7 @@ useEffect(() => {
                         {...field}
                       >
                         {stages.map((option) => (
-                          <MenuItem key={option.LifeStageID} value={option.Stage}>
+                          <MenuItem key={option.LifeStageID} value={option.LifeStageID}>
                             {option.Stage}
                           </MenuItem>
                         ))}

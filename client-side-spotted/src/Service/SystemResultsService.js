@@ -1,4 +1,5 @@
 import HttpService from './httpService'
+import {userService} from './UserService';
 
 export const SystemResultsService = {
   getFirstSystemResults,
@@ -30,13 +31,22 @@ async function getFirstSystemResults(id) {
     }
   }
 
-  function addFirstSystemResults(data, encounterId) {
+  function addFirstSystemResults(data, encounterId, photosBlboData) {
+    console.log(photosBlboData);
       if(data){
-          const body = {encounterId: encounterId, results: data}
-        return HttpService.post(`/api/addEncounterFirstSystemResults`, body)
-        .then(res=> {
-          return res.data;
-        })
+          const body = {encounterId: encounterId, results: data, photosBlobData: photosBlboData}
+          if(userService.isLoggedIn()){
+            return HttpService.post(`/api/addEncounterFirstSystemResults`, body)
+            .then(res=> {
+              return res.data;
+            })
+          }else{
+            return HttpService.post(`/pub/addEncounterFirstSystemResults`, body)
+            .then(res=> {
+              return res.data;
+            })
+          }
+
       }else{
         console.log("no results  data");
         return('no data was provided');

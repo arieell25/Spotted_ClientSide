@@ -10,22 +10,35 @@ export const EncounterService = {
   deleteEncounter,
   getIsraelSites,
   updateEncounterPic,
-  getMediatypes
+  getMediatypes,
+  getUserEncounters,
 }
 
 function getEncounters() {
   return HttpService
   .get(`/api/getAllEncounters`)
   .then(res => {
-    // console.log('in func data: ' + JSON.stringify(res.data.encounters.rows));
     return res.data.encounters.rows;
   } );
-
 }
 
-function updateEncounter(id, data) {
+function getUserEncounters() {
+  const user = userService.isLoggedIn();
+  // console.log(`user id id: ${user.id}`)
+  let body = {id: user.id};
+    console.log(`user id body: ${JSON.stringify(body)}`)
   return HttpService
-  .put(`/api/updateEncounter?id:${id}`, data)
+  .post(`/api/getAllUserEncounters`, body)
+  .then(res => {
+    return res.data.encounters.rows;
+  } );
+}
+
+
+function updateEncounter(id, data) {
+  console.log(data);
+  return HttpService
+  .put(`/api/updateEncounter?id=${id}`, data)
   .then(res => {
     return res;
   } );
@@ -33,7 +46,7 @@ function updateEncounter(id, data) {
 
 function updateEncounterPic(id, data) {
   if(data){
-    const body ={ url: data};
+    const body ={ ProfilePicture: data};
     return HttpService
     .put(`/api/updateEncounter?id=${id}`, body)
     .then(res => {
@@ -60,11 +73,17 @@ function getEncounterById(encounterId) {
   })
 }
 
-async function addEncounter(encounter) {
+function addEncounter(encounter) {
   console.log(encounter);
 
   if (encounter) {
-    return HttpService.post(`/pub/addEncounter`, encounter)
+    console.log(userService.isLoggedIn());
+    if(userService.isLoggedIn()){
+      return  HttpService.post(`/api/addEncounter`, encounter)
+    }
+    else{
+      return HttpService.post(`/pub/addEncounter`, encounter)
+    }
   } else {
     console.log("no encounter data");
     // return HttpService.post(`api/addEncounter`, encounter);

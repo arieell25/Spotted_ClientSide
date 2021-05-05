@@ -1,5 +1,6 @@
 import { useState, useEffect, React } from 'react'
 import { EncounterService } from '../../../Service/EncounterService'
+// import Encounter from './Encounter'
 import EncounterCard from '../components/EncounterCard'
 import GradientCircularProgress from '../components/CircularProgress'
 import {
@@ -8,19 +9,31 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  // root: {
+  //   display: 'flex',
+  //   '& > * + *': {
+  //     marginLeft: theme.spacing(3),
+  //   },
+  //   justifyContent: 'center',
+  //   padding: '120px'
+  // },
 
 }));
-export default function UserEncountersBoard() {
+export default function EncountersBoard() {
   const classes = useStyles();
 
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(13);
+
+
+  // const [encounterAdd, setencounterAdd] = useState(false)
+  const [flag] = useState(false) 
 
   useEffect(() => {
     async function fetchData() {
       try {
-        await EncounterService.getEncounters().then(encounters => setEncounters(encounters));
+        await EncounterService.getUserEncounters().then(encounters => setEncounters(encounters));
       } catch (err) {
         console.log('error fetching...:', err);
       }
@@ -43,6 +56,15 @@ export default function UserEncountersBoard() {
     )
       showMore();
   }
+  // useEffect(() => {
+  //   getEncounters();
+  // }, [flag])
+
+  // const getEncounters = async () => {
+  //   const data = await EncounterService.getEncounters()
+  //   console.log(data)
+  //   setEncounters(data)
+  // }
 
   const renderEachEncounter = (item, i) => {
     if(item.IdentifiedEncounterID){
@@ -72,3 +94,25 @@ export default function UserEncountersBoard() {
     )
         }
       }
+    // return (
+    //   <div className='encounterList'>
+    //       <table className='table'>
+    //         <thead>
+    //           <tr>
+    //             <th>Encounter ID</th>
+    //             <th>Encounter Date</th>
+    //             <th>Site ID</th>
+    //             <th>Reported By</th>
+    //             <th>Total Spotted</th>
+
+    //           </tr>
+    //         </thead>
+    //         <tbody>
+    //           {encounters.map(encounter => <Encounter encounter={encounter} key={encounter.EncounterID} />)}
+    //         </tbody>
+    //       </table>
+    //     </div>
+      
+    // )
+  // }
+// }

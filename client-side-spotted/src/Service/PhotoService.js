@@ -1,10 +1,12 @@
 import HttpService from './httpService'
+import {userService} from './UserService';
 
 export const PhotoService = {
   getEncounterPhotos,
   uploadPhoto,
   uploadRawPhoto,
   addPhoto,
+  deleteBlobPhoto,
   getIdntEncounterPhotos
 //   updateEncounter,
 //   deletephoto
@@ -24,7 +26,13 @@ async function addPhoto(id, url, count) {
 async function uploadPhoto(fd, id) {
     console.log('photo service id: ' + id +' fd: ' + fd);
     if (fd) {
-      return HttpService.post(`/api/uploadphoto?id=${id}`, fd)
+      if(userService.isLoggedIn()){
+        return HttpService.post(`/api/uploadphoto?id=${id}`, fd)
+      }
+      else{
+        return HttpService.post(`/pub/uploadphoto?id=${id}`, fd)
+
+      }
     } else {
       console.log("no photo data");
       // return HttpService.post(`api/addEncounter`, encounter);
@@ -41,10 +49,22 @@ async function uploadPhoto(fd, id) {
   }
 
   function getEncounterPhotos(encounterId) {
-    return HttpService.get(`/api/getEncounterPhotos?id=${encounterId}`)
-    .then(res=> {
-      return res.data.photos;
-    })
+    if(userService.isLoggedIn()){
+      return HttpService.get(`/api/getEncounterPhotos?id=${encounterId}`)
+      .then(res=> {
+        return res.data.photos;
+      })    
+    }
+    else{
+      return HttpService.get(`/pub/getEncounterPhotos?id=${encounterId}`)
+      .then(res=> {
+        return res.data.photos;
+      })
+    }
+    // return HttpService.get(`/api/getEncounterPhotos?id=${encounterId}`)
+    // .then(res=> {
+    //   return res.data.photos;
+    // })
   }
 
   function getIdntEncounterPhotos(id) {
@@ -52,4 +72,15 @@ async function uploadPhoto(fd, id) {
     .then(res=> {
       return res.data.photos;
     })
+  }
+
+  async function deleteBlobPhoto(id, files) {
+    console.log('photo service delete id: ' + id );
+    if (id) {
+      const body = {encounterId: id, files: files};
+      return HttpService.post(`/api/deletephotofromBlob`,body);
+    } else {
+      console.log("no photo data");
+      // return HttpService.post(`api/addEncounter`, encounter);
+    }
   }

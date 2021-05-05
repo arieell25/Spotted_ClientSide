@@ -56,66 +56,63 @@ function useQuery() {
             setOpenRespons(true);
           };
 
-        const uploadHandler= async () =>{
-            console.log(pictures);
-            var id = query.get("id");
-            setId(id);
-            console.log(id);
-            const fd = new FormData();
-            fd.append('image', pictures[0][0], pictures[0][0].name);
-            try{
-                // await speciesDetectionService
-                // .detectSpecies(fd)
-                // .then( res => {
-                    //Check if confidence > 70%
-                    // console.log(res);
-                    // var bBox = res.data;
-                    var url, photoId;
-                    // var count = res.counts;
-                    // var confidence = (res.data[0][0].confidences).toString().substring(0,4);
-                    // if(res.counts > 0 && confidence > 0.61){
-                        PhotoService
-                        .uploadRawPhoto(fd, id)
-                        .then(data => {
-                            console.log('Added photo: ' + data.url);
-                            url = data.url;
-                            // PhotoService.addPhoto(id, url, count)
-                            // .then(res=>{
-                            //     photoId = res.data.newPhoto.PhotoID;
-                            //     EncounterService.addBoundingBox(bBox, photoId)
-                            //     .then(res=> console.log('added bounding box status: '+ JSON.stringify(res) ))
-                            // } )
-                            // .catch(err=> console.log(err));
-                            // setStatus(`Detected ${count} BlueSpotted with ${confidence} and saved photo!`);
-                            // setOpenRespons(true);
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            setStatus('Photo upload faild');
-                            setOpenRespons(true);
-                        });
-                    // }else if(res.counts == 0){
-                    //     setStatus('Sorry we did not detect any BlueSpotted.... try with a diffrent photo.');
-                    //     setOpenRespons(true)
-                    // }
+        // const uploadHandler= async () =>{
+        //     console.log(pictures);
+        //     var id = query.get("id");
+        //     setId(id);
+        //     console.log(id);
+        //     const fd = new FormData();
+        //     fd.append('image', pictures[0][0], pictures[0][0].name);
+        //     try{
+        //         // await speciesDetectionService
+        //         // .detectSpecies(fd)
+        //         // .then( res => {
+        //             //Check if confidence > 70%
+        //             // console.log(res);
+        //             // var bBox = res.data;
+        //             var url, photoId;
+        //             // var count = res.counts;
+        //             // var confidence = (res.data[0][0].confidences).toString().substring(0,4);
+        //             // if(res.counts > 0 && confidence > 0.61){
+        //                 PhotoService
+        //                 .uploadRawPhoto(fd, id)
+        //                 .then(data => {
+        //                     console.log('Added photo: ' + data.url);
+        //                     url = data.url;
+        //                     // PhotoService.addPhoto(id, url, count)
+        //                     // .then(res=>{
+        //                     //     photoId = res.data.newPhoto.PhotoID;
+        //                     //     EncounterService.addBoundingBox(bBox, photoId)
+        //                     //     .then(res=> console.log('added bounding box status: '+ JSON.stringify(res) ))
+        //                     // } )
+        //                     // .catch(err=> console.log(err));
+        //                     // setStatus(`Detected ${count} BlueSpotted with ${confidence} and saved photo!`);
+        //                     // setOpenRespons(true);
+        //                 })
+        //                 .catch(err => {
+        //                     console.log(err);
+        //                     setStatus('Photo upload faild');
+        //                     setOpenRespons(true);
+        //                 });
+        //             // }else if(res.counts == 0){
+        //             //     setStatus('Sorry we did not detect any BlueSpotted.... try with a diffrent photo.');
+        //             //     setOpenRespons(true)
+        //             // }
                 
-                // )
-                // .catch(err=>{
-                //         console.log(err);
-                //         setStatus('Oops...Something went wrong....');
-                //         setOpenRespons(true)
-                // }); 
+        //         // )
+        //         // .catch(err=>{
+        //         //         console.log(err);
+        //         //         setStatus('Oops...Something went wrong....');
+        //         //         setOpenRespons(true)
+        //         // }); 
                
-            // }
-        }catch(err){
-            console.log(err)
-        }}
+        //     // }
+        // }catch(err){
+        //     console.log(err)
+        // }}
      
             return (
                 <Card className={classes.root}>
-                 {console.log(pictures)}
-
-
                     <div>
                         <h2>Upload Media</h2>
                     </div>
@@ -131,6 +128,7 @@ function useQuery() {
                     <Collapse in={!expanded} timeout="auto" unmountOnExit>
                         <PhotosUploader 
                           handleOpenRespons={handleOpenRespons}
+                          setId = {setId}
                           status={status}/>
                     </Collapse>
                     <Button

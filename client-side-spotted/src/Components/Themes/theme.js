@@ -70,11 +70,16 @@ const theme = createMuiTheme({
 
         }
     },
-    // MuiDialogTitle:{
-    //     root:{
-
-    //     }
-    // },
+    MuiPickersCalendarHeader:{
+        iconButton:{
+            backgroundColor:"#252529"
+        }
+    },
+    MuiPickersDay:{
+        daySelected:{
+            backgroundColor: "-webkit-linear-gradient(45deg,#C5F836, #3AA4D1)"
+        }
+    },
     MuiListItem:{
         button:{
         },
