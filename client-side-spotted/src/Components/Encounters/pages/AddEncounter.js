@@ -42,8 +42,9 @@ const useStyles = makeStyles(() => ({
   }, []);
   
   const handleDateChange = (date) => {
-    console.log(date);
-    setSelectedDate(date);
+    setSelectedDate(new Date(date));
+    console.log(selectedDate);
+
   };
 
   const handleChange = event => {
@@ -55,6 +56,7 @@ const useStyles = makeStyles(() => ({
   const onSubmit = data => {
     console.log(data);
     data.SiteID = site;
+    data.EncounterDate = selectedDate;
     EncounterService
       .addEncounter(data)
       .then(result=>{

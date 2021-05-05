@@ -128,6 +128,7 @@ function useQuery() {
                     <Collapse in={!expanded} timeout="auto" unmountOnExit>
                         <PhotosUploader 
                           handleOpenRespons={handleOpenRespons}
+                          setId = {setId}
                           status={status}/>
                     </Collapse>
                     <Button

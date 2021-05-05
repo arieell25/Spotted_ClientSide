@@ -46,7 +46,7 @@ function updateEncounter(id, data) {
 
 function updateEncounterPic(id, data) {
   if(data){
-    const body ={ url: data};
+    const body ={ ProfilePicture: data};
     return HttpService
     .put(`/api/updateEncounter?id=${id}`, body)
     .then(res => {

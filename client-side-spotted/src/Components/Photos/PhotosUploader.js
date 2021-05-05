@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 
 import RUG, { Card, DragArea } from 'react-upload-gallery';
 import 'react-upload-gallery/dist/style.css'
-// import DoneIcon from '@material-ui/icons/Done';
 import { PhotoService } from '../../Service/PhotoService';
 import Done from '@material-ui/icons/Done';
 import { IconButton} from '@material-ui/core';
@@ -11,13 +10,13 @@ import {SystemResultsService} from '../../Service/SystemResultsService';
 import {EncounterService} from '../../Service/EncounterService';
 import {speciesDetectionService} from '../../Service/DetectionService/speciesDetectionService';
 import GradientCircularProgress from '../Encounters/components/CircularProgress';
-import { ControlCameraOutlined } from '@material-ui/icons';
+// import { ControlCameraOutlined } from '@material-ui/icons';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
   }
 export default function PhotosUploader(props) {
-    const {handleOpenRespons, status} = props;
+    const {handleOpenRespons, setId} = props;
     let query = useQuery();
     var id = query.get("id");
     const [images, setImages] = useState([]);
@@ -41,7 +40,6 @@ export default function PhotosUploader(props) {
                 count +=1;
                 imagesData=data;
                 setIsReady(true);
-                photoUrl = res.url;
                 photosBlboData.push(res);
                 console.log(res);
 
@@ -49,9 +47,6 @@ export default function PhotosUploader(props) {
             .catch(err => handleOpenRespons(`Upload faild please try again...${ err}`) )
 
         })
-                // await EncounterService.updateEncounterPic(id, photoUrl)
-                // .then( res => console.log(res));
-                // console.log(imagesData);
                 console.log(photosBlboData);
             const detectionRes = await speciesDetectionService
             .detectSpeciesPhotos(imagesData)
@@ -60,12 +55,28 @@ export default function PhotosUploader(props) {
                  SystemResultsService
                  .addFirstSystemResults(res, id, photosBlboData)
                  .then(res =>{
+                    photoUrl = res.photosResults[0].src;
+                    EncounterService.updateEncounterPic(id, photoUrl).then( res => {
+                // handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
+                        }).catch(err => {
+                            handleOpenRespons(`Failed updating encounter profile pic...` );
+
+                        });
+                     setId(id);
                     handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
                      setIsReady(true);
-                    } );
-                
+                    } );                
             }).catch(err =>handleOpenRespons('Species detection faild...Please try again' ))
 
+            // const photo = await EncounterService
+            // .updateEncounterPic(id, photoUrl)
+            // .then( res => {
+            //     handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
+            // }).catch(err => {
+            //     handleOpenRespons(`Failed updating encounter profile pic...` );
+
+            // });
+                // console.log(imagesData);
         }catch(err){
             console.log(err);
         }

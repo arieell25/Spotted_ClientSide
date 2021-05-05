@@ -24,7 +24,7 @@ export default function EncountersBoard() {
 
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(13);
 
 
   // const [encounterAdd, setencounterAdd] = useState(false)
