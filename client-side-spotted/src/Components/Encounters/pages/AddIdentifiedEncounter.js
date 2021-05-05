@@ -8,35 +8,7 @@ import { Link } from 'react-router-dom';
 import { useForm, Controller  } from 'react-hook-form';
 import StatusDialog from '../components/StatusDialog';
 
-
-
-const lifeStage = [
-  {
-    value: "Eilat",
-    label: "Eilat"
-  },
-  {
-    value: "Katzaa",
-    label: "Katzaa"
-  },
-  {
-    value: "Reserve",
-    label: "Reserve"
-  },
-  {
-    value: "almogBeach",
-    label: "Almog Beach"
-  }
-];
-
 export default function AddIdentifiedEncounter() {
-  // state = {
-  //   Photographer: "",
-  //   dateOfTheEncounter: "",
-  //   timeOfTheEncounter: "",
-  //   site: "",
-  //   email: ""
-  // };
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
   const [stage, setstage] = useState("Eilat");

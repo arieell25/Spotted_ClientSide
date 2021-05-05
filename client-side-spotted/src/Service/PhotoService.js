@@ -5,6 +5,7 @@ export const PhotoService = {
   uploadPhoto,
   uploadRawPhoto,
   addPhoto,
+  deleteBlobPhoto,
   getIdntEncounterPhotos
 //   updateEncounter,
 //   deletephoto
@@ -52,4 +53,15 @@ async function uploadPhoto(fd, id) {
     .then(res=> {
       return res.data.photos;
     })
+  }
+
+  async function deleteBlobPhoto(id, files) {
+    console.log('photo service delete id: ' + id );
+    if (id) {
+      const body = {encounterId: id, files: files};
+      return HttpService.post(`/api/deletephotofromBlob`,body);
+    } else {
+      console.log("no photo data");
+      // return HttpService.post(`api/addEncounter`, encounter);
+    }
   }

@@ -15,6 +15,7 @@ import EncounterProfile from './Components/Encounters/components/EncounterProfil
 import IdentifiedProfile from './Components/Encounters/components/IdentifiedProfile'
 import theme from './Components/Themes/theme'
 import EditEncounter from './Components/Encounters/pages/EditEncounter'
+import UserEncountersBoard from './Components/Encounters/pages/UserEncountersBoard'
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
           { <Route path='/TypeUpload' component={TypeUpload} /> }
           { <Route path='/UploadPhoto' component={UploadPhoto} /> }
           { <Route path='/EncountersBoard' component={EncountersBoard}/>}
+          { <Route path='/UserEncountersBoard' component={UserEncountersBoard}/>}
           { <Route path='/IdentifiedBoard' component={IdentifiedBoard}/>}  
           { <Route path='/EncounterProfile' component={EncounterProfile}/>}
           { <Route path='/IdentifiedProfile' component={IdentifiedProfile}/>}  

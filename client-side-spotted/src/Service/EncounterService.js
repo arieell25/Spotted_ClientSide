@@ -10,22 +10,35 @@ export const EncounterService = {
   deleteEncounter,
   getIsraelSites,
   updateEncounterPic,
-  getMediatypes
+  getMediatypes,
+  getUserEncounters,
 }
 
 function getEncounters() {
   return HttpService
   .get(`/api/getAllEncounters`)
   .then(res => {
-    // console.log('in func data: ' + JSON.stringify(res.data.encounters.rows));
     return res.data.encounters.rows;
   } );
-
 }
 
-function updateEncounter(id, data) {
+function getUserEncounters() {
+  const user = userService.isLoggedIn();
+  // console.log(`user id id: ${user.id}`)
+  let body = {id: user.id};
+    console.log(`user id body: ${JSON.stringify(body)}`)
   return HttpService
-  .put(`/api/updateEncounter?id:${id}`, data)
+  .post(`/api/getAllUserEncounters`, body)
+  .then(res => {
+    return res.data.encounters.rows;
+  } );
+}
+
+
+function updateEncounter(id, data) {
+  console.log(data);
+  return HttpService
+  .put(`/api/updateEncounter?id=${id}`, data)
   .then(res => {
     return res;
   } );

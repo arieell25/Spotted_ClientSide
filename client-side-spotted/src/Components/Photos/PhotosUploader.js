@@ -28,37 +28,39 @@ export default function PhotosUploader(props) {
     const uploadHandler= async () =>{
         let photoUrl;
         let count = 0 ;
+        let photosBlboData=[];
         try{
         const uploaders = await images.map(image => {
             const data = new FormData();
             data.append("image", image.file);
             imagesData.append("image", image.file);
             // console.log(data);
-            return PhotoService.uploadRawPhoto(data, id)
+            return PhotoService.uploadPhoto(data, id)
             .then( res => {
                 console.log(data);
                 count +=1;
                 imagesData=data;
                 setIsReady(true);
                 photoUrl = res.url;
-                handleOpenRespons(`Succesfully uploaded ${count} photos, Thank you!` );
+                photosBlboData.push(res);
                 console.log(res);
+
             })
             .catch(err => handleOpenRespons(`Upload faild please try again...${ err}`) )
 
         })
-                await EncounterService.updateEncounterPic(id, photoUrl)
-                .then( res => console.log(res));
-
+                // await EncounterService.updateEncounterPic(id, photoUrl)
+                // .then( res => console.log(res));
                 // console.log(imagesData);
-     
+                console.log(photosBlboData);
             const detectionRes = await speciesDetectionService
             .detectSpeciesPhotos(imagesData)
             .then( res => {
                 console.log(res);
                  SystemResultsService
-                 .addFirstSystemResults(res, id)
+                 .addFirstSystemResults(res, id, photosBlboData)
                  .then(res =>{
+                    handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
                      setIsReady(true);
                     } );
                 
@@ -73,7 +75,6 @@ export default function PhotosUploader(props) {
         uploadHandler();
     }
     return <div>
-        {console.log(images)}
         {!isReady && (<GradientCircularProgress/>)}
         <RUG
             action={`http://localhost:8081/pub/uploadrawphoto?id=${id}`}

@@ -20,8 +20,10 @@ async function save(user) {
 }
 
  function isLoggedIn() {
-   console.log(localStorage.getItem('user'));
-  return (localStorage.getItem('user'));
+  //  console.log(localStorage.getItem('user'));
+   var user =  JSON.parse(localStorage.getItem('user'));
+  //  console.log(user.firstName);
+   return user;
 }
  function isAdmin() {
   let status = false;
