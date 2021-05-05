@@ -73,11 +73,17 @@ function getEncounterById(encounterId) {
   })
 }
 
-async function addEncounter(encounter) {
+function addEncounter(encounter) {
   console.log(encounter);
 
   if (encounter) {
-    return HttpService.post(`/pub/addEncounter`, encounter)
+    console.log(userService.isLoggedIn());
+    if(userService.isLoggedIn()){
+      return  HttpService.post(`/api/addEncounter`, encounter)
+    }
+    else{
+      return HttpService.post(`/pub/addEncounter`, encounter)
+    }
   } else {
     console.log("no encounter data");
     // return HttpService.post(`api/addEncounter`, encounter);
