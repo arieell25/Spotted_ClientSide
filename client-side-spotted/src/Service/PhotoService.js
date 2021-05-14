@@ -7,9 +7,10 @@ export const PhotoService = {
   uploadRawPhoto,
   addPhoto,
   deleteBlobPhoto,
-  getIdntEncounterPhotos
-//   updateEncounter,
-//   deletephoto
+  getIdntEncounterPhotos,
+  getEncounterPhotosBBox,
+  getIdntEncounterProfilePic,
+  updateDBPhoto,
 }
 
 async function addPhoto(id, url, count) {
@@ -17,6 +18,16 @@ async function addPhoto(id, url, count) {
     if (id) {
       const body ={ id: id, url: url, count: count};
       return HttpService.post(`/api/addphoto`, body)
+    } else {
+      console.log("no photo data");
+      // return HttpService.post(`api/addPhotos`, encounter); TODO many photos.
+    }
+  }
+  async function updateDBPhoto(id, url) {
+    // console.log('addphoto:  ' + url);
+    if (id) {
+      const body ={ id: id, url: url};
+      return HttpService.put(`/api/updateDBphoto`, body)
     } else {
       console.log("no photo data");
       // return HttpService.post(`api/addPhotos`, encounter); TODO many photos.
@@ -66,12 +77,31 @@ async function uploadPhoto(fd, id) {
     //   return res.data.photos;
     // })
   }
-
+  
+  function getIdntEncounterProfilePic(ids) {
+    console.log(ids);
+    const body ={ individualids: ids}
+      return HttpService.post(`/api/getIdntEncountersProfilePics`, body)
+      .then(res=> {
+        return res.data.identEncounters;
+      })    
+  }
   function getIdntEncounterPhotos(id) {
     return HttpService.get(`/api/getIdntEncounterPhotos?id=${id}`)
     .then(res=> {
       return res.data.photos;
     })
+  }
+
+  function getEncounterPhotosBBox(data) {
+    if(data){
+      const body ={photosId: data} ;
+      return HttpService.post(`/api/getPhotosBoundingBoxes`, body)
+      .then(res=> {
+        return res.data.boundingBoxes;
+      })
+    }
+
   }
 
   async function deleteBlobPhoto(id, files) {

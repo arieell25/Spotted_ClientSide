@@ -9,6 +9,7 @@ const ImageViewer = (props) => {
             isOpen={props.isOpen}
             onClickPrev={props.gotoPrev}
             onClickNext={props.gotoNext}
+            // onClickImg={props.onimgClick}
             onClose={props.closeImgsViewer}
         />
     )

@@ -4,10 +4,9 @@ import {userService} from './UserService';
 export const SystemResultsService = {
   getFirstSystemResults,
   addFirstSystemResults,
-//   getAllFirstSystemResults,
-  getEncounterFirstSystemResults
-//   updateEncounter,
-//   deletephoto
+  getEncounterFirstSystemResults,
+  addSecondSystemResults,
+  addManualResult
 }
 
 async function getFirstSystemResults(id) {
@@ -47,6 +46,34 @@ async function getFirstSystemResults(id) {
             })
           }
 
+      }else{
+        console.log("no results  data");
+        return('no data was provided');
+      }
+
+  }
+  function addManualResult(originalPhoto, idvalue, encounterid) {
+      if(idvalue){
+          const body = {EncounterID: encounterid, IndividualID: idvalue, url: originalPhoto}
+            return HttpService.post(`/api/addManualResult`, body)
+            .then(res=> {
+              return res.data.newResult;
+            })
+      }else{
+        console.log("no results  data");
+        return('no data was provided');
+      }
+
+  }
+  function addSecondSystemResults(data) {
+    // console.log(photosBlboData);
+    // const {} = data;
+      if(data){
+          const body = {Results: data }
+            return HttpService.post(`/api/addSecondSystemResults`, body)
+            .then(res=> {
+              return res.data.newResult;
+            })
       }else{
         console.log("no results  data");
         return('no data was provided');

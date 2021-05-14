@@ -11,10 +11,11 @@ export const IdntEncService = {
 }
 
 async function addIdentifiedEncounter(identifiedEncounter) {
-  console.log(identifiedEncounter);
+  console.log(`Adding new identety:  ${identifiedEncounter}`);
 
   if (identifiedEncounter) {
     return HttpService.post(`/api/addIdentifiedEncounter`, identifiedEncounter)
+    .then(res => res.data.newIdentifiedEncounter)
   } else {
     console.log("no identifiedEncounter data");
   }

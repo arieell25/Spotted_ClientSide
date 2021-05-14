@@ -28,27 +28,25 @@ export default function PhotosUploader(props) {
         let photoUrl;
         let count = 0 ;
         let photosBlboData=[];
-        try{
-        const uploaders = await images.map(image => {
+        var uploaders =  images.map(image => {
             const data = new FormData();
             data.append("image", image.file);
             imagesData.append("image", image.file);
-            // console.log(data);
             return PhotoService.uploadPhoto(data, id)
             .then( res => {
                 console.log(data);
                 count +=1;
-                imagesData=data;
-                setIsReady(true);
-                photosBlboData.push(res);
                 console.log(res);
-
+                return (res);
             })
             .catch(err => handleOpenRespons(`Upload faild please try again...${ err}`) )
 
         })
-                console.log(photosBlboData);
-            const detectionRes = await speciesDetectionService
+        console.log(Promise.all(uploaders))
+        Promise.all(uploaders).then(res => {
+            console.log(`yploaders: ${res}`)
+            photosBlboData = res;
+             speciesDetectionService
             .detectSpeciesPhotos(imagesData)
             .then( res => {
                 console.log(res);
@@ -57,7 +55,6 @@ export default function PhotosUploader(props) {
                  .then(res =>{
                     photoUrl = res.photosResults[0].src;
                     EncounterService.updateEncounterPic(id, photoUrl).then( res => {
-                // handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
                         }).catch(err => {
                             handleOpenRespons(`Failed updating encounter profile pic...` );
 
@@ -68,19 +65,9 @@ export default function PhotosUploader(props) {
                     } );                
             }).catch(err =>handleOpenRespons('Species detection faild...Please try again' ))
 
-            // const photo = await EncounterService
-            // .updateEncounterPic(id, photoUrl)
-            // .then( res => {
-            //     handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
-            // }).catch(err => {
-            //     handleOpenRespons(`Failed updating encounter profile pic...` );
-
-            // });
-                // console.log(imagesData);
-        }catch(err){
-            console.log(err);
-        }
+        });
     }
+
     const handleUploadClick = () => {
         setIsReady(false);
         uploadHandler();
@@ -123,8 +110,5 @@ export default function PhotosUploader(props) {
                 UPLOAD
             </button>
         </RUG>
-        {/* <button className='btn' onClick={uploadHandler} >
-            UPLOAD
-        </button> */}
      </div>
 }

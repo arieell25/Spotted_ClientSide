@@ -1,7 +1,7 @@
 import { useState, useEffect, React } from 'react'
 import { IdntEncService } from '../../../Service/IdentifiedEncounterService'
 import GradientCircularProgress from '../components/CircularProgress'
-import EncounterCard from '../components/EncounterCard'
+import IdntEncounterCard from '../components/IdntEncounterCard'
 import {
   Grid
 } from '@material-ui/core';
@@ -53,7 +53,7 @@ export default function IdentifiedBoard() {
 
   const renderEachEncounter = (item, i) => {
     return (
-      <EncounterCard index={item.IdentifiedEncounterID} encounter={item} key={item.IdentifiedEncounterID} identFlag = {true}></EncounterCard>
+      <IdntEncounterCard index={item.IdentifiedEncounterID} encounter={item} key={item.IdentifiedEncounterID} identFlag = {true}></IdntEncounterCard>
     );
   };
 

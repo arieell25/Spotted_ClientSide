@@ -2,6 +2,8 @@ import { useState, useEffect, React } from 'react'
 import { EncounterService } from '../../../Service/EncounterService'
 import EncounterCard from '../components/EncounterCard'
 import GradientCircularProgress from '../components/CircularProgress'
+import StatusDialog from '../components/StatusDialog';
+import EncountersTable from '../components/EncountersTable';
 import {
   Grid,
   makeStyles
@@ -12,17 +14,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function UserEncountersBoard() {
   const classes = useStyles();
-
+  const [gridView, setGridView] = useState(true);
+  const [status, setStatus] = useState([]);
+  const [open, setOpen] = useState(false);
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(13);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        await EncounterService.getEncounters().then(encounters => setEncounters(encounters));
+        await EncounterService.getEncounters()
+        .then(encounters => setEncounters(encounters))
+        // .catch(res => console.log(res));
       } catch (err) {
         console.log('error fetching...:', err);
+        setStatus('Somthing went wrong, please login again...');
+        setOpen(true);
       }
       setEdit(false);
     }
@@ -43,6 +51,9 @@ export default function UserEncountersBoard() {
     )
       showMore();
   }
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const renderEachEncounter = (item, i) => {
     if(item.IdentifiedEncounterID){
@@ -58,17 +69,33 @@ export default function UserEncountersBoard() {
   };
 
   if (!encounters) return (
+    <div>
+
+    <StatusDialog
+      open={open}
+      status={status}
+      onClose={handleClose}/>
       <GradientCircularProgress />
+      </div>
+
     )
   else {
     return(
-      <Grid container className="Encounters">
-        {encounters
-          .map(renderEachEncounter)
-          .reverse()
-          .slice(0, limit)
-        }
-      </Grid>
+      <div>
+        
+        {/* {gridView && <div><EncountersTable rows={encounters}/></div>} */}
+        {gridView &&
+        <Grid container className="Encounters">
+
+          {encounters
+            .map(renderEachEncounter)
+            .reverse()
+            .slice(0, limit)
+          }
+        </Grid>
+  }
+        </div>
+      
     )
         }
       }

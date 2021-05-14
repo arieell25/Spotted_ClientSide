@@ -7,6 +7,7 @@ export default function PhotosGrid(props) {
     const {photos} = props;
     const [isOpen, setIsOpen] = useState(false);
     const [currImage, setCurrImage] = useState(0);
+    const [photosArr, setphotosArr] = useState([]);
 
     const closeImgsViewer = () => {
         setCurrImage(0)
@@ -17,6 +18,11 @@ export default function PhotosGrid(props) {
     }
     const gotoNext = () => {
         setCurrImage(currImage + 1)
+    }
+    const onimgClick = (e) =>{
+        console.log(e);
+        photosArr.push(e.target);
+        // console.log(photosArr);
     }
 
 
@@ -32,6 +38,7 @@ export default function PhotosGrid(props) {
           closeImgsViewer={closeImgsViewer}
           gotoPrev={gotoPrev}
           gotoNext={gotoNext}
+        //   onimgClick={onimgClick}
           currImg={currImage}
           isOpen={isOpen}
       />
