@@ -29,11 +29,14 @@ const Login = forwardRef((props, ref) => {
             name="email"
           />
           <TextField
+            id="standard-password-input"
+            type="password"
             fullWidth
             inputRef={register}
             label="Password"
             name="password"
           />
+          
           <Button type="submit">Login</Button>
         </form>
         {error && <div className="info info-danger">{error}</div>}

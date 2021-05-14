@@ -52,6 +52,7 @@ export default function EncounterProfile(props) {
   const [open, setOpen] = useState(false);
   const [linkpath, setlinkpath] = useState('')
   const [edit, setEdit] = useState(false);
+  const [date, setDate] = useState('');
   const [openPhotos, setOpenPhotos] = useState(false);
   const [photos, setPhotos] = useState([]);
     const [encounter, setEncounter] = useState([]);
@@ -62,6 +63,8 @@ export default function EncounterProfile(props) {
           const encounterData = await EncounterService.getEncounterById(id);
           const photosData = await PhotoService.getEncounterPhotos(id);
           
+          let date = new Date(encounterData.EncounterDate);
+          setDate(date.toLocaleDateString());
           setPhotos(photosData);
           setEncounter(encounterData)
         };
@@ -148,18 +151,17 @@ else {
                 <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton>
             </CardActions>
             <div className ="detailsEncounter">
-            <p>Encounter Date: {encounter.EncounterDate}</p>
-            <p>Spotted At:</p>
+            <p>Spotted At: {date}</p>
             <p>Encounter no.: {encounter.EncounterID}</p>
             <p>Original ID: {encounter.OriginalID}</p>
             <p>Total Bluespotted Reported: {encounter.SpottedCountReported}:</p>
-            <p>Actually Detected: {encounter.SpottedCount? encounter.SpottedCount : ''}</p>
-            <p>MediaType:</p>
+            <p>Actually Detected: {encounter.SpottedCount? encounter.SpottedCount : 'Not detected yet'}</p>
+            <p>MediaType: {encounter.MediaType === 1 ? 'Photos' : 'Video'}</p>
             <p>Reported By: {encounter.ReporterEmail}</p>
             <p>{encounter.UpdateBy ? 'Last Updates By: '+encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at: ' + encounter.UpdateAt : ''}</p>
             </div>
           </CardContent>
-          <button className='btn'onClick={event =>  window.location.href='/IdentifyPhoto'} >
+          <button className='btn'onClick={event =>  window.location.href=`/IdentifyPhoto?id=${encounter.EncounterID}`} >
                   IDENITFY
           </button> 
 
@@ -172,58 +174,4 @@ else {
   );
 }
 }
-    // <Grid container className={classes.root} spacing={3}>
-    //   <Grid item xs={12} lg={6}>
-    //     {/* <ListItem>
-    //       <ListItemAvatar>
-    
-    //       </ListItemAvatar>
-    //       <ListItemText primary={coupon.title} secondary={coupon.couponName} />
-    //     </ListItem> */}
-    //   </Grid>
 
-    //   {userService.isLoggedIn() && (
-    //     <Grid item xs={12} lg={6}>
-    //       <IconButton onClick={handleEdit} style={{ cursor: 'pointer' }}>
-    //         <EditIcon />
-    //       </IconButton>
-    //       <IconButton onClick={handleDelete} style={{ cursor: 'pointer' }}>
-    //         <DeleteIcon />
-    //       </IconButton>
-    //     </Grid>
-    //   )}
-
-    //   <Grid item container>
-    //     <Typography>
-    //       Status:
-    //     </Typography>
-    //   </Grid>
-    //   <Grid item>
-    //     <Typography>SpottedAt: {encounter.EncounterDate}</Typography>
-    //   </Grid>
-    //   <Grid item>
-    //     <Typography>Encounter ID: {encounter.EncounterID}</Typography>
-    //   </Grid>
-    //   <Grid item>
-    //     <Typography>Total Bluespotted: {encounter.SpottedCountReported}</Typography>
-    //   </Grid>
-    //   <Grid item>
-    //     <Typography>Actually Detected: {encounter.SpottedCount}</Typography>
-    //   </Grid>
-    //   <Grid item>
-    //     <Typography>Reported By: {encounter.ReporterEmail}</Typography>
-    //   </Grid>
-    //   {/* <Grid item>
-    //     <Typography>Original ID: {encounter.MaxDepth}</Typography>
-    //   </Grid> */}
-    //   <Grid item>
-    //     <Typography>Last Updates By: {encounter.UpdateBy ? encounter.UpdateBy : ''} at:  {encounter.UpdateAt ? encounter.UpdateAt : ''} </Typography>
-    //   </Grid>
-    //   <StatusDialog open={open} status={status} onClose={handleClose} />
-    //   {/* <EditiDialog
-    //     encounter={encounter}
-    //     open={edit}
-    //     onChange={handleSave}
-    //     onClose={handleClose}
-    //   /> */}
-    // </Grid>

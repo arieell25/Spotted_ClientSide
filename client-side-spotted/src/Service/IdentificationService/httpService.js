@@ -26,9 +26,9 @@ async function connectApi(endpoint, method = 'get', data = null) {
         const res = await axios({
             url: `${BASE_URL}${endpoint}`,
             method,
-            // headers:{
-            //     'x-token': token 
-            // } ,
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            } ,
             data,
         })
         return res.data;

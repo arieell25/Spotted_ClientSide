@@ -45,12 +45,13 @@ export default function IdentifiedProfile(props) {
   const [photos, setPhotos] = useState([]);
   var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
   const [encounter, setEncounter] = useState([]);
+  const [date, setDate] = useState();
 
-//   const [bestPrice, setBestPrice] = useState('not available');
 
   useEffect(() => {
     IdntEncService.getIdentifiedEncounter(id).then(encounter => {
-        console.log(encounter)
+        let date = new Date(encounter.CreatedAt);
+        setDate(date.toLocaleDateString());
         setEncounter(encounter);
       })
       .catch(err => console.log(err));
@@ -132,7 +133,7 @@ else {
 
         <CardContent>
           <Typography gutterBottom className={classes.cardtitle} component="h2">
-            BlueSpotted ID {encounter.IdentifiedEncounterID}
+            BlueSpotted ID no. {encounter.IdentifiedEncounterID}
           </Typography>
           <CardActions className={classes.actions}>
             <p>{photos.length}</p>
@@ -141,13 +142,17 @@ else {
             <IconButton color="secondary"><DeleteIcon  /></IconButton>
           </CardActions>
           <div className ="detailsEncounter">
-            <p>SpottedBy: {encounter.Photographer}</p>
-            <p> Status: is {encounter.isAlive? 'Alive' : 'Dead'}</p>
-            <p>Encounter no.: {encounter.EncounterID}</p>
-            <p>TL: {encounter.TL} cm</p>
-            <p>DL: {encounter.DL} cm</p>
+            <p>Spotted by: {encounter.Photographer}</p>
+            <p>{encounter.isAlive? 'Considerd as Alive' : 'Considerd as Dead'}</p>
+            <p>First reported on Encounter no. {encounter.EncounterID}</p>
+            <p>Created at {date}</p>
+            <p>Gender: {encounter.Sex}</p>
+            <p>{encounter.TL ? `TL: ${encounter.TL} cm` : '' }   </p>
+            <p>{encounter.DL ? `DL: ${encounter.DL} cm` : '' }   </p>
+
+            {/* <p>DL: {`${encounter.DL} cm`}</p> */}
             <p>DW: {encounter.DW}</p>
-            <p>Max Depth: {encounter.MaxDepth} meter</p>
+            <p>Max depth: { `${encounter.MaxDepth} meter`}</p>
             <p>Water temperature: {encounter.Temp} </p>
             <p>Link to source: {encounter.Link ? encounter.Link : ''}</p>
             <p> {encounter.UpdateBy ? 'Last Updates By: ' + encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at ' + encounter.UpdateAt : ''}</p>

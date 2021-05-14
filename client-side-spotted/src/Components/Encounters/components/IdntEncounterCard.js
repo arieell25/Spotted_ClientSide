@@ -31,14 +31,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EncounterCard(props) {
+export default function IdntEncounterCard(props) {
   const classes = useStyles();
   const { index, encounter, identFlag } = props;
   const [editing, setEditing] = useState(false);
   const [commentCount, setComments] = useState(0);
   const [date, setDate] = useState();
   useEffect(() => {
-    let date = new Date(encounter.EncounterDate);
+    let date = new Date(encounter.CreatedAt);
     setDate(date.toLocaleDateString());
 
     // eslint-disable-next-line
@@ -59,25 +59,6 @@ export default function EncounterCard(props) {
             search: '?id=' + index,
           }}
         >
-          {/* <CardHeader
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                className={classes.avatar}
-                src={coupon.publisherImg}
-              >
-                R
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-            }
-            title={coupon.title}
-            subheader={coupon.discount + ' off'}
-          /> */}
-
           <CardActionArea>
             <CardMedia
               className={classes.img}
@@ -93,17 +74,24 @@ export default function EncounterCard(props) {
             />
             <CardContent>
               <Typography variant="body2" color="secondary" component="h5">
-                Encounter no.: {encounter.EncounterID}
-              </Typography>
-              <Typography variant="body2" color="secondary" component="h5">
-                Original ID: {encounter.OriginalID}
-              </Typography>
-              <Typography variant="body2" color="secondary" component="h5">
-                 {!encounter.Verified ? "Not Verified" : "Verififed"}
+                ID no. {encounter.IdentifiedEncounterID}
               </Typography>
               <Typography variant="body2" color="secondary" component="p">
-              Spotted at: {date}
+              Identity created at {date}
               </Typography>
+              <Typography variant="body2" color="secondary" component="p">
+              {encounter.EncounterID ?  `Was first spotted with encounter no. ${encounter.EncounterID}` : ''}
+              </Typography>
+              <Typography variant="body2" color="secondary" component="h5">
+                {encounter.Photographer ? `Photographed by ${encounter.Photographer} ` : ''}
+              </Typography>
+              {/* <Typography variant="body2" color="secondary" component="h5">
+                 {encounter.isAlive ? "Last was reported as alive" : "Last was reported as dead"}
+              </Typography> */}
+              <Typography variant="body2" color="secondary" component="p">
+              {encounter.Description}
+              </Typography>
+
             </CardContent>
           </CardActionArea>
 

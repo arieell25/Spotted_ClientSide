@@ -3,7 +3,8 @@ import HttpService from './httpService'
 export const speciesDetectionService = {
     detectSpecies,
     detectSpeciesPhotos,
-    detectSpeciesVideos
+    detectSpeciesVideos,
+    copyEncounterImagefromBlob
 }
 
 async function detectSpecies(fd, id) {
@@ -39,5 +40,18 @@ async function detectSpecies(fd, id) {
     } else {
       console.log("no video data for detection");
       // return HttpService.post(`api/addEncounter`, encounter);
+    }
+  }
+
+  async function copyEncounterImagefromBlob(src, idntId) {
+    // console.log('detection service fd: ' + JSON.stringify(fd) );
+
+    let arr_str = (src).split("/");
+    // console.log(arr_str[5]);
+    if (idntId && src) {
+      const body ={url: src, fileName:arr_str[5], individual_ID: idntId.toString() }
+      return HttpService.post('/copyBlobImage', body)
+    } else {
+      return("No url or indevidual id data");
     }
   }

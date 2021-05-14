@@ -29,16 +29,6 @@ async function connectApi(endpoint, method = 'get', data = null) {
             headers:{
                 'Content-Type': 'multipart/form-data'
             } ,
-            // onUploadProgress: progressEvent => {
-            //         setUploadPercentage(
-            //           parseInt(
-            //             Math.round((progressEvent.loaded * 100) / progressEvent.total)
-            //           )
-            //         );
-          
-            //         // Clear percentage
-            //         setTimeout(() => setUploadPercentage(0), 10000);
-            //       },
             data,
         })
         return res.data;

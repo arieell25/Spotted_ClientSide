@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function StatusDialog(props) {
   const classes = useStyles;
-  const { open, status, onClose, id, link } = props;
+  const { open, status, onClose, id, link, idntId } = props;
 
   return (
     // <MuiThemeProvider theme={theme}>
@@ -54,9 +54,7 @@ export default function StatusDialog(props) {
                 ><Button onClick={onClose} color="primary">
               View Encounter Profile
             </Button></NavLink>}
-            {/* <Button className='btn' onClick={onClose} color="primary">
-              OK
-            </Button> */}
+
             {link && 
                     <NavLink
                               to={{
@@ -67,6 +65,16 @@ export default function StatusDialog(props) {
                         </Button>
                     </NavLink>
               }
+
+              {idntId && 
+                  <NavLink
+                  to={{
+                    pathname: '/IdentifiedProfile',
+                    search: '?id=' + idntId,
+                  }}
+                ><Button onClick={onClose} color="primary">
+              Go to Profile
+            </Button></NavLink>}
           </DialogActions>
         </Dialog>
       </Fragment>
