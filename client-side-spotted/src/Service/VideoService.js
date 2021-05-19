@@ -1,6 +1,7 @@
 import HttpService from './httpService'
+import {userService} from './UserService';
 
-export const PhotoService = {
+export const VideoService = {
   getEncounterVideos,
   uploadVideo,
   addVideo,
@@ -9,11 +10,21 @@ export const PhotoService = {
 //   deletephoto
 }
 
-async function addVideo(id, url, count) {
-    console.log('addvideo:  ' + url);
+async function addVideo(id, fileName) {
+    console.log('addvideo:  ' + fileName);
     if (id) {
-      const body ={ id: id, url: url, count: count};
-      return HttpService.post(`/api/addvideo`, body)
+      const body ={ id: id, fileName: fileName};
+      if(userService.isLoggedIn()){
+      return HttpService.post(`/api/addVideo`, body)
+      .then(res=> {
+        return res.data;
+      })
+      }else{
+        return HttpService.post(`/pub/addVideo`, body)
+        .then(res=> {
+          return res.data;
+        })
+      }
     } else {
       console.log("no video data");
       // return HttpService.post(`api/addPhotos`, encounter); TODO many photos.

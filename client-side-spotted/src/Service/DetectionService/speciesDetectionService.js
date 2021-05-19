@@ -18,11 +18,9 @@ async function detectSpecies(fd, id) {
     }
   }
 
-  async function detectSpeciesPhotos(fd, id) {
-    console.log('detection service fd: ' + JSON.stringify(fd) );
-    // const images
+  async function detectSpeciesPhotos(fd) {
+    // console.log('detection service fd: ' + JSON.stringify(fd) );
     if (fd) {
-      // var id = query.get("id");
       return HttpService.post('/uploadimages', fd)
     } else {
       console.log("no photos data for detection");
@@ -31,11 +29,9 @@ async function detectSpecies(fd, id) {
   }
 
   
-  async function detectSpeciesVideos(fd, id) {
-    console.log('detection service fd: ' + JSON.stringify(fd) );
-    // const images
+  async function detectSpeciesVideos(fd) {
+    // console.log('detection service fd: ' + JSON.stringify(fd) );
     if (fd) {
-      // var id = query.get("id");
       return HttpService.post('/uploadVideo', fd)
     } else {
       console.log("no video data for detection");
@@ -44,10 +40,7 @@ async function detectSpecies(fd, id) {
   }
 
   async function copyEncounterImagefromBlob(src, idntId) {
-    // console.log('detection service fd: ' + JSON.stringify(fd) );
-
     let arr_str = (src).split("/");
-    // console.log(arr_str[5]);
     if (idntId && src) {
       const body ={url: src, fileName:arr_str[5], individual_ID: idntId.toString() }
       return HttpService.post('/copyBlobImage', body)

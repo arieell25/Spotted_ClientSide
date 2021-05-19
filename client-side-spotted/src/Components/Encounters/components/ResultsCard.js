@@ -8,6 +8,7 @@ import {identificationService} from '../../../Service/IdentificationService/phot
 import {IdntEncService} from '../../../Service/IdentifiedEncounterService';
 import {speciesDetectionService} from '../../../Service/DetectionService/speciesDetectionService';
 import {SystemResultsService} from '../../../Service/SystemResultsService';
+import ProfileDialog from '../components/ProfileDialog';
 
 import {
   Card,
@@ -50,6 +51,9 @@ export default function ResultsCard(props) {
   const [item, setitem] = useState(null);
   const [photos, setPhotos] = useState([]);
   const [indevidualIds, setindevidualIds] = useState([]);
+  const [openProfile, setOpenProfile] = useState(false);
+  const [encounter, setEncounter] = useState([]);
+
   useEffect(() => {
         console.log(ids);
         setindevidualIds(ids);
@@ -92,8 +96,16 @@ export default function ResultsCard(props) {
 }
 const onPick = (image) => {
     setitem(image);
-    console.log(image);
+    setEncounter(photos.filter(photo => photo.IdentifiedEncounterID === image.value))
+    console.log(encounter);
+    setOpenProfile(true);
+
 }
+
+const handleCloseRespons = () => {
+  setOpenProfile(false);
+};
+
 const handleNew = () => {
     // setLoading(true);
     const body ={EncounterID: encounterid, ProfilePicture: src}
@@ -166,7 +178,14 @@ else{
                       </Typography>
                     }
                   </CardContent>
+                  {item &&
+                  <ProfileDialog
+                    open={openProfile}
+                    encounter={encounter}
+                    onClose={handleCloseRespons}
 
+                  />
+                    }
                   </div>
           </Card>    
    

@@ -6,7 +6,8 @@ export const SystemResultsService = {
   addFirstSystemResults,
   getEncounterFirstSystemResults,
   addSecondSystemResults,
-  addManualResult
+  addManualResult,
+  addVideoFirstSystemResults
 }
 
 async function getFirstSystemResults(id) {
@@ -49,6 +50,27 @@ async function getFirstSystemResults(id) {
       }else{
         console.log("no results  data");
         return('no data was provided');
+      }
+
+  }
+  function addVideoFirstSystemResults(rawdata, encounterId) {
+    // console.log(rawdata);
+      if(rawdata){
+          const body = {encounterId: encounterId, results: rawdata.data}
+          if(userService.isLoggedIn()){
+            return HttpService.post(`/api/addVideoFirstSystemResults`, body)
+            .then(res=> {
+              return res.data;
+            })
+          }else{
+            return HttpService.post(`/pub/addVideoFirstSystemResults`, body)
+            .then(res=> {
+              return res.data;
+            })
+          }
+      }else{
+        console.log("no video results data");
+        return('no video data was provided');
       }
 
   }

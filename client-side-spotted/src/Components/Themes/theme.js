@@ -130,7 +130,15 @@ const theme = createMuiTheme({
             fontFamily: "'Montserrat', sans-serif",
 
         }
-    }
+    },
+    // MuiCardMedia:{
+    //     media:{
+    //         width: '80%',
+    //         padding: '20px',
+    //         margin: '0 auto',
+    //     }
+    
+    // }
     
   }
 })

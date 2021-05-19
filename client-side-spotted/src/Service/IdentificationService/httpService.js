@@ -21,7 +21,7 @@ export default {
 }
 
 async function connectApi(endpoint, method = 'get', data = null) {
-    var token = localStorage.getItem('token');
+    // var token = localStorage.getItem('token');
     try {
         const res = await axios({
             url: `${BASE_URL}${endpoint}`,

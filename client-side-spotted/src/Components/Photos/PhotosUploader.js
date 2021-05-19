@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import RUG, { Card, DragArea } from 'react-upload-gallery';
 import 'react-upload-gallery/dist/style.css'
@@ -75,7 +75,7 @@ export default function PhotosUploader(props) {
     return <div>
         {!isReady && (<GradientCircularProgress/>)}
         <RUG
-            action={`http://localhost:8081/pub/uploadrawphoto?id=${id}`}
+            action={`http://spotted-server.azurewebsites.net/pub/uploadrawphoto?id=${id}`}
             source={response => response} // response image source
             onChange={(images) => {
                 setImages(images) // save current component

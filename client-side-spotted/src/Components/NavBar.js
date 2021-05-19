@@ -2,9 +2,7 @@ import  React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
-  IconButton,
   List,
-  Typography,
   ListItem,
   ListItemText,
   Button
@@ -14,7 +12,7 @@ import Menu from '@material-ui/core/Menu';
 import { userService } from '../Service/UserService'
 import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Signup from './Signup';
 import Login from './Login'
 
@@ -23,7 +21,6 @@ const useStyles = makeStyles({
     fontSize: `24px`,
     textDecoration: `none`,
     color: `linear-gradient(45deg,#C5F836, #3AA4D1)`,
-    textDecoration: `none`,
     textTransform: `uppercase`,
   },
   navDisplayFlex: {
@@ -39,14 +36,15 @@ const useStyles = makeStyles({
   },
 });
 
-const navLinks = [
+const navLinksPub = [
+  { title: `Report Encounter`, path: `/AddEncounter` },
+  { title: `All Encounters`, path: `/EncountersBoard` },
+];
+const navLinksUser = [
   { title: `Report Encounter`, path: `/AddEncounter` },
   { title: `My Encounters`, path: `/UserEncountersBoard` },
   { title: `All Encounters`, path: `/EncountersBoard` },
   { title: `All Identified `, path: `/IdentifiedBoard` },
-
-  // { title: `EncounterProfile`, path: `/EncounterProfile` },
-  // { title: `Report Identified Encounter`, path: `/AddIdentifiedEncounter` },
 ];
 
 const NavBar = () => {
@@ -82,22 +80,41 @@ const NavBar = () => {
   return (
     <AppBar position="static" style={{ backgroundColor: `#252529` }}> 
       <Toolbar className="toolBar">
-          <Link className={classes.logo} to="/HeaderTitle">
+          {/* <Link className={classes.logo} to="/HeaderTitle">
             <h3>spotted</h3>
-          </Link>
+            <img src="logo.png" alt="logo" ></img>
+          </Link> */}
+            <NavLink to="/Home" exact>
+              <img
+                src="/logo192.png"
+                alt="logo"
+                style={{ height: 50, margin: 10 }}
+              />
+            </NavLink>
           {
             <List
               component="nav"
               aria-labelledby="main navigation"
               className={classes.navDisplayFlex}
             >
-              {navLinks.map(({ title, path }) => (
+              {userService.isLoggedIn() &&
+              navLinksUser.map(({ title, path }) => (
                 <a href={path} key={title} className={classes.linkText}>
                   <ListItem button>
                     <ListItemText primary={title} />
                   </ListItem>
                 </a>
-              ))}
+              ))
+          }
+            {!userService.isLoggedIn() &&
+              navLinksPub.map(({ title, path }) => (
+                <a href={path} key={title} className={classes.linkText}>
+                  <ListItem button>
+                    <ListItemText primary={title} />
+                  </ListItem>
+                </a>
+              ))
+          }
             </List>
           }
         {!userService.isLoggedIn()  && (

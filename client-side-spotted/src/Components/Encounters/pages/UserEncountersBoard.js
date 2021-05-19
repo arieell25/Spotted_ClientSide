@@ -9,26 +9,16 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   display: 'flex',
-  //   '& > * + *': {
-  //     marginLeft: theme.spacing(3),
-  //   },
-  //   justifyContent: 'center',
-  //   padding: '120px'
-  // },
 
 }));
+
 export default function EncountersBoard() {
-  const classes = useStyles();
+  // const classes = useStyles();
 
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
   const [limit, setLimit] = useState(13);
-
-
-  // const [encounterAdd, setencounterAdd] = useState(false)
-  const [flag] = useState(false) 
+  // const [flag] = useState(false) 
 
   useEffect(() => {
     async function fetchData() {
@@ -56,15 +46,6 @@ export default function EncountersBoard() {
     )
       showMore();
   }
-  // useEffect(() => {
-  //   getEncounters();
-  // }, [flag])
-
-  // const getEncounters = async () => {
-  //   const data = await EncounterService.getEncounters()
-  //   console.log(data)
-  //   setEncounters(data)
-  // }
 
   const renderEachEncounter = (item, i) => {
     if(item.IdentifiedEncounterID){
@@ -84,35 +65,13 @@ export default function EncountersBoard() {
     )
   else {
     return(
-      <Grid container className="Encounters">
-        {encounters
-          .map(renderEachEncounter)
-          .reverse()
-          .slice(0, limit)
-        }
-      </Grid>
-    )
+        <Grid container className="Encounters">
+          {encounters
+            .map(renderEachEncounter)
+            .reverse()
+            .slice(0, limit)
+          }
+        </Grid>
+        )
         }
       }
-    // return (
-    //   <div className='encounterList'>
-    //       <table className='table'>
-    //         <thead>
-    //           <tr>
-    //             <th>Encounter ID</th>
-    //             <th>Encounter Date</th>
-    //             <th>Site ID</th>
-    //             <th>Reported By</th>
-    //             <th>Total Spotted</th>
-
-    //           </tr>
-    //         </thead>
-    //         <tbody>
-    //           {encounters.map(encounter => <Encounter encounter={encounter} key={encounter.EncounterID} />)}
-    //         </tbody>
-    //       </table>
-    //     </div>
-      
-    // )
-  // }
-// }

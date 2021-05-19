@@ -1,8 +1,10 @@
 import Axios from 'axios';
 
-const BASE_URL = process.env.NODE_ENV === 'production' ?
-    '' :
-    '//localhost:8081'
+const NODE_ENV = 'development';
+const BASE_URL = NODE_ENV === 'development' ?
+    '//localhost:8081' :
+    '//spotted-server.azurewebsites.net'
+    // '//localhost:8081'
 
 var axios = Axios;
 

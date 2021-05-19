@@ -2,10 +2,9 @@ import React, {useState, useEffect} from 'react';
 import qs from 'qs';
 import {SystemResultsService} from '../../../Service/SystemResultsService';
 import {identificationService} from '../../../Service/IdentificationService/photoIdentService';
-import {EncounterService} from '../../../Service/EncounterService';
 import GradientCircularProgress from '../components/CircularProgress'
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardContent, Typography, Grid } from '@material-ui/core';
+import { Card, CardContent, Typography } from '@material-ui/core';
 import ImagePicker from 'react-image-picker'
 import 'react-image-picker/dist/index.css'
 import { PhotoService } from '../../../Service/PhotoService';
@@ -25,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
         fontSize:30,
         paddingBottom:10
       },
-    //   results:{
-    //       width: '80%'
-    //   }
   }));
 
     function IdentifyPhoto(props){
@@ -88,10 +84,6 @@ const useStyles = makeStyles((theme) => ({
                 .catch(err =>{ setStatus(err); setOpenRespons(true); setError(true);});
             })
             .catch(err => {setStatus(err); setOpenRespons(true);} );
-  
-            // setfileNames(prevState=>[picture, ...prevState]);
-            // const newState = [picture];
-            // setPictures(newState);
         }
         const onPick = (image) => {
             setimage({image});
@@ -177,17 +169,16 @@ const useStyles = makeStyles((theme) => ({
           };
 
         if (!photos || loading ) return <GradientCircularProgress />
-        else if(error){
-            return
-            (<StatusDialog
-                open={openRespons}
-                status={status}
-                onClose={handleCloseRespons}
-            /> )
-        }
+        // else if(error){
+        //     return
+        //     (<StatusDialog
+        //         open={openRespons}
+        //         status={status}
+        //         onClose={handleCloseRespons}
+        //     /> )
+        // }
         else if(resultsReady){
             return(
-            //    <div>
             <div className="animated slideInUpTiny animation-duration-3">
             <div className="m-5">
               <div className="d-flex justify-content-center title">

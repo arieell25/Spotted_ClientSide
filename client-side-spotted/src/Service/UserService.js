@@ -6,6 +6,7 @@ export const userService = {
   isAdmin,
   isResearcher,
   login,
+  getUserName,
   register,
   logout,
   getLocalStorageUser
@@ -84,6 +85,14 @@ async function save(user) {
     })
 }
 
+function getUserName(id) {
+  const body ={ id: id}
+  return HttpService.put(`/api/user`, body )
+  .then(res=> {
+    console.log(res);
+    return res.data.user;
+  })
+}
 async function logout() {
    localStorage.removeItem('user');  
    localStorage.removeItem('token');

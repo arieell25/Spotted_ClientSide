@@ -149,13 +149,11 @@ else {
             <p>Gender: {encounter.Sex}</p>
             <p>{encounter.TL ? `TL: ${encounter.TL} cm` : '' }   </p>
             <p>{encounter.DL ? `DL: ${encounter.DL} cm` : '' }   </p>
-
-            {/* <p>DL: {`${encounter.DL} cm`}</p> */}
             <p>DW: {encounter.DW}</p>
             <p>Max depth: { `${encounter.MaxDepth} meter`}</p>
             <p>Water temperature: {encounter.Temp} </p>
             <p>Link to source: {encounter.Link ? encounter.Link : ''}</p>
-            <p> {encounter.UpdateBy ? 'Last Updates By: ' + encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at ' + encounter.UpdateAt : ''}</p>
+            <p>{encounter.UpdatedBy ? 'Last Updates By: ' + encounter.UpdatedBy : ''}{encounter.UpdatedAt ? ' at ' + encounter.UpdatedAt : ''}</p> 
           </div>
           </CardContent>
             {/* <button className='iconbtn' >

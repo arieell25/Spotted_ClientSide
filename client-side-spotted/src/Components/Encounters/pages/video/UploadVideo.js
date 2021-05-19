@@ -1,13 +1,15 @@
 import React, { Fragment, useState } from 'react';
-import Message from './Message';
-// import Progress from './Progress';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import {Card, Button} from "@material-ui/core";
+import { Button} from "@material-ui/core";
+import {SystemResultsService} from '../../../../Service/SystemResultsService';
+import {VideoService} from '../../../../Service/VideoService';
+import {EncounterService} from '../../../../Service/EncounterService';
+
 // import {speciesDetectionService} from '../../../../Service/DetectionService/speciesDetectionService';
 import StatusDialog from '../../components/StatusDialog';
 import LinearProgressWithLabel from './Progress'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import PermMediaIcon from '@material-ui/icons/PermMedia';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -22,9 +24,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const UploadVideo = () => {
+const UploadVideo = (props) => {
   const classes = useStyles();
-
+  const { encounterid } = props
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
@@ -46,13 +48,14 @@ const UploadVideo = () => {
     e.preventDefault();
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('id', encounterid);
 
     try {
       const res = 
       // await speciesDetectionService
       // .detectSpeciesVideos(formData)
       // .then(res => console.log(res))
-      await axios.post('http://40.91.223.174:5000/uploadVideo', formData, {
+      await axios.post(`http://40.91.223.174:5000/uploadVideo`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -62,18 +65,35 @@ const UploadVideo = () => {
               Math.round((progressEvent.loaded * 100) / progressEvent.total)
             )
           );
-
           // Clear percentage
           setTimeout(() => setUploadPercentage(0), 10000);
         }
+      })
+      .then(res => {
+        // console.log(res);
+        VideoService.addVideo(encounterid, filename)
+         .catch(err=>console.log(err));
+         SystemResultsService.addVideoFirstSystemResults(res, encounterid)
+         .then(res => {
+           const data={ProfilePicture: res.photosResults[0].src, MediaType: 2 }
+          EncounterService.updateEncounter(encounterid, data)
+          .then(() =>{
+            setStatus('Your video was succesfully uploaded. Thank you!')
+            setOpenRespons(true);
+          }) 
+          .catch(err => {
+            setStatus(`Failed updating encounter profile pic...` );
+            setOpenRespons(true);
+          });
+         })
+         .catch(err=>console.log(err));
+
+
       });
 
-      const { fileName, filePath } = res.data;
+      // const { fileName, filePath } = res.data;
+      // setUploadedFile({ fileName, filePath });
 
-      setUploadedFile({ fileName, filePath });
-
-      
-      setMessage('File Uploaded');
     } catch (err) {
       if(err.response){
         if (err.response.status === 500) {
@@ -107,6 +127,7 @@ const UploadVideo = () => {
       <StatusDialog
          open={openRespons}
          status={status}
+         id={encounterid}
          onClose={handleCloseRespons}
       />
       <form onSubmit={onSubmit}>
@@ -116,10 +137,10 @@ const UploadVideo = () => {
           variant="contained"
           component="label"
           className= "btn"
-          startIcon={<CloudUploadIcon />}
+          startIcon={<PermMediaIcon />}
 
         >
-          Upload
+          Open File
           <input
             type="file"
             hidden
@@ -127,24 +148,16 @@ const UploadVideo = () => {
             onChange={onChange}
           />
         </Button>
-          {/* <input
-            type='file'
-            className='custom-file-input'
-            id='customFile'
-            onChange={onChange}
-          /> */}
           <label className='custom-file-label'  htmlFor='customFile'>
             {filename}
           </label>
         </div>
-
-        {/* <Progress percentage={uploadPercentage} /> */}
         <div className={classes.progress}>
       <LinearProgressWithLabel percentage={uploadPercentage} value={uploadPercentage} />
     </div>
         <input
           type='submit'
-          value='Save'
+          value='Upload'
           className='btn'
         />
         </div>

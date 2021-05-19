@@ -35,7 +35,6 @@ export default function EncounterCard(props) {
   const classes = useStyles();
   const { index, encounter, identFlag } = props;
   const [editing, setEditing] = useState(false);
-  const [commentCount, setComments] = useState(0);
   const [date, setDate] = useState();
   useEffect(() => {
     let date = new Date(encounter.EncounterDate);
@@ -59,25 +58,6 @@ export default function EncounterCard(props) {
             search: '?id=' + index,
           }}
         >
-          {/* <CardHeader
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                className={classes.avatar}
-                src={coupon.publisherImg}
-              >
-                R
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="share">
-                <ShareIcon />
-              </IconButton>
-            }
-            title={coupon.title}
-            subheader={coupon.discount + ' off'}
-          /> */}
-
           <CardActionArea>
             <CardMedia
               className={classes.img}

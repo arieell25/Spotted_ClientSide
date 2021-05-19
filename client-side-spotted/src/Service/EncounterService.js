@@ -15,23 +15,34 @@ export const EncounterService = {
 }
 
 function getEncounters() {
-  return HttpService
-  .get(`/api/getAllEncounters`)
-  .then(res => {
-    return res.data.encounters.rows;
-  } );
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getAllEncounters`)
+    .then(res => {
+      return res.data.encounters.rows;
+    } );
+  }
+  else{
+    return HttpService
+    .get(`/pub/getAllEncounters`)
+    .then(res => {
+      return res.data.encounters.rows;
+    } );
+  }
 }
 
 function getUserEncounters() {
-  const user = userService.isLoggedIn();
-  // console.log(`user id id: ${user.id}`)
-  let body = {id: user.id};
-    console.log(`user id body: ${JSON.stringify(body)}`)
-  return HttpService
-  .post(`/api/getAllUserEncounters`, body)
-  .then(res => {
-    return res.data.encounters.rows;
-  } );
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getAllUserEncounters`)
+    .then(res => {
+      return res.data.encounters.rows;
+    } );
+  }
+  else{
+    return ('Please login')
+  }
+
 }
 
 
@@ -77,7 +88,6 @@ function addEncounter(encounter) {
   console.log(encounter);
 
   if (encounter) {
-    console.log(userService.isLoggedIn());
     if(userService.isLoggedIn()){
       return  HttpService.post(`/api/addEncounter`, encounter)
     }
@@ -86,16 +96,13 @@ function addEncounter(encounter) {
     }
   } else {
     console.log("no encounter data");
-    // return HttpService.post(`api/addEncounter`, encounter);
   }
 }
 
 function getIsraelSites() {
-  // console.log(userService.isLoggedIn)
   return HttpService
   .get(`/pub/getAllIsraeliSites`)
   .then(res => {
-    // console.log('in func data: ' + JSON.stringify(res.data.encounters.rows));
     return res.data.sites;
   } );
 }

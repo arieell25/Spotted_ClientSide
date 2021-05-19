@@ -69,7 +69,7 @@ export default function EncounterProfile(props) {
           setEncounter(encounterData)
         };
         fetchData();        
-          console.log(photos[0]);
+          // console.log(photos[0]);
       }, []);
 
   const handleDelete = (e) => {
