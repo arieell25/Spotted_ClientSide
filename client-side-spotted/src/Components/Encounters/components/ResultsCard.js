@@ -78,8 +78,8 @@ export default function ResultsCard(props) {
         //Add to DB manual results
         SystemResultsService.addManualResult(originalPhoto, item.value, encounterid )
         .then(() => {
-          setstatus(`You'r verification of this photo as identified Bluespotted no. ${item.value} was saved`);
-          setDoneStatus(`Photo of encounter no. ${encounterid} was saved as indevidual identity no.${item.value} `)
+          setstatus(`Photo tagging as identified Bluespotted no. ${item.value} was saved.`);
+          setDoneStatus(`Photo of encounter no. ${encounterid} tagged as indevidual identity no. ${item.value}. `)
           setisDone(true); 
           setOpen(true);
 
@@ -158,7 +158,7 @@ else{
                         />
                         <button className='btn' onClick={onClick}>save</button>
                         <Typography gutterBottom className={classes.cardtitle} component="h2">
-                          Or you can create a new Bluespotted individual
+                        Alternatively create a new Bluespotted individual
                         </Typography>
                         <button className='btn' onClick={handleNew}>New identity</button>
 
@@ -166,7 +166,7 @@ else{
                 } { photos.length === 0 && !isDone &&
                     <div>
                      <Typography gutterBottom className={classes.cardtitle} component="h2">
-                        Our algorithem did not found any similar identity
+                        Our algorithm did not find any similar identity
                     </Typography>
                     <button className='btn' onClick={handleNew}>New identity</button>
 

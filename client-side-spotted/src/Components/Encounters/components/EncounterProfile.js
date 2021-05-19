@@ -154,8 +154,8 @@ else {
             <p>Spotted At: {date}</p>
             <p>Encounter no.: {encounter.EncounterID}</p>
             <p>Original ID: {encounter.OriginalID}</p>
-            <p>Total Bluespotted Reported: {encounter.SpottedCountReported}:</p>
-            <p>Actually Detected: {encounter.SpottedCount? encounter.SpottedCount : 'Not detected yet'}</p>
+            <p>Total Bluespotted Reported: {encounter.SpottedCountReported}</p>
+            <p>BlueSpotted Count: {encounter.SpottedCount? encounter.SpottedCount : 'Not detected yet'}</p>
             <p>MediaType: {encounter.MediaType === 1 ? 'Photos' : 'Video'}</p>
             <p>Reported By: {encounter.ReporterEmail}</p>
             <p>{encounter.UpdateBy ? 'Last Updates By: '+encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at: ' + encounter.UpdateAt : ''}</p>

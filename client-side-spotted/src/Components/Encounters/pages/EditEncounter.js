@@ -258,7 +258,7 @@ export default function EditIdentifiedEncounter(props) {
             <TextField
               inputRef={register}
               name="SpottedCount"
-              label="Bluespotted Total Number"
+              label="Bluespotted count"
               margin="normal"
               defaultValue={count}
               helperText={`Was reported ${count} Bluespotted`}
@@ -279,7 +279,7 @@ export default function EditIdentifiedEncounter(props) {
             <TextField
               inputRef={register}
               name="ProfilePicture"
-              label="Profile Picture link"
+              label="Profile picture link"
               margin="normal"
               halfwidth="true"
             />
