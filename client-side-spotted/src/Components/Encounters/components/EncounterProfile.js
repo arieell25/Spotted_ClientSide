@@ -93,24 +93,7 @@ export default function EncounterProfile(props) {
     setOpen(false);
     setOpenPhotos(false);
   };
-  // const handleEdit = () => {
-  //   setEdit(true);
-  // };
-  // const handleSave = (title, couponName, link, discount) => {
-  //   var body = {
-
-  //   //   publisherImg: api.getLocalStorageUser().img,
-  //   };
-  //   try {
-  //       EncounterService.updateEncounter(index, body).then(response => console.log(response));
-  //     setStatus('All changes were saved');
-  //     setOpen(true);
-  //   } catch (err) {
-  //     console.log('error fetching...:', err);
-  //     setStatus('Something is wrong... try again');
-  //     setOpen(true);
-  //   }
-  // };
+ 
 
 if (!encounter) return <GradientCircularProgress />
 else {
@@ -128,6 +111,7 @@ else {
         onClose={handleClose}/>
 
         <Card className={classes.root}>
+          <div>
         {encounter.ProfilePicture? <CardMedia
           component="img"
           className={classes.media}
@@ -136,6 +120,7 @@ else {
         /> :
         <GradientCircularProgress />
         }
+        </div>
         {openPhotos &&
         <PhotosGrid photos={photos}  />
           }

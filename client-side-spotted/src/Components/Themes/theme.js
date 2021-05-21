@@ -7,6 +7,9 @@ const theme = createMuiTheme({
         },
         textSecondary:{
             color: "#ffffff"
+        },
+        text:{
+            disabled: '#c5e0e361'
         }
      },
   typography: {
@@ -39,15 +42,31 @@ const theme = createMuiTheme({
         },
         text:{
             padding: "6px 20px"
+        },
+        // outlined: {
+        //     "&:hover": {
+        //       backgroundColor: "#50ec37"
+        //     }
+        //   },
+    },
+    MuiIconButton:{
+        root:{
+            "&$selected:hover": {
+                backgroundColor: "#50ec37"
+              }
+            // backgroundColor: "#50ec37"
         }
     },
-    MuiTypography:{
+    MuiTypography:{ 
         h6:{
             textTransform: "capitalize",
             fontFamily: "'Montserrat', sans-serif",
             fontSize:"26px"
         },
         colorTextSecondary:{
+            color:"white"
+        },
+        colorInherit:{
             color:"white"
         }
     },
@@ -73,11 +92,30 @@ const theme = createMuiTheme({
     MuiPickersCalendarHeader:{
         iconButton:{
             backgroundColor:"#252529"
+        },
+        dayLabel:{
+            color: "#e3d6d661"
         }
     },
+
     MuiPickersDay:{
+        root:{
+            "&$selected:hover": {
+                color: "#50ec37",
+                backgroundColor: "#50ec37"
+            },
+            "&:hover":{
+                backgroundColor: "#50ec37"
+
+            }
+        },
         daySelected:{
-            backgroundColor: "-webkit-linear-gradient(45deg,#C5F836, #3AA4D1)"
+            color: "#50ec37",
+            backgroundColor: "#50ec37"
+        },
+        hover:{
+            color: "#50ec37",
+            backgroundColor: "#50ec37"
         }
     },
     MuiListItem:{
@@ -131,14 +169,6 @@ const theme = createMuiTheme({
 
         }
     },
-    // MuiCardMedia:{
-    //     media:{
-    //         width: '80%',
-    //         padding: '20px',
-    //         margin: '0 auto',
-    //     }
-    
-    // }
     
   }
 })

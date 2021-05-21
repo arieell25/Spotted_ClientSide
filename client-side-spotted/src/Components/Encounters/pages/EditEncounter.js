@@ -29,17 +29,17 @@ export default function EditIdentifiedEncounter(props) {
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
   const [mediatypes, setmediatypes] = useState([]);
-  const [media, setmedia] = useState("");
+  const [media, setmedia] = useState('');
   const [count, setcount] = useState([]);
   const [encounter, setencounter] = useState([]);
-  const [verified, setVerified] = useState('no');
+  const [verified, setVerified] = useState('yes');
   const [pvalue, setpvalue] = useState("no");
   const [gender, setgender] = useState('unknown');
   const [sites, setsites] = useState([]);
   const [site, setsite] = useState('');
   const [originalid, setoriginalid] = useState('');
   const [profile, setprofile] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date('2020-01-01T21:11:54'));
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const { register, handleSubmit, control } = useForm();
   var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
 
@@ -50,7 +50,7 @@ export default function EditIdentifiedEncounter(props) {
       const encounter = await EncounterService.getEncounterById(id);
       console.log(encounter.SpottedCountReported);
       setsites(sitesData);
-      setSelectedDate(new Date(encounter.EncounterDate));
+      setSelectedDate((new Date(encounter.EncounterDate)).toLocaleDateString());
       setgender(encounter.Gender)
       setpvalue(encounter.IsPregnant ? 'yes' : 'no');
       setsite(encounter.SiteID);
@@ -58,7 +58,7 @@ export default function EditIdentifiedEncounter(props) {
       setcount(encounter.SpottedCountReported);
       setprofile(encounter.ProfilePicture);
       setoriginalid(encounter.OriginalID);
-      setVerified(encounter.Verified === true ? 'yes' : 'no');
+      // setVerified(encounter.Verified === 1 ? 'yes' : 'no');
       setmediatypes(mediatypeData);
       setencounter(encounter);
 
@@ -83,11 +83,16 @@ export default function EditIdentifiedEncounter(props) {
   };
   const onSubmit = data => {
     console.log(data);
-    // data.SiteID = site;
+    data.EncounterDate = selectedDate;
+    data.MediaType = media;
+    data.verified = verified;
+    // data.ProfilePicture = profile;
+    // data.OriginalID = originalid;
+    data.SiteID = site;
     EncounterService
       .updateEncounter(id, data)
       .then(result=>{
-        setStatus(`Updated succesfully encounter #${id}!`);
+        setStatus(`Updated succesfully encounter no. ${id}!`);
         setOpenRespons(true);
       })
       .catch(err => {
@@ -231,7 +236,7 @@ export default function EditIdentifiedEncounter(props) {
               defaultValue={pvalue}
             />
             </section>
-            <section>
+            {/* <section>
               <label>Verified by Resercher?</label>
             <Controller
               as={
@@ -252,7 +257,7 @@ export default function EditIdentifiedEncounter(props) {
               control={control}
               defaultValue={verified}
             />
-            </section>
+            </section> */}
             </div>
           <div className="row">
             <TextField
@@ -272,7 +277,7 @@ export default function EditIdentifiedEncounter(props) {
               name="OriginalID"
               label="Original ID"
               margin="normal"
-              defaultValue={originalid}
+              // defaultValue={originalid}
             />
           </div>
           <div className="row">
@@ -280,6 +285,7 @@ export default function EditIdentifiedEncounter(props) {
               inputRef={register}
               name="ProfilePicture"
               label="Profile picture link"
+              // defaultValue={profile}
               margin="normal"
               halfwidth="true"
             />

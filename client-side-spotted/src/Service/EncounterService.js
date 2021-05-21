@@ -58,11 +58,22 @@ function updateEncounter(id, data) {
 function updateEncounterPic(id, data) {
   if(data){
     const body ={ ProfilePicture: data};
-    return HttpService
+
+    if(userService.isLoggedIn()){
+      return HttpService
     .put(`/api/updateEncounter?id=${id}`, body)
     .then(res => {
       return res;
     } );
+    }
+    else{
+      return HttpService
+      .put(`/pub/updateEncounter?id=${id}`, body)
+      .then(res => {
+        return res;
+      } );
+    }
+    
   }else{
     return ("No data was provided");
   }
