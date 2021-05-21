@@ -75,7 +75,7 @@ export default function EncounterProfile(props) {
   const handleDelete = (e) => {
     console.log('deleting')
     try {
-        EncounterService.deleteEncounter(id)
+        EncounterService.deactivateEncounter(id)
       .then(response => {
           console.log(response)
           setStatus('Deleted Successfully.');
@@ -116,7 +116,7 @@ else {
           component="img"
           className={classes.media}
           image={encounter.ProfilePicture}
-          title="Contemplative Reptile"
+          title="Bluespotted Profile"
         /> :
         <GradientCircularProgress />
         }

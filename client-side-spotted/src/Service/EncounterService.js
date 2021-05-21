@@ -12,19 +12,20 @@ export const EncounterService = {
   updateEncounterPic,
   getMediatypes,
   getUserEncounters,
+  deactivateEncounter,
 }
 
 function getEncounters() {
   if(userService.isLoggedIn()){
     return  HttpService
-    .get(`/api/getAllEncounters`)
+    .get(`/api/getActiveEncounters`)
     .then(res => {
       return res.data.encounters.rows;
     } );
   }
   else{
     return HttpService
-    .get(`/pub/getAllEncounters`)
+    .get(`/pub/getActiveEncounters`)
     .then(res => {
       return res.data.encounters.rows;
     } );
@@ -78,6 +79,15 @@ function updateEncounterPic(id, data) {
     return ("No data was provided");
   }
 
+}
+
+function deactivateEncounter(id) {
+  const body = { id: id, isActive: 0 };
+  return HttpService
+  .put(`/api/updateEncounterIsActive`, body)
+  .then(res => {
+    return res;
+  } );
 }
 
 function deleteEncounter(id) {
