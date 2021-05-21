@@ -39,7 +39,7 @@ export default function PhotosUploader(props) {
                 console.log(res);
                 return (res);
             })
-            .catch(err => handleOpenRespons(`Upload faild please try again...${ err}`) )
+            .catch(err => handleOpenRespons(`Upload failed, please try again...${ err}`) )
 
         })
         console.log(Promise.all(uploaders))
@@ -60,10 +60,10 @@ export default function PhotosUploader(props) {
 
                         });
                      setId(id);
-                    handleOpenRespons(`Succesfully uploaded ${count} photos and sent for detection, Thank you!` );
+                    handleOpenRespons(`Successfully uploaded ${count} photos and sent for detection` );
                      setIsReady(true);
                     } );                
-            }).catch(err =>handleOpenRespons('Species detection faild...Please try again' ))
+            }).catch(err =>handleOpenRespons('Species detection failed... try again' ))
 
         });
     }

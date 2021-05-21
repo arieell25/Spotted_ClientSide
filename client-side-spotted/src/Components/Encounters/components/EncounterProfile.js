@@ -138,7 +138,7 @@ else {
             <div className ="detailsEncounter">
             <p>Spotted At: {date}</p>
             <p>Encounter no.: {encounter.EncounterID}</p>
-            <p>Original ID: {encounter.OriginalID}</p>
+            <p>SIIֹ_ID: {encounter.OriginalID}</p>
             <p>Total Bluespotted Reported: {encounter.SpottedCountReported}</p>
             <p>BlueSpotted Count: {encounter.SpottedCount? encounter.SpottedCount : 'Not detected yet'}</p>
             <p>MediaType: {encounter.MediaType === 1 ? 'Photos' : 'Video'}</p>

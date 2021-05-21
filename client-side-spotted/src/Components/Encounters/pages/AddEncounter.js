@@ -153,6 +153,8 @@ const useStyles = makeStyles(() => ({
                   helperText="Please enter number of Bluespotted"
                 />
               </div>
+              <br></br>
+              <br></br>
               <div className="lowerContainer">
               <section>
               <label>Gender</label>

@@ -78,8 +78,8 @@ export default function ResultsCard(props) {
         //Add to DB manual results
         SystemResultsService.addManualResult(originalPhoto, item.value, encounterid )
         .then(() => {
-          setstatus(`Photo tagging as identified Bluespotted no. ${item.value} was saved.`);
-          setDoneStatus(`Photo of encounter no. ${encounterid} tagged as indevidual identity no. ${item.value}. `)
+          setstatus(`Photo tagging as identified Bluespotted no. ${item.value} saved.`);
+          setDoneStatus(`Photo from encounter no. ${encounterid} tagged as individual identity no. ${item.value}. `)
           setisDone(true); 
           setOpen(true);
 
@@ -89,7 +89,7 @@ export default function ResultsCard(props) {
     })
     .catch(err => {setstatus(err); setOpen(true);} );
   }else{
-    setstatus('Please pick one representing image of identety or create a new one.'); 
+    setstatus('Please pick one representing image of identity alternative create a new one'); 
     setOpen(true);
   }
 
@@ -117,8 +117,8 @@ const handleNew = () => {
         identificationService.setIndividualIdentity(res.IdentifiedEncounterID , originalPhoto);
         SystemResultsService.addManualResult(originalPhoto, res.IdentifiedEncounterID, encounterid )
         .then (()=> {
-          setstatus(`Successfully added new identety no. ${res.IdentifiedEncounterID}`);
-          setDoneStatus(`Photo of encounter no. ${encounterid} was saved as new indevidual identity no.${res.IdentifiedEncounterID} `)
+          setstatus(`Successfully added new identity no. ${res.IdentifiedEncounterID}`);
+          setDoneStatus(`Photo of encounter no. ${encounterid} saved as new individual identity no.${res.IdentifiedEncounterID} `)
           setisDone(true); 
           setOpen(true);
         })
@@ -150,7 +150,7 @@ else{
                 {photos.length > 0 && !isDone &&
                 <div>
                     <Typography gutterBottom className={classes.cardtitle} component="h2">
-                    Our algorithem found the next indeviduals as most similar, please pick one
+                    Most similar individuals- please pick one
                     </Typography>
                     <ImagePicker 
                         images={photos.map((image, i) => ({src: image.ProfilePicture, value: image.IdentifiedEncounterID}))}
@@ -166,7 +166,7 @@ else{
                 } { photos.length === 0 && !isDone &&
                     <div>
                      <Typography gutterBottom className={classes.cardtitle} component="h2">
-                        Our algorithm did not find any similar identity
+                        Did not find any similar identity
                     </Typography>
                     <button className='btn' onClick={handleNew}>New identity</button>
 

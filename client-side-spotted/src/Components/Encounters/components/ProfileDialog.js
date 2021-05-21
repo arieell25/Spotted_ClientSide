@@ -95,7 +95,7 @@ export default function ProfileDialog(props) {
             </CardActions>
             <div className ="detailsEncounter">
             <p>Spotted by: {encounter[0].Photographer}</p>
-            <p>{encounter[0].isAlive? 'Considerd as Alive' : 'Considerd as Dead'}</p>
+            <p>{encounter[0].isAlive? 'Considered as Alive' : 'Considered as Dead'}</p>
             <p>{encounter[0].EncounterID ? `First reported on Encounter no. ${encounter[0].EncounterID}` : ''}</p>
             <p>Created at {date}</p>
             <p>Gender: {encounter[0].Sex}</p>

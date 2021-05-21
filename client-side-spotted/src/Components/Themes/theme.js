@@ -166,6 +166,7 @@ const theme = createMuiTheme({
         root:{
             color: "#ffffff",
             fontFamily: "'Montserrat', sans-serif",
+            paddingTop: "50px"
 
         }
     },
