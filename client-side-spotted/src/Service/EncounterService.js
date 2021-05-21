@@ -25,7 +25,7 @@ function getEncounters() {
   }
   else{
     return HttpService
-    .get(`/pub/getAllEncounters`)
+    .get(`/pub/getActiveEncounters`)
     .then(res => {
       return res.data.encounters.rows;
     } );
