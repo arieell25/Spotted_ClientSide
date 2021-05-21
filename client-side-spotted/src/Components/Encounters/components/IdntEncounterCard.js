@@ -89,7 +89,7 @@ export default function IdntEncounterCard(props) {
                  {encounter.isAlive ? "Last was reported as alive" : "Last was reported as dead"}
               </Typography> */}
               <Typography variant="body2" color="secondary" component="p">
-              {encounter.Description}
+              Description: {encounter.Description}
               </Typography>
 
             </CardContent>

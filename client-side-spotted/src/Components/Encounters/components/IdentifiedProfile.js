@@ -152,7 +152,7 @@ else {
             <p>DW: {encounter.DW}</p>
             <p>Max depth: { `${encounter.MaxDepth} meter`}</p>
             <p>Water temperature: {encounter.Temp} </p>
-            <p>Link to source: {encounter.Link ? encounter.Link : ''}</p>
+            <p>Link to source(optional): {encounter.Link ? encounter.Link : ''}</p>
             <p>{encounter.UpdatedBy ? 'Last Updates By: ' + encounter.UpdatedBy : ''}{encounter.UpdatedAt ? ' at ' + encounter.UpdatedAt : ''}</p> 
           </div>
           </CardContent>
