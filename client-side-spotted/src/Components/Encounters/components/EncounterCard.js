@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     color: '#e0e0e7',
   },
   checked:{
-    margin: '15px',
+    margin: '5px',
   },
   cardContainer:{
     float: 'left',
@@ -74,7 +74,7 @@ export default function EncounterCard(props) {
               image={
                 encounter.ProfilePicture
                   ? encounter.ProfilePicture
-                  : 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTCWnEg-zPrA6JZIXqfN7vxCdSWgORuP3b3jycKv1_3oZYODAeF'
+                  : 'https://t4.ftcdn.net/jpg/02/07/87/79/360_F_207877921_BtG6ZKAVvtLyc5GWpBNEIlIxsffTtWkv.jpg'
               }
               title="Contemplative Reptile"
             />
