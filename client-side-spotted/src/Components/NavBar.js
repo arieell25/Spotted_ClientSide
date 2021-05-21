@@ -43,8 +43,8 @@ const navLinksPub = [
 const navLinksUser = [
   { title: `Report Encounter`, path: `/AddEncounter` },
   { title: `My Encounters`, path: `/UserEncountersBoard` },
-  { title: `All Encounters`, path: `/EncountersBoard` },
-  { title: `All Identified `, path: `/IdentifiedBoard` },
+  { title: `Encounters`, path: `/EncountersBoard` },
+  { title: `Individuals `, path: `/IdentifiedBoard` },
 ];
 
 const NavBar = () => {
@@ -86,7 +86,7 @@ const NavBar = () => {
           </Link> */}
             <NavLink to="/Home" exact>
               <img
-                src="/logo192.png"
+                src="logo192.png"
                 alt="logo"
                 style={{ height: 50, margin: 10 }}
               />

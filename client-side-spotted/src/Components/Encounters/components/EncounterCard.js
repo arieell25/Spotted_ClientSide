@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-
-
-import {
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';import {
   Card,
   CardActionArea,
   CardActions,
@@ -11,6 +10,7 @@ import {
   CardContent,
   CardMedia,
   Grid,
+  IconButton,
 } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
@@ -29,6 +29,13 @@ const useStyles = makeStyles(theme => ({
   lable: {
     color: '#e0e0e7',
   },
+  checked:{
+    margin: '15px',
+  },
+  cardContainer:{
+    float: 'left',
+
+  }
 }));
 
 export default function EncounterCard(props) {
@@ -71,20 +78,29 @@ export default function EncounterCard(props) {
               }
               title="Contemplative Reptile"
             />
-            <CardContent>
+            <CardContent >
+              <div className={classes.cardContainer}>
               <Typography variant="body2" color="secondary" component="h5">
                 Encounter no.: {encounter.EncounterID}
               </Typography>
+    
               <Typography variant="body2" color="secondary" component="h5">
                 Original ID: {encounter.OriginalID}
               </Typography>
-              <Typography variant="body2" color="secondary" component="h5">
+              {/* <Typography variant="body2" color="secondary" component="h5">
                  {!encounter.Verified ? "Not Verified" : "Verififed"}
-              </Typography>
+              </Typography> */}
               <Typography variant="body2" color="secondary" component="p">
-              Spotted at: {date}
+              Last encounter date: {date}
               </Typography>
+              </div>
+              <div>
+              {encounter.Verified &&
+              <CheckCircleOutlineIcon className={classes.checked} color="secondary" />
+              }
+              </div>
             </CardContent>
+
           </CardActionArea>
 
         <CardActions>

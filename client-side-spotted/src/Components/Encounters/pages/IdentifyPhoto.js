@@ -9,6 +9,7 @@ import ImagePicker from 'react-image-picker'
 import 'react-image-picker/dist/index.css'
 import { PhotoService } from '../../../Service/PhotoService';
 import ResultsCard from '../components/ResultsCard';
+import SidesMenuDialog from '../components/SidesMenuCard';
 
 // import { Link, useLocation, BrowserRouter } from "react-router-dom";
 import StatusDialog from '../components/StatusDialog';
@@ -26,10 +27,21 @@ const useStyles = makeStyles((theme) => ({
       },
   }));
 
+  const photoSides = [
+    {title: "Right profile ", value: "1"},
+    {title: "Right front ", value: "2"},
+    {title: "Right top ", value: "3"},
+    {title: "Left profile ", value: "4"},
+    {title: "Left front ", value: "5"},
+    {title: "Left top ", value: "6"},
+    {title: "Full top ", value: "7"},
+
+  ]
+
     function IdentifyPhoto(props){
         const classes = useStyles();
         const [photos, setPhotos] = useState([]);
-        const [loading, setLoading] = useState([]);
+        const [loading, setLoading] = useState();
         const [resultsReady, setResultsReady] = useState(false);
         const [fileNames, setfileNames] = useState([]);
         const [status, setStatus] = useState('');
@@ -38,38 +50,75 @@ const useStyles = makeStyles((theme) => ({
         const [newId, setId] = useState(null);
         const [image, setimage] = useState(null);
         const [idntId, setidntId] = useState(null);
-        const [photosResults, setPhotosResults] = useState();
         const [idntResults, setidntResults] = useState();
         var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
-        
+        const [lastClicked, setLastClicked] = useState();
+        const [open, setOpen] = useState(false);
+        const [selectedValue, setSelectedValue] = useState(photoSides[0].title);
+        const [update, setUpdate] = useState(false);
+   
+        const handleClose = () => {
+          setOpen(false);
+        };
+        const handleSaveSide = () => {
+          console.log(`selected values for save: ${selectedValue}`)
+          console.log(image);
+          console.log(lastClicked);
+          PhotoService.updatePhotoSide(lastClicked, selectedValue)
+          .then(setUpdate(!update))
+          .catch(err => { setStatus('Failed to set photo side. Try again.')});
+          // setImagesSides(image);
+          // setImagesSides((previousState) => ({
+          //   // now we'll use cached value
+          //   imagesSides: imagesSides.map(item => item.value === lastClicked 
+          //     ? Object.assign(item, {side: selectedValue}) 
+          //     : item)
+          // }));
+          setOpen(false);
+          console.log(image);
+
+          
+          // PhotoService.updateDBPhoto()
+        };
+
     useEffect(() => {
         const fetchData = async () => {
         //   const boundingBoxData = await PhotoService.getEncounterPhotosBBox(fileNames);
           const photosData = await PhotoService.getEncounterPhotos(id);
            var new_arr = photosData.map(image=> {
                let arr_str = (image.src).split("/");
-               console.log(arr_str);
                image.fileName = arr_str[5];
                return (image)
            }
              )
-             console.log(new_arr);
-           
-          setPhotos(new_arr);
+            //  console.log(`new Photos arr ${new_arr}`);          
+            setPhotos(new_arr);
         };
         fetchData();  
         setLoading(false);
       
-      }, []);
+      }, [update]);
 
         const onClick = () => {
             setLoading(true);
-            console.log(image.image)
+            console.log(image)
             console.log(fileNames);
+            const photosArr = [];
+            console.log(photos);
+            for(let i = 0; i < image.length; i += 1 ){
+              let photo = photos.filter(item => item.src === image[i].src );
+              if(photo !== undefined) {
+                console.log(photo);
+                let str = (photo[0].src).split("/");
+                photo[0].value = str[5];
+                photosArr.push(photo[0]);
+              }
+            }
+            console.log(photosArr);
             PhotoService.getEncounterPhotosBBox(fileNames)
             .then(res => {
                 console.log(res);
-                identificationService.identifyPhotos(image.image, res )
+                identificationService.identifyPhotos(photosArr, res )
                 .then(res => {
                     console.log(res);
                     SystemResultsService.addSecondSystemResults(res)
@@ -85,72 +134,22 @@ const useStyles = makeStyles((theme) => ({
             })
             .catch(err => {setStatus(err); setOpenRespons(true);} );
         }
-        const onPick = (image) => {
-            setimage({image});
-            setfileNames(image.map((item)=>item.value));
-            // setfileNames(prevState=>[image, ...prevState]);
+        const onPick = (item) => {
+          let length = item.length ;
+          console.log(item);
+          setimage(item);
+            setLastClicked(item[length-1]);
+            setfileNames(item.map((item)=>item.value));
             console.log(fileNames);
+            // console.log(image);
+
+            setOpen(true);
+            
         }
 
         const handleCloseRespons = () => {
             setOpenRespons(false);
           };
-
-        // const uploadHandler= async () =>{
-        //     console.log(fileNames);
-        //     // var id = query.get("id");
-        //     setId(id);
-        //     console.log(id);
-        //     const fd = new FormData();
-        //     // fd.append('image', pictures[0][0], pictures[0][0].name);
-        //     try{
-        //         await speciesDetectionService
-        //         .detectSpecies(fd)
-        //         .then( res => {
-        //             //Check if confidence > 70%
-        //             console.log(res);
-        //             var bBox = res.data;
-        //             var url, photoId;
-        //             var count = res.counts;
-        //             var confidence = (res.data[0][0].confidences).toString().substring(0,4);
-        //             if(res.counts > 0 && confidence > 0.61){
-        //              EncounterService
-        //             .uploadPhoto(fd, id)
-        //             .then(data => {
-        //                 console.log('Added photo: ' + data.url);
-        //                 url = data.url;
-        //                 EncounterService.addPhoto(id, url, count)
-        //                 .then(res=>{
-        //                     photoId = res.data.newPhoto.PhotoID;
-        //                     EncounterService.addBoundingBox(bBox, photoId)
-        //                     .then(res=> console.log('added bounding box status: '+ JSON.stringify(res) ))
-        //                 } )
-        //                 .catch(err=> console.log(err));
-        //                 setStatus(`Detected ${count} BlueSpotted with ${confidence} and saved photo!`);
-        //                 setOpenRespons(true);
-        //             })
-        //             .catch(err => {
-        //                 console.log(err);
-        //                 setStatus('Photo upload faild');
-        //                 setOpenRespons(true);
-        //             });
-
-                   
-        //             }else if(res.counts == 0){
-        //                 setStatus('Sorry we did not detect any BlueSpotted.... try with a diffrent photo.');
-        //                 setOpenRespons(true)
-        //             }
-        //         })
-        //         // .catch(err=>{
-        //         //         console.log(err);
-        //         //         setStatus('Oops...Something went wrong....');
-        //         //         setOpenRespons(true)
-        //         // }); 
-               
-        //     }catch(err){
-        //         console.log(err)
-        //     }
-        // }
 
         const renderEachResult = (item, i) => {
             if(item.individuals_ID){
@@ -169,14 +168,6 @@ const useStyles = makeStyles((theme) => ({
           };
 
         if (!photos || loading ) return <GradientCircularProgress />
-        // else if(error){
-        //     return
-        //     (<StatusDialog
-        //         open={openRespons}
-        //         status={status}
-        //         onClose={handleCloseRespons}
-        //     /> )
-        // }
         else if(resultsReady){
             return(
             <div className="animated slideInUpTiny animation-duration-3">
@@ -203,15 +194,6 @@ const useStyles = makeStyles((theme) => ({
         }
         else{
             return (
-                // {{ resultsReady} && 
-                //     <Grid container className="Encounters">
-                //     {encounters
-                //       .map(renderEachEncounter)
-                //       .reverse()
-                //       .slice(0, limit)
-                //     }
-                //   </Grid>
-                // }
                 <div className="animated slideInUpTiny animation-duration-3">
                 <div className="m-5">
 
@@ -226,7 +208,15 @@ const useStyles = makeStyles((theme) => ({
                         Select photos for identification
                         </Typography>
                     <ImagePicker 
-                            images={photos.map((image, i) => ({src: image.src, value: image.fileName}))}
+                            images={photos.map((image, i) => ({
+                              src: image.src,
+                              value: image.fileName,
+                              LeftSide: image.LeftSide,
+                              RightSide: image.RightSide, 
+                              FrontSide: image.FrontSide, 
+                              TopSide: image.TopSide,
+                              BackSide: image.BackSide
+                            }))}
                             onPick={onPick}
                             multiple
                             />
@@ -236,6 +226,14 @@ const useStyles = makeStyles((theme) => ({
                         </div>
 
                 </Card>
+               <SidesMenuDialog 
+               open={open} 
+               value={selectedValue}
+               setSelectedValue={setSelectedValue} 
+               onClose={handleClose}
+               sidesData={photoSides}
+               onSave={handleSaveSide}
+               />
                 <StatusDialog
                     open={openRespons}
                     status={status}

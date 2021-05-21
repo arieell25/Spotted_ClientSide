@@ -11,6 +11,8 @@ export const PhotoService = {
   getEncounterPhotosBBox,
   getIdntEncounterProfilePic,
   updateDBPhoto,
+  updatePhotobyID,
+  updatePhotoSide
 }
 
 async function addPhoto(id, url, count) {
@@ -33,6 +35,51 @@ async function addPhoto(id, url, count) {
       // return HttpService.post(`api/addPhotos`, encounter); TODO many photos.
     }
   }
+
+  async function updatePhotobyID(item, data) {
+    console.log('updatephoto:  ' + JSON.stringify(item) );
+    if (item) {
+      const body ={ };
+      return HttpService.put(`/api/updatephoto?id=`, body)
+    } else {
+      console.log("no photo data");
+      // return HttpService.post(`api/addPhotos`, encounter); TODO many photos.
+    }
+  }
+  async function updatePhotoSide(item, data) {
+    if (item) {
+      let body;
+        switch(data) {
+        case '1' :
+        case '2' :
+        case '3' :
+           body = {FrontSide: 0,LeftSide: 0, RightSide: 1, TopSide: 0, BackSide:0, src: item.src };
+           break;
+        case '4' :
+        case '5':
+        case '6':
+           body = {FrontSide: 0,LeftSide: 1, RightSide: 0, TopSide: 0, BackSide:0, src: item.src};
+           break;
+        case '7':
+             body = {FrontSide: 0, LeftSide: 0, RightSide: 0, TopSide: 1, BackSide:0, src: item.src};
+             break;
+        case 'TopSide':
+             body = {FrontSide: 0,LeftSide: 0, RightSide: 0, TopSide: 1, BackSide:0, src: item.src};
+             break;
+        case 'BackSide':
+             body = {FrontSide: 0,LeftSide: 0, RightSide: 0, TopSide: 0, BackSide:1, src: item.src};
+             break;
+        default:
+          body = {FrontSide: 0,LeftSide: 0, RightSide: 0, TopSide: 0, BackSide:0, src: item.src};
+            break;    
+    }
+      console.log(body);
+      return HttpService.put(`/api/updatePhotoSide`, body)
+    } else {
+      console.log("no photo data");
+    }
+  }
+
 
 async function uploadPhoto(fd, id) {
     console.log('photo service id: ' + id +' fd: ' + fd);
