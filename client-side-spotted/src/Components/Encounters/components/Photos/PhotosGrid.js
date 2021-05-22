@@ -1,5 +1,5 @@
 import React, { useState} from "react";
-import GradientCircularProgress from '../Encounters/components/CircularProgress';
+import GradientCircularProgress from '../CircularProgress';
 import ImageViewer from './ImagesView';
 
 

@@ -13,6 +13,7 @@ export const EncounterService = {
   getMediatypes,
   getUserEncounters,
   deactivateEncounter,
+  getEncounterVideo,
 }
 
 function getEncounters() {
@@ -99,10 +100,38 @@ function deleteEncounter(id) {
 }
 
 function getEncounterById(encounterId) {
-  return HttpService.get(`/api/getEncounter?id=${encounterId}`)
-  .then(res=> {
-    return res.data.encounter;
-  })
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getEncounter?id=${encounterId}`)
+    .then(res => {
+      return res.data.encounter;
+    } );
+  }
+  else{
+    return  HttpService
+    .get(`/pub/getEncounter?id=${encounterId}`)
+    .then(res => {
+      return res.data.encounter;
+    } );
+  }
+
+}
+function getEncounterVideo(encounterId) {
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getEncounterVideos?id=${encounterId}`)
+    .then(res => {
+      return res.data.video;
+    } );
+  }
+  else{
+    return  HttpService
+    .get(`/pub/getEncounterVideos?id=${encounterId}`)
+    .then(res => {
+      return res.data.video;
+    } );
+  }
+
 }
 
 function addEncounter(encounter) {

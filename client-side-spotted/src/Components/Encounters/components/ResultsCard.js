@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     padding: 50,
-    width: 800,
+    maxWidth: 800,
     margin: `0 auto`
   },
   linkText:{

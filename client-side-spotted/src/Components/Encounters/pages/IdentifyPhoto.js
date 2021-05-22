@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         padding: 50,
-        width: 800,
+        maxWidth: 800,
         margin: `0 auto`
       },
     cardtitle :{
@@ -68,18 +68,13 @@ const useStyles = makeStyles((theme) => ({
           .then(setUpdate(!update))
           .catch(err => { setStatus('Failed to set photo side. Try again.')});
           // setImagesSides(image);
-          // setImagesSides((previousState) => ({
-          //   // now we'll use cached value
-          //   imagesSides: imagesSides.map(item => item.value === lastClicked 
-          //     ? Object.assign(item, {side: selectedValue}) 
-          //     : item)
-          // }));
           setOpen(false);
           console.log(image);
 
           
           // PhotoService.updateDBPhoto()
         };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -99,14 +94,19 @@ const useStyles = makeStyles((theme) => ({
       
       }, [update]);
 
-        const onClick = () => {
+        const onClick = async() => {
+            // setUpdate(!update);
             setLoading(true);
             console.log(image)
             console.log(fileNames);
             const photosArr = [];
-            console.log(photos);
+            const photosData = await PhotoService.getEncounterPhotos(id)
+            .then(res => {
+                
+            setPhotos(res);
+            console.log(res);
             for(let i = 0; i < image.length; i += 1 ){
-              let photo = photos.filter(item => item.src === image[i].src );
+              let photo = res.filter(item => item.src === image[i].src );
               if(photo !== undefined) {
                 console.log(photo);
                 let str = (photo[0].src).split("/");
@@ -133,7 +133,8 @@ const useStyles = makeStyles((theme) => ({
                 .catch(err =>{ setStatus(err); setOpenRespons(true); setError(true);});
             })
             .catch(err => {setStatus(err); setOpenRespons(true);} );
-        }
+          })
+          }
         const onPick = (item) => {
           let length = item.length ;
           console.log(item);
@@ -152,6 +153,7 @@ const useStyles = makeStyles((theme) => ({
           };
 
         const renderEachResult = (item, i) => {
+          for(let i =0 ; i< item.length; i++) {
             if(item.individuals_ID){
               return (
                 <ResultsCard index={i} 
@@ -165,6 +167,7 @@ const useStyles = makeStyles((theme) => ({
                 />
               );
             }
+          }
           };
 
         if (!photos || loading ) return <GradientCircularProgress />
@@ -175,7 +178,8 @@ const useStyles = makeStyles((theme) => ({
               <div className="d-flex justify-content-center title">
                 <h2>Individual Identification Results</h2>               
              <div className={classes.results}>
-                    {idntResults
+                    {
+                    idntResults
                       .map(renderEachResult)
                     }
                   </div>

@@ -1,4 +1,4 @@
-import  React, { useState, useEffect } from "react";
+import  React, { useState, useEffect, useRef } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,7 +7,7 @@ import {
   ListItemText,
   Button
 } from "@material-ui/core";
-
+import UserMenu from './UserMenu'
 import Menu from '@material-ui/core/Menu';
 import { userService } from '../Service/UserService'
 import { Home } from "@material-ui/icons";
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 
 const navLinksPub = [
   { title: `Report Encounter`, path: `/AddEncounter` },
-  { title: `All Encounters`, path: `/EncountersBoard` },
+  { title: `Encounters`, path: `/EncountersBoard` },
 ];
 const navLinksUser = [
   { title: `Report Encounter`, path: `/AddEncounter` },
@@ -50,8 +50,9 @@ const navLinksUser = [
 const NavBar = () => {
   const [anchorElL, setAnchorElL] = useState(null);
   const [anchorSignup, setAnchorSignup] = useState(null);
-
+  const [open, setOpen] = useState(false);
   const [islogin, setislogin] = useState(null);
+  const anchorRef = useRef(null);
 
   const classes = useStyles();
   useEffect(() => {}, [islogin]);
@@ -71,11 +72,22 @@ const NavBar = () => {
   }
   const handleCloseL = () => { setAnchorElL(null); }
   
-  function handleLogoutClick(e) {
-    userService.logout();
-    window.location.reload();
+  // function handleLogoutClick(e) {
+  //   userService.logout();
+  //   window.location.reload();
 
-  }
+  // }
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <AppBar position="static" style={{ backgroundColor: `#252529` }}> 
@@ -140,23 +152,21 @@ const NavBar = () => {
            </div>)}
         {userService.isLoggedIn()  && (
          <div className="logindiv">
-         <Button
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleLogoutClick}
-              size="small"
-              // style={{left: '30%'}}
-            >
-              Logout
-        </Button>
             <Button
-              aria-controls="simple-menu"
               aria-haspopup="true"
               size="small"
-              // style={{color: 'white'}}
+              onClick={handleToggle}
+              ref={anchorRef}
+              aria-controls={open ? 'menu-list-grow' : undefined}
               >
               {userService.getLocalStorageUser()}          
             </Button>
+            <UserMenu
+            open={ open }
+            setOpen={ setOpen }
+            handleClose={ handleClose }
+            anchorRef = { anchorRef}
+            />
             </div>
     
             )}

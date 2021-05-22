@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import qs from 'qs';
-import ImageUploader from 'react-images-upload';
-import {EncounterService} from '../../../Service/EncounterService';
-import {speciesDetectionService} from '../../../Service/DetectionService/speciesDetectionService';
-import { Link, useLocation, BrowserRouter as Router } from "react-router-dom";
+// import ImageUploader from 'react-images-upload';
+// import {EncounterService} from '../../../Service/EncounterService';
+// import {speciesDetectionService} from '../../../Service/DetectionService/speciesDetectionService';
+import {BrowserRouter as Router } from "react-router-dom";
 import StatusDialog from '../components/StatusDialog';
 import { makeStyles } from '@material-ui/core/styles';
 import {Card, Button} from "@material-ui/core";
-import PhotosUploader from '../../Photos/PhotosUploader';
+import PhotosUploader from '../components/Photos/PhotosUploader';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';

@@ -25,9 +25,10 @@ const theme = createMuiTheme({
   },
   overrides: {
     MuiButtonBase:{
-        root:
-        {
-            color: "white"
+        root:{
+            fontFamily: "'Montserrat', sans-serif",
+            color: "white",
+
         }
     },
     MuiButton:{
@@ -54,7 +55,6 @@ const theme = createMuiTheme({
             "&$selected:hover": {
                 backgroundColor: "#50ec37"
               }
-            // backgroundColor: "#50ec37"
         }
     },
     MuiTypography:{ 
@@ -68,6 +68,13 @@ const theme = createMuiTheme({
         },
         colorInherit:{
             color:"white"
+        }
+    },
+    MuiMenuItem:{
+        root: {
+            fontFamily: "'Montserrat', sans-serif",
+            textTransform: "capitalize",
+
         }
     },
     MuiAppBar: {

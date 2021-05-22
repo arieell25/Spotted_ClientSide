@@ -3,12 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import StatusDialog from './StatusDialog';
-import EditiDialog from './EditDialog';
 import GradientCircularProgress from './CircularProgress';
 import {IdntEncService} from '../../../Service/IdentifiedEncounterService';
 import {userService} from '../../../Service/UserService';
 import { PhotoService } from '../../../Service/PhotoService';
-import PhotosGrid from '../../Photos/PhotosGrid';
+import PhotosGrid from './Photos/PhotosGrid';
 import qs from 'qs';
 import { IconButton, Typography,  Card, CardMedia, CardContent, CardActions} from '@material-ui/core';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
@@ -17,7 +16,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     padding: 50,
-    width: 800,
+    maxWidth: 800,
     margin: `0 auto`
   },
   media:{

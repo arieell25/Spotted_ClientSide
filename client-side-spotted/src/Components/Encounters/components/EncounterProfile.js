@@ -3,10 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import PhotosGrid from '../../Photos/PhotosGrid';
+import PhotosGrid from './Photos/PhotosGrid';
 import StatusDialog from './StatusDialog';
 import GradientCircularProgress from './CircularProgress';
 import {EncounterService} from '../../../Service/EncounterService';
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 // import {userService} from '../../../Service/UserService';
 import { PhotoService } from '../../../Service/PhotoService';
 
@@ -18,7 +19,7 @@ const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     padding: 50,
-    width: 800,
+    maxWidth: 800,
     margin: `0 auto`
   },
   media:{
@@ -50,7 +51,8 @@ export default function EncounterProfile(props) {
   const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [open, setOpen] = useState(false);
-  const [linkpath, setlinkpath] = useState('')
+  const [linkpath, setlinkpath] = useState('');
+  const [videoPath, setVideoPath] = useState();
   const [edit, setEdit] = useState(false);
   const [date, setDate] = useState('');
   const [openPhotos, setOpenPhotos] = useState(false);
@@ -62,11 +64,12 @@ export default function EncounterProfile(props) {
         const fetchData = async () => {
           const encounterData = await EncounterService.getEncounterById(id);
           const photosData = await PhotoService.getEncounterPhotos(id);
-          
+          const videoData = await EncounterService.getEncounterVideo(id);
           let date = new Date(encounterData.EncounterDate);
           setDate(date.toLocaleDateString());
           setPhotos(photosData);
           setEncounter(encounterData)
+          setVideoPath(videoData);
         };
         fetchData();        
           // console.log(photos[0]);
@@ -93,7 +96,13 @@ export default function EncounterProfile(props) {
     setOpen(false);
     setOpenPhotos(false);
   };
- 
+  const openInNewTab = () => {
+    if(videoPath.length > 0){
+      const newWindow = window.open(videoPath, '_blank', 'noopener,noreferrer')
+      if (newWindow) newWindow.opener = null
+
+    }
+  }
 
 if (!encounter) return <GradientCircularProgress />
 else {
@@ -132,8 +141,10 @@ else {
               {/* edit event listner */}
                 <p>{photos.length}</p>
                 <IconButton color="secondary" onClick={ () => setOpenPhotos(openPhotos => !openPhotos)}><PhotoLibraryIcon/></IconButton>
-                <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditEncounter?id=${encounter.EncounterID}`}><EditIcon /></IconButton>
-                <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton>
+                {videoPath && 
+                <IconButton color="secondary" onClick={ (e) => openInNewTab()}><VideoLibraryIcon/></IconButton>}
+                {/* <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditEncounter?id=${encounter.EncounterID}`}><EditIcon /></IconButton>
+                <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton> */}
             </CardActions>
             <div className ="detailsEncounter">
             <p>Spotted At: {date}</p>
@@ -149,6 +160,10 @@ else {
           <button className='btn'onClick={event =>  window.location.href=`/IdentifyPhoto?id=${encounter.EncounterID}`} >
                   IDENITFY
           </button> 
+          <CardActions className={classes.actions}>
+          <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditEncounter?id=${encounter.EncounterID}`}><EditIcon /></IconButton>
+          <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton>
+            </CardActions>
 
 
     </Card>
