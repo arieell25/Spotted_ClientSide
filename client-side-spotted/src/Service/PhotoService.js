@@ -3,6 +3,7 @@ import {userService} from './UserService';
 
 export const PhotoService = {
   getEncounterPhotos,
+  getPhotoByUrl,
   uploadPhoto,
   uploadRawPhoto,
   addPhoto,
@@ -140,6 +141,13 @@ async function uploadPhoto(fd, id) {
     })
   }
 
+  function getPhotoByUrl(url) {
+    const body = {PhotoPath: url}
+    return HttpService.put(`/api/getPhotoByUrl`, body)
+    .then(res=> {
+      return res.data.photo;
+    })
+  }
   function getEncounterPhotosBBox(data) {
     if(data){
       const body ={photosId: data} ;

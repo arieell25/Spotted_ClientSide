@@ -15,7 +15,7 @@ import IdentifiedProfile from './Components/Encounters/components/IdentifiedProf
 import theme from './Components/Themes/theme'
 import EditEncounter from './Components/Encounters/pages/EditEncounter'
 import UserEncountersBoard from './Components/Encounters/pages/UserEncountersBoard'
-
+import AdminDashboard from './Components/admin/AdminDashboard';
 const App = () => {
   return (
   <ThemeProvider theme={theme}>
@@ -37,6 +37,8 @@ const App = () => {
           { <Route path='/EditIdentifiedEncounter' component={EditIdentifiedEncounter}/>}
           { <Route path='/AddIdentifiedEncounter' component={AddIdentifiedEncounter}/>}
           { <Route path='/EditEncounter' component={EditEncounter}/>}
+          { <Route path='/AdminDashboard' component={AdminDashboard}/>}
+
 
         </div>
       </div>

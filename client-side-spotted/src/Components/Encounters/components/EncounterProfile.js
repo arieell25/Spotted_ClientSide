@@ -66,7 +66,7 @@ export default function EncounterProfile(props) {
           const photosData = await PhotoService.getEncounterPhotos(id);
           const videoData = await EncounterService.getEncounterVideo(id);
           let date = new Date(encounterData.EncounterDate);
-          setDate(date.toLocaleDateString());
+          setDate(date.toLocaleDateString("he-IL"));
           setPhotos(photosData);
           setEncounter(encounterData)
           setVideoPath(videoData);
@@ -149,12 +149,12 @@ else {
             <div className ="detailsEncounter">
             <p>Spotted At: {date}</p>
             <p>Encounter no.: {encounter.EncounterID}</p>
-            <p>SIIֹ_ID: {encounter.OriginalID}</p>
+            <p>SIIֹ ID: {encounter.OriginalID}</p>
             <p>Total Bluespotted Reported: {encounter.SpottedCountReported}</p>
             <p>BlueSpotted Count: {encounter.SpottedCount? encounter.SpottedCount : 'Not detected yet'}</p>
             <p>MediaType: {encounter.MediaType === 1 ? 'Photos' : 'Video'}</p>
             <p>Reported By: {encounter.ReporterEmail}</p>
-            <p>{encounter.UpdateBy ? 'Last Updates By: '+encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at: ' + encounter.UpdateAt : ''}</p>
+            <p>{encounter.UpdatedBy ? 'Last Updates By: '+encounter.UpdatedBy : ''}{encounter.UpdatedAt ? ' on: ' + (new Date(encounter.UpdatedAt)).toLocaleDateString("he-IL") : ''}</p>
             </div>
           </CardContent>
           <button className='btn'onClick={event =>  window.location.href=`/IdentifyPhoto?id=${encounter.EncounterID}`} >

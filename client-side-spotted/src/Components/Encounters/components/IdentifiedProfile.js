@@ -141,7 +141,7 @@ else {
             <IconButton color="secondary"><DeleteIcon  /></IconButton>
           </CardActions>
           <div className ="detailsEncounter">
-            <p>Spotted by: {encounter.Photographer}</p>
+            <p><b>Spotted by</b>: {encounter.Photographer}</p>
             <p>{encounter.isAlive? 'Considerd as Alive' : 'Considerd as Dead'}</p>
             <p>First reported on Encounter no. {encounter.EncounterID}</p>
             <p>Created at {date}</p>
@@ -152,7 +152,7 @@ else {
             <p>Max depth: { `${encounter.MaxDepth} meter`}</p>
             <p>Water temperature: {encounter.Temp} </p>
             <p>Link to source(optional): {encounter.Link ? encounter.Link : ''}</p>
-            <p>{encounter.UpdatedBy ? 'Last Updates By: ' + encounter.UpdatedBy : ''}{encounter.UpdatedAt ? ' at ' + encounter.UpdatedAt : ''}</p> 
+            <p>{encounter.UpdatedBy ? 'Last Updates By: ' + encounter.UpdatedBy : ''}{encounter.UpdatedAt ? ' on ' + (new Date(encounter.UpdatedAt)).toLocaleDateString("he-IL") : ''}</p> 
           </div>
           </CardContent>
             {/* <button className='iconbtn' >

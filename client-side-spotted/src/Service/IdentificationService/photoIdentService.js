@@ -1,3 +1,4 @@
+import { CompassCalibrationOutlined } from '@material-ui/icons';
 import HttpService from './httpService'
 
 export const identificationService = {
@@ -11,6 +12,8 @@ async function identifyPhoto(fd, id) {
     if (fd) {
       // var id = query.get("id");
       return HttpService.post('/identification', fd)
+      .then(res => {
+        return res})
     } else {
       console.log("no photo data in identification");
       // return HttpService.post(`api/addEncounter`, encounter);
@@ -35,12 +38,14 @@ async function identifyPhoto(fd, id) {
     console.log(`setIndividualIdentity service data:${item} ` );
     if (item) {
       let arr_str = (src).split("/");
-      console.log(arr_str[5]);
+      // console.log(arr_str[5]);
 
       var body = { 
         individual_ID: item.value,
-        // src: item.src,
-        value: arr_str[5]
+        value: arr_str[5],
+        LeftSide: item.LeftSide,
+        RightSide: item.RightSide,
+        TopSide: item.TopSide
       }
       return HttpService.post('/setIndividualIdentity', body)
     } else {

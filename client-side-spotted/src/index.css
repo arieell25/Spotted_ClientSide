@@ -51,6 +51,9 @@ h3{
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+p{
+  margin: 5px;
+}
 .btn {
   display: flex;
 	background:linear-gradient(45deg,#C5F836, #3AA4D1);

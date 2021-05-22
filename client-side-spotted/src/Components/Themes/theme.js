@@ -52,7 +52,7 @@ const theme = createMuiTheme({
     },
     MuiIconButton:{
         root:{
-            "&$selected:hover": {
+            "&:hover": {
                 backgroundColor: "#50ec37"
               }
         }
@@ -173,7 +173,7 @@ const theme = createMuiTheme({
         root:{
             color: "#ffffff",
             fontFamily: "'Montserrat', sans-serif",
-            paddingTop: "50px"
+            paddingTop: "10px"
 
         }
     },

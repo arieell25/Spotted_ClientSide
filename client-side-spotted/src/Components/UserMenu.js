@@ -43,6 +43,10 @@ export default function UserMenu(props) {
     userService.logout();
     window.location.reload();
   }
+  function handleStatistics(e) {
+    e.preventDefault();
+  window.location.href=`/AdminDashboard`
+}
 
   return (
     <div className={classes.root}>
@@ -58,7 +62,7 @@ export default function UserMenu(props) {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>Profile</MenuItem>
                     <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
-                    <MenuItem onClick={handleClose}>Statistics</MenuItem>
+                    <MenuItem onClick={handleStatistics}>Statistics</MenuItem>
 
                   </MenuList>
                 </ClickAwayListener>

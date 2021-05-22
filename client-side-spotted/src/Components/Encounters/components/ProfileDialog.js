@@ -50,7 +50,7 @@ export default function ProfileDialog(props) {
       const user = await userService.getUserName(encounter[0].UpdatedBy);
       let date = new Date(encounter[0].CreatedAt);
       setUserName(user);
-      console.log(user[1]);
+      // console.log(user[1]);
       setDate(date.toLocaleDateString());
       setPhotos(photosData);
       // setEncounter(encounterData)
