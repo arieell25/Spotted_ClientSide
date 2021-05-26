@@ -10,7 +10,6 @@ import {
 import UserMenu from './UserMenu'
 import Menu from '@material-ui/core/Menu';
 import { userService } from '../Service/UserService'
-import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import Signup from './Signup';
@@ -72,11 +71,6 @@ const NavBar = () => {
   }
   const handleCloseL = () => { setAnchorElL(null); }
   
-  // function handleLogoutClick(e) {
-  //   userService.logout();
-  //   window.location.reload();
-
-  // }
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -100,7 +94,7 @@ const NavBar = () => {
               <img
                 src="logo192.png"
                 alt="logo"
-                style={{ height: 50, margin: 10 }}
+                style={{ height: 50, margin: 10, width: 245 }}
               />
             </NavLink>
           {

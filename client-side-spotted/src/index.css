@@ -16,6 +16,8 @@
 /******************** MAIN ********************/
 .container {
   /* max-width: 85%; */
+  position: relative;
+
   margin: 1px auto;
   overflow: auto;
   min-height: 300px;
@@ -139,25 +141,6 @@ a{
   bottom: 40px;
 }
 
-/* .loginOut{
-  list-style: none;
-  position:relative;
-  margin-left: 100%;
-}  */
-
-
-/* .weatherCard{
-  text-align: center;
-	color:linear-gradient(to top,#C5F836, #3AA4D1);
-  width: 550px;
-  flex-wrap: wrap;
-  margin: 0 auto;
-} */
-
-/* .MuiPaper-root{
-  height: 80px;
-} */
-
 .FilePath{
   padding: 10px 30px;
 
@@ -167,3 +150,15 @@ a{
   text-align: left;
 }
 
+/* Charts */
+.ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut{
+  stroke: #a6d9c4;
+}
+.ct-label{
+  font-weight: bold;
+  color: aliceblue;
+
+}
+.ct-chart ct-chart{
+
+}

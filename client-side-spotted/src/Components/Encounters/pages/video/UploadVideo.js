@@ -5,8 +5,6 @@ import { Button} from "@material-ui/core";
 import {SystemResultsService} from '../../../../Service/SystemResultsService';
 import {VideoService} from '../../../../Service/VideoService';
 import {EncounterService} from '../../../../Service/EncounterService';
-
-// import {speciesDetectionService} from '../../../../Service/DetectionService/speciesDetectionService';
 import StatusDialog from '../../components/StatusDialog';
 import LinearProgressWithLabel from './Progress'
 import PermMediaIcon from '@material-ui/icons/PermMedia';
@@ -30,7 +28,7 @@ const UploadVideo = (props) => {
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
-  const [message, setMessage] = useState('');
+  // const [message, setMessage] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [openRespons, setOpenRespons] = useState(false);
   const [status, setStatus] = useState('');
@@ -51,7 +49,7 @@ const UploadVideo = (props) => {
     formData.append('id', encounterid);
 
     try {
-      const res = 
+      // const res = 
       // await speciesDetectionService
       // .detectSpeciesVideos(formData)
       // .then(res => console.log(res))
@@ -81,7 +79,7 @@ const UploadVideo = (props) => {
             setStatus('Your video was succesfully uploaded. Thank you!')
             setOpenRespons(true);
           }) 
-          .catch(err => {
+          .catch(() => {
             setStatus(`Failed updating encounter profile pic...` );
             setOpenRespons(true);
           });

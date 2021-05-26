@@ -1,36 +1,37 @@
 import React, { useState} from "react";
-import GradientCircularProgress from '../Encounters/components/CircularProgress';
+import { makeStyles } from "@material-ui/core/styles";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
+import Sidebar from './components/SideBar';
+// import logo from "../../assets/images/logo.png";
+import routes from "./routes.js";
+
+import styles from "../../assets/jss/material-dashboard-react/layouts/adminStyle.js";
 
 
-export default function AdminDashboard(props) {
-    const {photos} = props;
-    const [isOpen, setIsOpen] = useState(false);
-    const [currImage, setCurrImage] = useState(0);
-    const [photosArr, setphotosArr] = useState([]);
+const useStyles = makeStyles(styles);
 
-    const closeImgsViewer = () => {
-        setCurrImage(0)
-        setIsOpen(false)
-    }
-    const gotoPrev = () => {
-        setCurrImage(currImage - 1)
-    }
-    const gotoNext = () => {
-        setCurrImage(currImage + 1)
-    }
-    const onimgClick = (e) =>{
-        console.log(e);
-        photosArr.push(e.target);
-        // console.log(photosArr);
-    }
+export default function AdminDashboard(...rest ) {
+    const classes = useStyles();
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const [color, setColor] = useState("blue");
 
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+      };
 
 //   if (!photos) return <GradientCircularProgress />
 //   else {
     return (
-      <>
-        <h6>Admin</h6>
-    </>
+<div className={classes.wrapper}>
+      <Sidebar
+        routes={routes}
+        logoText={"Spotted"}
+        handleDrawerToggle={handleDrawerToggle}
+        open={mobileOpen}
+        color={color}
+        {...rest}
+      />
+
+      </div>  
     );
-// }
 }

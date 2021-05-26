@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserMenu(props) {
   const classes = useStyles();
-  const { open , setOpen , handleClose, anchorRef, OnLogout } = props;
+  const { open , setOpen , handleClose, anchorRef } = props;
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
       event.preventDefault();

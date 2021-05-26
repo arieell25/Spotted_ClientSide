@@ -44,19 +44,15 @@ const theme = createMuiTheme({
         text:{
             padding: "6px 20px"
         },
-        // outlined: {
-        //     "&:hover": {
-        //       backgroundColor: "#50ec37"
-        //     }
-        //   },
+
     },
-    MuiIconButton:{
-        root:{
-            "&:hover": {
-                backgroundColor: "#50ec37"
-              }
-        }
-    },
+    // MuiIconButton:{
+    //     root:{
+    //         "&:hover": {
+    //             backgroundColor: "#50ec37"
+    //           }
+    //     }
+    // },
     MuiTypography:{ 
         h6:{
             textTransform: "capitalize",

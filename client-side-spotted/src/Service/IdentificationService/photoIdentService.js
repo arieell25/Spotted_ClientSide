@@ -1,4 +1,3 @@
-import { CompassCalibrationOutlined } from '@material-ui/icons';
 import HttpService from './httpService'
 
 export const identificationService = {
