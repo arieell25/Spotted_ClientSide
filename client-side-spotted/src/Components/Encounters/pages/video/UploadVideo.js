@@ -8,6 +8,7 @@ import {EncounterService} from '../../../../Service/EncounterService';
 import StatusDialog from '../../components/StatusDialog';
 import LinearProgressWithLabel from './Progress'
 import PermMediaIcon from '@material-ui/icons/PermMedia';
+import GradientCircularProgress from '../../components/CircularProgress'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -28,7 +29,7 @@ const UploadVideo = (props) => {
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
-  // const [message, setMessage] = useState('');
+  const [loading , setLoading] = useState(false);
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [openRespons, setOpenRespons] = useState(false);
   const [status, setStatus] = useState('');
@@ -53,8 +54,10 @@ const UploadVideo = (props) => {
       // await speciesDetectionService
       // .detectSpeciesVideos(formData)
       // .then(res => console.log(res))
-      await axios.post(`http://40.91.223.174:5000/uploadVideo`, formData, {
+      // await axios.post(`http://40.91.223.174:5000`, formData, {
+      await axios.post(`https://spotted-detect-component.azurewebsites.net/uploadVideo`, formData, {
         headers: {
+           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'multipart/form-data'
         },
         onUploadProgress: progressEvent => {
@@ -63,8 +66,9 @@ const UploadVideo = (props) => {
               Math.round((progressEvent.loaded * 100) / progressEvent.total)
             )
           );
+          setLoading(true);
           // Clear percentage
-          setTimeout(() => setUploadPercentage(0), 10000);
+          // setTimeout(() => setUploadPercentage(0), 40000);
         }
       })
       .then(res => {
@@ -76,8 +80,9 @@ const UploadVideo = (props) => {
            const data={ProfilePicture: res.photosResults[0].src, MediaType: 2 }
           EncounterService.updateEncounter(encounterid, data)
           .then(() =>{
-            setStatus('Your video was succesfully uploaded. Thank you!')
+            setStatus('Your video was successfully uploaded. Thank you!')
             setOpenRespons(true);
+            setLoading(false);
           }) 
           .catch(() => {
             setStatus(`Failed updating encounter profile pic...` );
@@ -121,7 +126,10 @@ const UploadVideo = (props) => {
   return (
     <Fragment>
       {/* <Card className={classes.root}> */}
-      {/* {message ? <Message msg={message} /> : null} */}
+      {loading ? 
+      <div><GradientCircularProgress/>
+        <h3>Upload can take a while... do not close this page.</h3>
+      </div> : null}
       <StatusDialog
          open={openRespons}
          status={status}

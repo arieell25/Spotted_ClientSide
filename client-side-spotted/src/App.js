@@ -26,8 +26,10 @@ const App = () => {
   <ThemeProvider theme={theme}>
     <Router>
       <div className='body'>
-        <NavBar />
-        <div className='container'>
+      <NavBar />
+
+      <div className='container'>
+
 
         <Route exact path="/">
           {!userService.isAdmin() ? <Redirect to="/Home" /> : < Redirect to="/AdminDashboard" />}

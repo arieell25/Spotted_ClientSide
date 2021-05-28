@@ -46,12 +46,14 @@ const navLinksUser = [
   { title: `Individuals `, path: `/IdentifiedBoard` },
 ];
 
-const NavBar = () => {
+const NavBar = (...rest) => {
   const [anchorElL, setAnchorElL] = useState(null);
   const [anchorSignup, setAnchorSignup] = useState(null);
   const [open, setOpen] = useState(false);
   const [islogin, setislogin] = useState(null);
   const anchorRef = useRef(null);
+  const [drawrOpen, setdrawrOpen] = useState(false);
+  const [color, setColor] = useState("blue");
 
   const classes = useStyles();
   useEffect(() => {}, [islogin]);
@@ -79,12 +81,22 @@ const NavBar = () => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
     setOpen(false);
+  };
+  const handleDrawerToggle = () => {
+    setdrawrOpen(!drawrOpen);
   };
 
   return (
     <AppBar position="static" style={{ backgroundColor: `#252529` }}> 
+          {/* <Sidebar
+            routes={routes}
+            logoText={"Spotted"}
+            handleDrawerToggle={ handleDrawerToggle}
+            open={drawrOpen}
+            color={color}
+            {...rest}
+      /> */}
       <Toolbar className="toolBar">
           {/* <Link className={classes.logo} to="/HeaderTitle">
             <h3>spotted</h3>

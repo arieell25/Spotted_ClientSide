@@ -12,7 +12,6 @@ const Login = forwardRef((props, ref) => {
       .login(data.email, data.password)
       .then( () => {
         onSubmitC();
-        console.log('SUCCESS!');
       }).catch(err => {
         setError('Wrong username or password')
       })

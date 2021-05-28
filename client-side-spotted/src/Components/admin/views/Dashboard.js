@@ -37,19 +37,20 @@ const useStyles = makeStyles(styles);
 export default function Dashboard() {
   const classes = useStyles();
   const [sites, setSites] = useState([]);
-
+  const [encountersCount, setEncountersCount] = useState(0);
 
   useEffect(() => {
     EncounterService.getIsraelSites().then(data => {
         const sitesData = data.map(item => {
           return item.SiteName;
         })
-        homeRangeChart.data.labels = sites;
+        homeRangeChart.data.labels = sitesData;
 
         setSites(sitesData);
       })
       .catch(err => console.log(err));
-      
+      EncounterService.getEncountersCount()
+      .then(res => setEncountersCount(res))
   }, []);
   
   return (
@@ -63,7 +64,7 @@ export default function Dashboard() {
               </CardIcon>
               <p className={classes.cardCategory}></p>
               <h3 className={classes.cardTitle}>
-                85 <small>Reported</small>
+                {encountersCount} <small>Reports</small>
               </h3>
             </CardHeader>
             <CardFooter stats>
@@ -81,7 +82,7 @@ export default function Dashboard() {
                 <ImageSearchIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Detected individuals</p>
-              <h3 className={classes.cardTitle}>128<small> Photos</small></h3>
+              <h3 className={classes.cardTitle}>308<small> Photos</small></h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>

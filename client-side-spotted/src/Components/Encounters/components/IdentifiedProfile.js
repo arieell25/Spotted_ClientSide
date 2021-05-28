@@ -15,7 +15,7 @@ import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    padding: 50,
+    padding: '0px 50px',
     maxWidth: 800,
     margin: `0 auto`
   },
@@ -32,6 +32,12 @@ const useStyles = makeStyles(theme => ({
   cardtitle :{
     fontSize:30
   },
+  update: {
+    fontSize: 12,
+    color: '#96a299',
+    float: 'right',
+ 
+  }
 }));
 
 export default function IdentifiedProfile(props) {
@@ -109,15 +115,15 @@ else {
     <div className="animated slideInUpTiny animation-duration-3">
     <div className="m-5">
       <div className="d-flex justify-content-center title">
-        <div>
-          <h2>Identified Encounter Profile</h2>
-        </div>
         <StatusDialog
         open={open}
         status={status}
         onClose={handleClose}/>
-
+        <div>
+          <h2>Identified Encounter Profile</h2>
+        </div>
         <Card className={classes.root}>
+
           {encounter.ProfilePicture?
           <CardMedia
             className={classes.media}
@@ -141,7 +147,7 @@ else {
             <IconButton color="secondary"><DeleteIcon  /></IconButton>
           </CardActions>
           <div className ="detailsEncounter">
-            <p><b>Spotted by</b>: {encounter.Photographer}</p>
+            <p>Observed by: {encounter.Photographer}</p>
             <p>{encounter.isAlive? 'Considerd as Alive' : 'Considerd as Dead'}</p>
             <p>First reported on Encounter no. {encounter.EncounterID}</p>
             <p>Created at {date}</p>
@@ -151,14 +157,10 @@ else {
             <p>DW: {encounter.DW}</p>
             <p>Max depth: { `${encounter.MaxDepth} meter`}</p>
             <p>Water temperature: {encounter.Temp} </p>
-            <p>Link to source(optional): {encounter.Link ? encounter.Link : ''}</p>
-            <p>{encounter.UpdatedBy ? 'Last Updates By: ' + encounter.UpdatedBy : ''}{encounter.UpdatedAt ? ' on ' + (new Date(encounter.UpdatedAt)).toLocaleDateString("he-IL") : ''}</p> 
+            <p> {encounter.Link ? 'Link to source:' + encounter.Link : ''}</p>
+            <p className={classes.update}>{encounter.UpdatedBy ? 'Updated by: ' + encounter.User.firstName : ''}{encounter.UpdatedAt ? ' on ' + (new Date(encounter.UpdatedAt)).toLocaleDateString("he-IL") : ''}</p> 
           </div>
           </CardContent>
-            {/* <button className='iconbtn' >
-             <div ><PhotoLibraryIcon color="secondary"/></div>
-              PHOTOS
-          </button>  */}
       </Card>
       </div>
     
@@ -166,62 +168,4 @@ else {
 </div>
 )}
   }
-    // <Grid container className={classes.root} spacing={3}>
-    //   <Grid item xs={12} lg={6}>
-    //     {/* <ListItem>
-    //       <ListItemAvatar>
-    
-    //       </ListItemAvatar>
-    //       <ListItemText primary={coupon.title} secondary={coupon.couponName} />
-    //     </ListItem> */}
-    //   </Grid>
 
-      // {userService.isLoggedIn() && (
-      //   <Grid item xs={12} lg={6}>
-      //     <IconButton onClick={handleEdit} style={{ cursor: 'pointer' }}>
-      //       <EditIcon />
-      //     </IconButton>
-      //     <IconButton onClick={handleDelete} style={{ cursor: 'pointer' }}>
-      //       <DeleteIcon />
-      //     </IconButton>
-      //   </Grid>
-      // )}
-
-      // <Grid item container>
-      //   <Typography>
-      //     Status: {encounter.isAlive? 'Alive' : 'Dead'}
-      //   </Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>SpottedBy: {encounter.Photographer}</Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>Encounter ID: {encounter.EncounterID}</Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>TL: {encounter.TL}</Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>DL: {encounter.DL}</Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>DW: {encounter.DW}</Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>Max Depth: {encounter.MaxDepth}</Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>Water temperature: {encounter.Temp}</Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>Link to source: {encounter.Link ? encounter.Link : ''}</Typography>
-      // </Grid>
-      // <Grid item>
-      //   <Typography>Last Updates By: {encounter.UpdateBy ? encounter.UpdateBy : ''} at:  {encounter.UpdateAt ? encounter.UpdateAt : ''} </Typography>
-      // </Grid>
-      // <StatusDialog open={open} status={status} onClose={handleClose} /> */}
-  
-    // </Grid>
-//   // );
-// }
-// }

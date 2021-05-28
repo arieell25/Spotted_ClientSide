@@ -14,6 +14,7 @@ export const EncounterService = {
   getUserEncounters,
   deactivateEncounter,
   getEncounterVideo,
+  getEncountersCount
 }
 
 function getEncounters() {
@@ -29,6 +30,15 @@ function getEncounters() {
     .get(`/pub/getActiveEncounters`)
     .then(res => {
       return res.data.encounters.rows;
+    } );
+  }
+}
+function getEncountersCount() {
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getActiveEncounters`)
+    .then(res => {
+      return res.data.encounters.count;
     } );
   }
 }
@@ -60,21 +70,20 @@ function updateEncounter(id, data) {
 function updateEncounterPic(id, data) {
   if(data){
     const body ={ ProfilePicture: data};
-
-    if(userService.isLoggedIn()){
-      return HttpService
-    .put(`/api/updateEncounter?id=${id}`, body)
-    .then(res => {
-      return res;
-    } );
-    }
-    else{
+    // if(userService.isLoggedIn()){
+    //   return HttpService
+    // .put(`/api/updateEncounter?id=${id}`, body)
+    // .then(res => {
+    //   return res;
+    // } );
+    // }
+    // else{
       return HttpService
       .put(`/pub/updateEncounter?id=${id}`, body)
       .then(res => {
         return res;
       } );
-    }
+    // }
     
   }else{
     return ("No data was provided");

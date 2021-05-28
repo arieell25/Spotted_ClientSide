@@ -30,10 +30,14 @@ const useStyles = makeStyles(theme => ({
     color: '#e0e0e7',
   },
   checked:{
-    margin: '5px',
+    // margin: '5px',
   },
   cardContainer:{
     float: 'left',
+
+  },
+  verified:{
+    display: 'flex',
 
   }
 }));
@@ -45,7 +49,7 @@ export default function EncounterCard(props) {
   const [date, setDate] = useState();
   useEffect(() => {
     let date = new Date(encounter.EncounterDate);
-    setDate(date.toLocaleDateString());
+    setDate(date.toLocaleDateString("he-IL"));
 
     // eslint-disable-next-line
   }, [editing]);
@@ -96,7 +100,12 @@ export default function EncounterCard(props) {
               </div>
               <div>
               {encounter.Verified &&
+              <div className="verified">        
+                <Typography variant="body2" color="secondary" component="p">
+                  Verified
+                 </Typography>
               <CheckCircleOutlineIcon className={classes.checked} color="secondary" />
+              </div>
               }
               </div>
             </CardContent>

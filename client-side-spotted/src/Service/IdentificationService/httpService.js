@@ -27,6 +27,7 @@ async function connectApi(endpoint, method = 'get', data = null) {
             url: `${BASE_URL}${endpoint}`,
             method,
             headers:{
+                // 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'multipart/form-data'
             } ,
             data,

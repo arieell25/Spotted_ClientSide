@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     padding: 50,
-    margin: `50px auto`,
+    margin: `2px auto`,
     width: 800,
   },
 }));
