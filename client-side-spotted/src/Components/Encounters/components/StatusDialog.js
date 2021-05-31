@@ -35,14 +35,6 @@ export default function StatusDialog(props) {
           aria-labelledby="form-dialog-title"
 
         >
-          <Grid item container justify="center">
-            {/* <img
-              src="/images/done.png"
-              alt="done"
-              style={{ width: 160, height: 120, padding: 30 }}
-            /> */}
-          </Grid>
-
           <DialogTitle style={{textAlign: 'center'}} id="form-dialog-title">{status}</DialogTitle>
           <DialogActions style={{alignSelf: 'center'}}>
             {id && 

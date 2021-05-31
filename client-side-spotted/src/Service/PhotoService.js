@@ -13,7 +13,8 @@ export const PhotoService = {
   getIdntEncounterProfilePic,
   updateDBPhoto,
   updatePhotobyID,
-  updatePhotoSide
+  updatePhotoSide,
+  getPhotosCount,
 }
 
 async function addPhoto(id, url, count) {
@@ -120,12 +121,15 @@ async function uploadPhoto(fd, id) {
         return res.data.photos;
       })
     }
-    // return HttpService.get(`/api/getEncounterPhotos?id=${encounterId}`)
-    // .then(res=> {
-    //   return res.data.photos;
-    // })
   }
   
+  function getPhotosCount() {
+      return HttpService.get(`/api/getAllDetectPhotosCount`)
+      .then(res=> {
+        return res.data.count;
+      })    
+  }
+
   function getIdntEncounterProfilePic(ids) {
     console.log(ids);
     const body ={ individualids: ids}

@@ -6,7 +6,8 @@ export const IdntEncService = {
   updateIdentified,
   addIdentifiedEncounter,
   deleteIdentified,
-  getLifeStages
+  getLifeStages,
+  getIdentifiedEncountersCount
 
 }
 
@@ -26,6 +27,13 @@ function getIdentifiedEncounters() {
   .get(`/api/getAllIdentifiedEncounters`)
   .then(res => {
     return res.data.identifiedEncounters.rows;
+  } );
+}
+function getIdentifiedEncountersCount() {
+  return HttpService
+  .get(`/api/getAllIdentifiedEncounters`)
+  .then(res => {
+    return res.data.identifiedEncounters.count;
   } );
 }
 

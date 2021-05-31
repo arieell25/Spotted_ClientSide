@@ -71,7 +71,7 @@ const NavBar = (...rest) => {
     setislogin(true);
     setAnchorSignup(null);  
   }
-  const handleCloseL = () => { setAnchorElL(null); }
+  const handleCloseL = () => { setAnchorElL(null); window.location.reload(); }
   
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -98,10 +98,6 @@ const NavBar = (...rest) => {
             {...rest}
       /> */}
       <Toolbar className="toolBar">
-          {/* <Link className={classes.logo} to="/HeaderTitle">
-            <h3>spotted</h3>
-            <img src="logo.png" alt="logo" ></img>
-          </Link> */}
             <NavLink to="/Home" exact>
               <img
                 src="logo192.png"

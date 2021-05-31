@@ -23,6 +23,9 @@ import CardBody from "../components/Card/CardBody.js";
 import CardFooter from "../components/Card/CardFooter.js";
 
 import {EncounterService} from '../../../Service/EncounterService';
+import {IdntEncService} from '../../../Service/IdentifiedEncounterService';
+import {PhotoService} from '../../../Service/PhotoService';
+import {userService} from '../../../Service/UserService';
 
 import {
   EncountersIdentChart,
@@ -38,20 +41,68 @@ export default function Dashboard() {
   const classes = useStyles();
   const [sites, setSites] = useState([]);
   const [encountersCount, setEncountersCount] = useState(0);
-
+  const [identCount, setIdentCount] = useState(0);
+  const [photosCount, setPhotosCount] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+  const [usersData, setUsersData] = useState([]);
+  const [update, setUpdate] = useState(false);
+  const [ maxh, setmaxh ]= useState(15);
   useEffect(() => {
+ 
     EncounterService.getIsraelSites().then(data => {
         const sitesData = data.map(item => {
           return item.SiteName;
         })
         homeRangeChart.data.labels = sitesData;
+        // setUpdate(!update);
 
         setSites(sitesData);
+        EncounterService.getEncountersCount().then(res => {
+          setEncountersCount(res.count);
+          let encounterperSite = [];
+          for ( let i =0 ; i< sitesData.length ; i++ ){
+            let count = 0;
+            res.rows.map(row => {
+              if ( row.Site.SiteName === sitesData[i]){
+                // console.log(`site: ${sitesData[i]} `)
+                count++;
+              }
+            })
+            if (count > maxh ){
+              setmaxh(count);
+              console.log(`max ${maxh}`)
+            }
+            encounterperSite.push(count);
+          }
+          homeRangeChart.data.series = [encounterperSite];
+          homeRangeChart.options.high = maxh;
+          console.log(homeRangeChart.data.series );
+
+        })
       })
       .catch(err => console.log(err));
-      EncounterService.getEncountersCount()
-      .then(res => setEncountersCount(res))
-  }, []);
+      // setUpdate(!update);
+
+      // EncounterService.getEncountersCount().then(res => {
+      //   setEncountersCount(res.count);
+      //   res.rows
+      // })
+      PhotoService.getPhotosCount().then(res => setPhotosCount(res) );
+      IdntEncService.getIdentifiedEncountersCount().then(res => setIdentCount(res));
+      userService.getAllUsers(1).then(res =>{
+        setUserCount(res.count);
+        const users = res.rows.map(row => {
+          let item = [];
+          item = [`${row.id}`, `${row.firstName} ${row.lastName}`, `${ row.isAdmin ? 'Admin': 'User'}`, `${(row.Encounters).length}`]
+          return item;
+        })
+        console.log(users);
+        setUsersData(users);
+        setUpdate(true);
+
+      } );
+
+    }, [update,maxh]);
   
   return (
     <div>
@@ -82,7 +133,7 @@ export default function Dashboard() {
                 <ImageSearchIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Detected individuals</p>
-              <h3 className={classes.cardTitle}>308<small> Photos</small></h3>
+              <h3 className={classes.cardTitle}>{photosCount}<small> Photos</small></h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -99,7 +150,7 @@ export default function Dashboard() {
                 <Icon>Individuals </Icon>
               </CardIcon>
               {/* <p className={classes.cardCategory}>Identified</p> */}
-              <h3 className={classes.cardTitle}>38 <small>BlueSpotted</small></h3>
+              <h3 className={classes.cardTitle}>{identCount} <small>BlueSpotted</small></h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -116,7 +167,7 @@ export default function Dashboard() {
                 <GroupIcon />
               </CardIcon>
               <p className={classes.cardCategory}>Registered Users</p>
-              <h3 className={classes.cardTitle}>10</h3>
+              <h3 className={classes.cardTitle}>{userCount} <small>Users</small> </h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -140,7 +191,7 @@ export default function Dashboard() {
             </CardHeader>
             <CardBody>
             <h4 className={classes.cardTitle}> Home Range</h4>
-            <p className={classes.cardCategory}>Encounters home range statistics</p>
+            <p className={classes.cardCategory}>Number of Ecounters per Site</p>
             </CardBody>
             <CardFooter chart>
               <div className={classes.stats}>
@@ -227,13 +278,13 @@ export default function Dashboard() {
               <Table
                 tableHeaderColor="warning"
                 tableHead={["ID", "Name", "Type", "Encounters"]}
-                tableData={[
-                  ["1", "Adi Barash", "Admin", "2"],
-                  ["2", "Polina Polsky", "Admin", "34"],
-                  ["3", "Ariel Hadad", "Admin", "92"],
-                  ["4", "Chen Zaguri", "Admin", "27"],
-                  ["5", "Alan Ron ", "User", "1"],
-                ]}
+                tableData={usersData
+                  // ["1", "Adi Barash", "Admin", "2"],
+                  // ["2", "Polina Polsky", "Admin", "34"],
+                  // ["3", "Ariel Hadad", "Admin", "92"],
+                  // ["4", "Chen Zaguri", "Admin", "27"],
+                  // ["5", "Alan Ron ", "User", "1"],
+                }
               />
             </CardBody>
           </Card>

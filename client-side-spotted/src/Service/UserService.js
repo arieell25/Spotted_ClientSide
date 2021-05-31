@@ -9,7 +9,8 @@ export const userService = {
   getUserName,
   register,
   logout,
-  getLocalStorageUser
+  getLocalStorageUser,
+  getAllUsers
 }
 
 async function save(user) {
@@ -91,6 +92,19 @@ function getUserName(id) {
   .then(res=> {
     console.log(res);
     return res.data.user;
+  })
+}
+
+function getAllUsers(count) {
+  return HttpService.get(`/api/getAllUsers` )
+  .then(res=> {
+    console.log(res);
+    if(count){
+      return res.data.users;
+    }else {
+      return res.data.users.rows;
+    }
+    
   })
 }
 async function logout() {

@@ -46,16 +46,9 @@ const theme = createMuiTheme({
         },
 
     },
-    // MuiIconButton:{
-    //     root:{
-    //         "&:hover": {
-    //             backgroundColor: "#50ec37"
-    //           }
-    //     }
-    // },
     MuiTypography:{ 
         h6:{
-            textTransform: "capitalize",
+            textTransform: "none",
             fontFamily: "'Montserrat', sans-serif",
             fontSize:"26px"
         },

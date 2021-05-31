@@ -38,7 +38,7 @@ function getEncountersCount() {
     return  HttpService
     .get(`/api/getActiveEncounters`)
     .then(res => {
-      return res.data.encounters.count;
+      return res.data.encounters;
     } );
   }
 }

@@ -166,15 +166,17 @@ else {
             </div>
           </CardContent>
           {userService.isAdmin() &&
+          <div>
           <button className='btn'onClick={event =>  window.location.href=`/IdentifyPhoto?id=${encounter.EncounterID}`} >
                   IDENITFY
           </button> 
-        }
+        
           <CardActions className={classes.actions}>
           <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditEncounter?id=${encounter.EncounterID}`}><EditIcon /></IconButton>
           <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton>
             </CardActions>
-
+            </div>
+          }
 
     </Card>
       </div>

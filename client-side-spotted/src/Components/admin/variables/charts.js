@@ -85,14 +85,14 @@ const EncountersIdentChart = {
 const homeRangeChart = {
   data: {
     labels: [],
-    series: [[20, 5, 7, 17, 23, 18, 15, 4, 15, 13, 2, 1, 6,7,6, 0, 4, 8, 2, 4 ]],
+    series: [],
   },
   options: {
     axisX: {
       showGrid: false,
     },
     low: 0,
-    high: 25,
+    high: 20,
     chartPadding: {
       top: 0,
       right: 5,

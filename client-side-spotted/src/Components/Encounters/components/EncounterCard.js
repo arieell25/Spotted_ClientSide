@@ -30,14 +30,15 @@ const useStyles = makeStyles(theme => ({
     color: '#e0e0e7',
   },
   checked:{
-    // margin: '5px',
+    marginLeft: 8,
+    paddingRight: '4px',
   },
   cardContainer:{
     float: 'left',
 
   },
   verified:{
-    display: 'flex',
+    display: 'inline-flex',
 
   }
 }));
@@ -98,16 +99,16 @@ export default function EncounterCard(props) {
               Last encounter date: {date}
               </Typography>
               </div>
-              <div>
+              {/* <div> */}
               {encounter.Verified &&
-              <div className="verified">        
+              <div  className={classes.verified}>        
                 <Typography variant="body2" color="secondary" component="p">
                   Verified
                  </Typography>
               <CheckCircleOutlineIcon className={classes.checked} color="secondary" />
               </div>
               }
-              </div>
+              {/* </div> */}
             </CardContent>
 
           </CardActionArea>
