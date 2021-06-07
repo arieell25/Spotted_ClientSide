@@ -2,14 +2,14 @@ import React, {useState} from 'react';
 
 import RUG, { Card, DragArea } from 'react-upload-gallery';
 import 'react-upload-gallery/dist/style.css'
-import { PhotoService } from '../../Service/PhotoService';
+import { PhotoService } from '../../../../Service/PhotoService';
 import Done from '@material-ui/icons/Done';
 import { IconButton} from '@material-ui/core';
 import { useLocation } from "react-router-dom";
-import {SystemResultsService} from '../../Service/SystemResultsService';
-import {EncounterService} from '../../Service/EncounterService';
-import {speciesDetectionService} from '../../Service/DetectionService/speciesDetectionService';
-import GradientCircularProgress from '../Encounters/components/CircularProgress';
+import {SystemResultsService} from '../../../../Service/SystemResultsService';
+import {EncounterService} from '../../../../Service/EncounterService';
+import {speciesDetectionService} from '../../../../Service/DetectionService/speciesDetectionService';
+import GradientCircularProgress from '../CircularProgress';
 // import { ControlCameraOutlined } from '@material-ui/icons';
 
 function useQuery() {

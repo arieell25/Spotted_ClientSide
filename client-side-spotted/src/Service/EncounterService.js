@@ -13,6 +13,8 @@ export const EncounterService = {
   getMediatypes,
   getUserEncounters,
   deactivateEncounter,
+  getEncounterVideo,
+  getEncountersCount
 }
 
 function getEncounters() {
@@ -28,6 +30,15 @@ function getEncounters() {
     .get(`/pub/getActiveEncounters`)
     .then(res => {
       return res.data.encounters.rows;
+    } );
+  }
+}
+function getEncountersCount() {
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getActiveEncounters`)
+    .then(res => {
+      return res.data.encounters;
     } );
   }
 }
@@ -59,21 +70,20 @@ function updateEncounter(id, data) {
 function updateEncounterPic(id, data) {
   if(data){
     const body ={ ProfilePicture: data};
-
-    if(userService.isLoggedIn()){
-      return HttpService
-    .put(`/api/updateEncounter?id=${id}`, body)
-    .then(res => {
-      return res;
-    } );
-    }
-    else{
+    // if(userService.isLoggedIn()){
+    //   return HttpService
+    // .put(`/api/updateEncounter?id=${id}`, body)
+    // .then(res => {
+    //   return res;
+    // } );
+    // }
+    // else{
       return HttpService
       .put(`/pub/updateEncounter?id=${id}`, body)
       .then(res => {
         return res;
       } );
-    }
+    // }
     
   }else{
     return ("No data was provided");
@@ -99,10 +109,38 @@ function deleteEncounter(id) {
 }
 
 function getEncounterById(encounterId) {
-  return HttpService.get(`/api/getEncounter?id=${encounterId}`)
-  .then(res=> {
-    return res.data.encounter;
-  })
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getEncounter?id=${encounterId}`)
+    .then(res => {
+      return res.data.encounter;
+    } );
+  }
+  else{
+    return  HttpService
+    .get(`/pub/getEncounter?id=${encounterId}`)
+    .then(res => {
+      return res.data.encounter;
+    } );
+  }
+
+}
+function getEncounterVideo(encounterId) {
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getEncounterVideos?id=${encounterId}`)
+    .then(res => {
+      return res.data.video;
+    } );
+  }
+  else{
+    return  HttpService
+    .get(`/pub/getEncounterVideos?id=${encounterId}`)
+    .then(res => {
+      return res.data.video;
+    } );
+  }
+
 }
 
 function addEncounter(encounter) {

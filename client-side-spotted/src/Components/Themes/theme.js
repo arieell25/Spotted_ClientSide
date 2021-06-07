@@ -25,9 +25,10 @@ const theme = createMuiTheme({
   },
   overrides: {
     MuiButtonBase:{
-        root:
-        {
-            color: "white"
+        root:{
+            fontFamily: "'Montserrat', sans-serif",
+            color: "white",
+
         }
     },
     MuiButton:{
@@ -43,23 +44,11 @@ const theme = createMuiTheme({
         text:{
             padding: "6px 20px"
         },
-        // outlined: {
-        //     "&:hover": {
-        //       backgroundColor: "#50ec37"
-        //     }
-        //   },
-    },
-    MuiIconButton:{
-        root:{
-            "&$selected:hover": {
-                backgroundColor: "#50ec37"
-              }
-            // backgroundColor: "#50ec37"
-        }
+
     },
     MuiTypography:{ 
         h6:{
-            textTransform: "capitalize",
+            textTransform: "none",
             fontFamily: "'Montserrat', sans-serif",
             fontSize:"26px"
         },
@@ -68,6 +57,13 @@ const theme = createMuiTheme({
         },
         colorInherit:{
             color:"white"
+        }
+    },
+    MuiMenuItem:{
+        root: {
+            fontFamily: "'Montserrat', sans-serif",
+            textTransform: "capitalize",
+
         }
     },
     MuiAppBar: {
@@ -166,7 +162,7 @@ const theme = createMuiTheme({
         root:{
             color: "#ffffff",
             fontFamily: "'Montserrat', sans-serif",
-            paddingTop: "50px"
+            paddingTop: "10px"
 
         }
     },

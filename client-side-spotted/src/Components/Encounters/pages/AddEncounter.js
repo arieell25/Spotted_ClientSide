@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
     padding: 50,
-    margin: `50px auto`,
+    margin: `2px auto`,
     width: 800,
   },
 }));
@@ -30,7 +30,7 @@ const useStyles = makeStyles(() => ({
     const [site, setSite] = useState('');
     const [sites, setSites] = useState([]);
     const { register, handleSubmit, control } = useForm();
-    const [selectedDate, setSelectedDate] = useState(new Date('2020-01-01T00:00:00'));
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
    useEffect(() => {
     EncounterService.getIsraelSites().then(data => {
@@ -199,7 +199,11 @@ const useStyles = makeStyles(() => ({
                     control={<Radio />}
                     label="No"
                   />
-
+                 <FormControlLabel
+                    value="null"
+                    control={<Radio />}
+                    label="Unknown"
+                  />
                 </RadioGroup>
               }
               name="IsPregnant"

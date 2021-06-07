@@ -94,7 +94,7 @@ async function getFirstSystemResults(id) {
           const body = {Results: data }
             return HttpService.post(`/api/addSecondSystemResults`, body)
             .then(res=> {
-              return res.data.newResult;
+              return res.data.secondSystemResults;
             })
       }else{
         console.log("no results  data");

@@ -3,11 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
-import PhotosGrid from '../../Photos/PhotosGrid';
+import PhotosGrid from './Photos/PhotosGrid';
 import StatusDialog from './StatusDialog';
 import GradientCircularProgress from './CircularProgress';
 import {EncounterService} from '../../../Service/EncounterService';
-// import {userService} from '../../../Service/UserService';
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import {userService} from '../../../Service/UserService';
 import { PhotoService } from '../../../Service/PhotoService';
 
 import qs from 'qs';
@@ -17,9 +18,10 @@ import { IconButton, Typography, Card,CardMedia, CardContent, CardActions  } fro
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
-    padding: 50,
-    width: 800,
+    padding: '0px 50px',
+    maxWidth: 800,
     margin: `0 auto`
+ 
   },
   media:{
     flex: 1,
@@ -43,6 +45,12 @@ const useStyles = makeStyles(() => ({
     borderRadius: 20,
     margin: 'auto'
   },
+  update: {
+    fontSize: 14,
+    color: '#96a299',
+    float: 'right',
+ 
+  }
 }));
 
 export default function EncounterProfile(props) {
@@ -50,7 +58,8 @@ export default function EncounterProfile(props) {
   const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [open, setOpen] = useState(false);
-  const [linkpath, setlinkpath] = useState('')
+  const [linkpath, setlinkpath] = useState('');
+  const [videoPath, setVideoPath] = useState();
   const [edit, setEdit] = useState(false);
   const [date, setDate] = useState('');
   const [openPhotos, setOpenPhotos] = useState(false);
@@ -62,11 +71,12 @@ export default function EncounterProfile(props) {
         const fetchData = async () => {
           const encounterData = await EncounterService.getEncounterById(id);
           const photosData = await PhotoService.getEncounterPhotos(id);
-          
+          const videoData = await EncounterService.getEncounterVideo(id);
           let date = new Date(encounterData.EncounterDate);
-          setDate(date.toLocaleDateString());
+          setDate(date.toLocaleDateString("he-IL"));
           setPhotos(photosData);
           setEncounter(encounterData)
+          setVideoPath(videoData);
         };
         fetchData();        
           // console.log(photos[0]);
@@ -93,7 +103,14 @@ export default function EncounterProfile(props) {
     setOpen(false);
     setOpenPhotos(false);
   };
- 
+  const openInNewTab = () => {
+    if(videoPath.length > 0){
+      const newWindow = window.open(videoPath[0].VideoPath, '_blank', 'noopener,noreferrer')
+      console.log(videoPath)
+      if (newWindow) newWindow.opener = null
+
+    }
+  }
 
 if (!encounter) return <GradientCircularProgress />
 else {
@@ -126,30 +143,40 @@ else {
           }
         <CardContent>
             <Typography gutterBottom className={classes.cardtitle} component="h2">
-              Encounter #{encounter.EncounterID}
+              Encounter no. {encounter.EncounterID}
             </Typography>
             <CardActions className={classes.actions}>
               {/* edit event listner */}
                 <p>{photos.length}</p>
                 <IconButton color="secondary" onClick={ () => setOpenPhotos(openPhotos => !openPhotos)}><PhotoLibraryIcon/></IconButton>
-                <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditEncounter?id=${encounter.EncounterID}`}><EditIcon /></IconButton>
-                <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton>
+                {videoPath && 
+                <IconButton color="secondary" onClick={ (e) => openInNewTab()}><VideoLibraryIcon/></IconButton>}
+                {/* <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditEncounter?id=${encounter.EncounterID}`}><EditIcon /></IconButton>
+                <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton> */}
             </CardActions>
             <div className ="detailsEncounter">
             <p>Spotted At: {date}</p>
             <p>Encounter no.: {encounter.EncounterID}</p>
-            <p>SIIֹ_ID: {encounter.OriginalID}</p>
+            <p>SII ID: {encounter.OriginalID}</p>
             <p>Total Bluespotted Reported: {encounter.SpottedCountReported}</p>
-            <p>BlueSpotted Count: {encounter.SpottedCount? encounter.SpottedCount : 'Not detected yet'}</p>
+            <p>BlueSpotted Count: {encounter.SpottedCount? encounter.SpottedCount : 'Not verified yet'}</p>
             <p>MediaType: {encounter.MediaType === 1 ? 'Photos' : 'Video'}</p>
             <p>Reported By: {encounter.ReporterEmail}</p>
-            <p>{encounter.UpdateBy ? 'Last Updates By: '+encounter.UpdateBy : ''}{encounter.UpdateAt ? ' at: ' + encounter.UpdateAt : ''}</p>
+            <p className={classes.update}>{encounter.UpdatedBy ? 'Last updated by '+encounter.User.firstName + ' on ' : ''}{encounter.UpdatedAt ?  (new Date(encounter.UpdatedAt)).toLocaleDateString("he-IL") : ''}</p>
             </div>
           </CardContent>
+          {userService.isAdmin() &&
+          <div>
           <button className='btn'onClick={event =>  window.location.href=`/IdentifyPhoto?id=${encounter.EncounterID}`} >
                   IDENITFY
           </button> 
-
+        
+          <CardActions className={classes.actions}>
+          <IconButton color="secondary" onClick={ () =>  window.location.href=`/EditEncounter?id=${encounter.EncounterID}`}><EditIcon /></IconButton>
+          <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton>
+            </CardActions>
+            </div>
+          }
 
     </Card>
       </div>

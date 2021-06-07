@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import Axios from 'axios';
 
 const NODE_ENV = 'development';

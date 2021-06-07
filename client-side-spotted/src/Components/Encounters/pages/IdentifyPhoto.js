@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         padding: 50,
-        width: 800,
+        maxWidth: 800,
         margin: `0 auto`
       },
     cardtitle :{
@@ -68,18 +68,13 @@ const useStyles = makeStyles((theme) => ({
           .then(setUpdate(!update))
           .catch(err => { setStatus('Failed to set photo side. Try again.')});
           // setImagesSides(image);
-          // setImagesSides((previousState) => ({
-          //   // now we'll use cached value
-          //   imagesSides: imagesSides.map(item => item.value === lastClicked 
-          //     ? Object.assign(item, {side: selectedValue}) 
-          //     : item)
-          // }));
           setOpen(false);
           console.log(image);
 
           
           // PhotoService.updateDBPhoto()
         };
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -99,14 +94,19 @@ const useStyles = makeStyles((theme) => ({
       
       }, [update]);
 
-        const onClick = () => {
+        const onClick = async() => {
+            // setUpdate(!update);
             setLoading(true);
             console.log(image)
             console.log(fileNames);
             const photosArr = [];
-            console.log(photos);
+            const photosData = await PhotoService.getEncounterPhotos(id)
+            .then(res => {
+                
+            setPhotos(res);
+            console.log(res);
             for(let i = 0; i < image.length; i += 1 ){
-              let photo = photos.filter(item => item.src === image[i].src );
+              let photo = res.filter(item => item.src === image[i].src );
               if(photo !== undefined) {
                 console.log(photo);
                 let str = (photo[0].src).split("/");
@@ -121,19 +121,25 @@ const useStyles = makeStyles((theme) => ({
                 identificationService.identifyPhotos(photosArr, res )
                 .then(res => {
                     console.log(res);
+                    setidntResults(res);
+                    console.log(idntResults);
+
                     SystemResultsService.addSecondSystemResults(res)
-                    .then(res => {console.log(res)})
+                    .then(res => {
+                      console.log(res);
+
+                      setResultsReady(true);
+                      setLoading(false);
+                    })
                     .catch(err => {console.log(err)})
                     
-                    setidntResults(res);
-                    setResultsReady(true);
-                    setLoading(false);
-                    console.log(idntResults)
+                    // console.log(idntResults)
                 })
                 .catch(err =>{ setStatus(err); setOpenRespons(true); setError(true);});
             })
             .catch(err => {setStatus(err); setOpenRespons(true);} );
-        }
+          })
+          }
         const onPick = (item) => {
           let length = item.length ;
           console.log(item);
@@ -150,22 +156,46 @@ const useStyles = makeStyles((theme) => ({
         const handleCloseRespons = () => {
             setOpenRespons(false);
           };
-
-        const renderEachResult = (item, i) => {
+        
+        const renderInnerItemResult = (item ,i ) => {
+          console.log("inner: " + JSON.stringify(item.individuals_ID))
             if(item.individuals_ID){
-              return (
-                <ResultsCard index={i} 
-                src={item.src} 
-                key={i} 
-                ids={item.individuals_ID} 
-                encounterid={id}
-                setOpen={setOpenRespons}
-                setstatus={setStatus}
-                setIdntId={setidntId}
-                />
-              );
+                return (
+                  <ResultsCard index={i} 
+                  src={item.src} 
+                  key={i} 
+                  ids={item.individuals_ID} 
+                  encounterid={id}
+                  setOpen={setOpenRespons}
+                  setstatus={setStatus}
+                  setIdntId={setidntId}
+                  />
+                );
+                }
             }
-          };
+
+        // const renderEachResult = (item, i) => {
+        //   console.log("item" + JSON.stringify(item));
+        //   console.log("lenght item: " + item.length)
+        //   for(let i =0 ; i< item.length; i++) {
+        //     // if(item[i].individuals_ID){
+        //       console.log(`item #${i} is: ###`);
+        //       console.log(JSON.stringify(item[i]));
+        //       return renderInnerItemResult(item[i]);
+        //       // return (
+        //       //   <ResultsCard index={i} 
+        //       //   src={item[i].src} 
+        //       //   key={i} 
+        //       //   ids={item[i].individuals_ID} 
+        //       //   encounterid={id}
+        //       //   setOpen={setOpenRespons}
+        //       //   setstatus={setStatus}
+        //       //   setIdntId={setidntId}
+        //       //   />
+        //       // );
+        //     }
+        //   // }
+        //   };
 
         if (!photos || loading ) return <GradientCircularProgress />
         else if(resultsReady){
@@ -175,9 +205,9 @@ const useStyles = makeStyles((theme) => ({
               <div className="d-flex justify-content-center title">
                 <h2>Individual Identification Results</h2>               
              <div className={classes.results}>
-                    {idntResults
-                      .map(renderEachResult)
-                    }
+                    {idntResults[0] && idntResults[0].map(renderInnerItemResult) }
+                    {idntResults[1] && idntResults[1].map(renderInnerItemResult) }
+                    { idntResults[2] && idntResults[2].map(renderInnerItemResult) }
                   </div>
               </div>
               <StatusDialog

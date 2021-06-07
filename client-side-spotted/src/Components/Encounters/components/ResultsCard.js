@@ -20,8 +20,9 @@ import {
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    padding: 50,
-    width: 800,
+    marginTop: 10,
+    padding: '0px 20px',
+    maxWidth: 800,
     margin: `0 auto`
   },
   linkText:{
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
   },
   cardtitle: {
     fontSize:22,
-    textTransform: 'capitalize',
+    textTransform: 'none',
   },
 
 }));
@@ -51,6 +52,7 @@ export default function ResultsCard(props) {
   const [item, setitem] = useState(null);
   const [photos, setPhotos] = useState([]);
   const [indevidualIds, setindevidualIds] = useState([]);
+  const [ originalPhotoData, setOriginalPhotoData] = useState();
   const [openProfile, setOpenProfile] = useState(false);
   const [encounter, setEncounter] = useState([]);
 
@@ -61,6 +63,9 @@ export default function ResultsCard(props) {
         const fetchData = async () => {
             //   const boundingBoxData = await PhotoService.getEncounterPhotosBBox(fileNames);
               const photosData = await PhotoService.getIdntEncounterProfilePic(ids);
+              const srcPhotoData = await PhotoService.getPhotoByUrl(src);
+              console.log(srcPhotoData);
+              setOriginalPhotoData(srcPhotoData);
               setPhotos(photosData);
             };
             fetchData();  
@@ -69,6 +74,7 @@ export default function ResultsCard(props) {
 
   const onClick = () => {
     if(item){
+      console.log(item);
     identificationService.setIndividualIdentity(item, src)
     .then(res => {
         console.log(res);
@@ -87,7 +93,7 @@ export default function ResultsCard(props) {
         );
 
     })
-    .catch(err => {setstatus(err); setOpen(true);} );
+    .catch(err => {setstatus('Faild tagging identity, please try again.'); setOpen(true);} );
   }else{
     setstatus('Please pick one representing image of identity alternative create a new one'); 
     setOpen(true);
@@ -95,6 +101,13 @@ export default function ResultsCard(props) {
 
 }
 const onPick = (image) => {
+    console.log(image);
+     image.RightSide = originalPhotoData.RightSide;
+     image.LeftSide = originalPhotoData.LeftSide
+     image.TopSide = originalPhotoData.TopSide;
+     console.log(image);
+
+    // image
     setitem(image);
     setEncounter(photos.filter(photo => photo.IdentifiedEncounterID === image.value))
     console.log(encounter);

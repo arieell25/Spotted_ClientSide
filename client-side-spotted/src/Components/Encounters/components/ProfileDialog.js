@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 // import { MuiThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
-import PhotosGrid from '../../Photos/PhotosGrid';
+import PhotosGrid from './Photos/PhotosGrid';
 import GradientCircularProgress from './CircularProgress';
 import {userService} from '../../../Service/UserService';
 import { PhotoService } from '../../../Service/PhotoService';
@@ -50,7 +50,7 @@ export default function ProfileDialog(props) {
       const user = await userService.getUserName(encounter[0].UpdatedBy);
       let date = new Date(encounter[0].CreatedAt);
       setUserName(user);
-      console.log(user[1]);
+      // console.log(user[1]);
       setDate(date.toLocaleDateString());
       setPhotos(photosData);
       // setEncounter(encounterData)

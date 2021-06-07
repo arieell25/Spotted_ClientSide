@@ -1,7 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
 import Axios from 'axios';
 
-const BASE_URL = 'http://40.91.223.174:5000'
+// const BASE_URL = 'http://40.91.223.174:5000'
+const BASE_URL = 'https://spotted-detect-component.azurewebsites.net';
 
 var axios = Axios;
 
@@ -27,6 +28,7 @@ async function connectApi(endpoint, method = 'get', data = null) {
             url: `${BASE_URL}${endpoint}`,
             method,
             headers:{
+                // 'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'multipart/form-data'
             } ,
             data,

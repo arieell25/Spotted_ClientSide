@@ -1,4 +1,4 @@
-import  React, { useState, useEffect } from "react";
+import  React, { useState, useEffect, useRef } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,10 +7,9 @@ import {
   ListItemText,
   Button
 } from "@material-ui/core";
-
+import UserMenu from './UserMenu'
 import Menu from '@material-ui/core/Menu';
 import { userService } from '../Service/UserService'
-import { Home } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import Signup from './Signup';
@@ -38,7 +37,7 @@ const useStyles = makeStyles({
 
 const navLinksPub = [
   { title: `Report Encounter`, path: `/AddEncounter` },
-  { title: `All Encounters`, path: `/EncountersBoard` },
+  { title: `Encounters`, path: `/EncountersBoard` },
 ];
 const navLinksUser = [
   { title: `Report Encounter`, path: `/AddEncounter` },
@@ -47,11 +46,14 @@ const navLinksUser = [
   { title: `Individuals `, path: `/IdentifiedBoard` },
 ];
 
-const NavBar = () => {
+const NavBar = (...rest) => {
   const [anchorElL, setAnchorElL] = useState(null);
   const [anchorSignup, setAnchorSignup] = useState(null);
-
+  const [open, setOpen] = useState(false);
   const [islogin, setislogin] = useState(null);
+  const anchorRef = useRef(null);
+  const [drawrOpen, setdrawrOpen] = useState(false);
+  const [color, setColor] = useState("blue");
 
   const classes = useStyles();
   useEffect(() => {}, [islogin]);
@@ -69,26 +71,38 @@ const NavBar = () => {
     setislogin(true);
     setAnchorSignup(null);  
   }
-  const handleCloseL = () => { setAnchorElL(null); }
+  const handleCloseL = () => { setAnchorElL(null); window.location.reload(); }
   
-  function handleLogoutClick(e) {
-    userService.logout();
-    window.location.reload();
+  const handleToggle = () => {
+    setOpen((prevOpen) => !prevOpen);
+  };
 
-  }
+  const handleClose = (event) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+    setOpen(false);
+  };
+  const handleDrawerToggle = () => {
+    setdrawrOpen(!drawrOpen);
+  };
 
   return (
     <AppBar position="static" style={{ backgroundColor: `#252529` }}> 
+          {/* <Sidebar
+            routes={routes}
+            logoText={"Spotted"}
+            handleDrawerToggle={ handleDrawerToggle}
+            open={drawrOpen}
+            color={color}
+            {...rest}
+      /> */}
       <Toolbar className="toolBar">
-          {/* <Link className={classes.logo} to="/HeaderTitle">
-            <h3>spotted</h3>
-            <img src="logo.png" alt="logo" ></img>
-          </Link> */}
             <NavLink to="/Home" exact>
               <img
                 src="logo192.png"
                 alt="logo"
-                style={{ height: 50, margin: 10 }}
+                style={{ height: 50, margin: 10, width: 245 }}
               />
             </NavLink>
           {
@@ -140,23 +154,21 @@ const NavBar = () => {
            </div>)}
         {userService.isLoggedIn()  && (
          <div className="logindiv">
-         <Button
-              aria-controls="simple-menu"
-              aria-haspopup="true"
-              onClick={handleLogoutClick}
-              size="small"
-              // style={{left: '30%'}}
-            >
-              Logout
-        </Button>
             <Button
-              aria-controls="simple-menu"
               aria-haspopup="true"
               size="small"
-              // style={{color: 'white'}}
+              onClick={handleToggle}
+              ref={anchorRef}
+              aria-controls={open ? 'menu-list-grow' : undefined}
               >
               {userService.getLocalStorageUser()}          
             </Button>
+            <UserMenu
+            open={ open }
+            setOpen={ setOpen }
+            handleClose={ handleClose }
+            anchorRef = { anchorRef}
+            />
             </div>
     
             )}

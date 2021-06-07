@@ -3,6 +3,7 @@ import {userService} from './UserService';
 
 export const PhotoService = {
   getEncounterPhotos,
+  getPhotoByUrl,
   uploadPhoto,
   uploadRawPhoto,
   addPhoto,
@@ -12,7 +13,8 @@ export const PhotoService = {
   getIdntEncounterProfilePic,
   updateDBPhoto,
   updatePhotobyID,
-  updatePhotoSide
+  updatePhotoSide,
+  getPhotosCount,
 }
 
 async function addPhoto(id, url, count) {
@@ -119,12 +121,15 @@ async function uploadPhoto(fd, id) {
         return res.data.photos;
       })
     }
-    // return HttpService.get(`/api/getEncounterPhotos?id=${encounterId}`)
-    // .then(res=> {
-    //   return res.data.photos;
-    // })
   }
   
+  function getPhotosCount() {
+      return HttpService.get(`/api/getAllDetectPhotosCount`)
+      .then(res=> {
+        return res.data.count;
+      })    
+  }
+
   function getIdntEncounterProfilePic(ids) {
     console.log(ids);
     const body ={ individualids: ids}
@@ -140,6 +145,13 @@ async function uploadPhoto(fd, id) {
     })
   }
 
+  function getPhotoByUrl(url) {
+    const body = {PhotoPath: url}
+    return HttpService.put(`/api/getPhotoByUrl`, body)
+    .then(res=> {
+      return res.data.photo;
+    })
+  }
   function getEncounterPhotosBBox(data) {
     if(data){
       const body ={photosId: data} ;
