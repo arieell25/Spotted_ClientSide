@@ -46,8 +46,13 @@ export default function UserMenu(props) {
   }
   function handleStatistics(e) {
     e.preventDefault();
-  window.location.href=`/AdminDashboard`
-}
+    window.location.href=`/AdminDashboard`
+  }
+  function handleProfileClick(e) {
+    e.preventDefault();
+    // handleClose
+    window.location.href=`/EditUserProfile`
+  }
 
   return (
     <div className={classes.root}>
@@ -61,7 +66,7 @@ export default function UserMenu(props) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                    <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
                     <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
                     <MenuItem onClick={handleStatistics}>Statistics</MenuItem>
 

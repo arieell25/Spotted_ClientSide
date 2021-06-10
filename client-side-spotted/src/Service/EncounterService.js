@@ -14,7 +14,8 @@ export const EncounterService = {
   getUserEncounters,
   deactivateEncounter,
   getEncounterVideo,
-  getEncountersCount
+  getEncountersCount,
+  getEnountersperMonth,
 }
 
 function getEncounters() {
@@ -39,6 +40,16 @@ function getEncountersCount() {
     .get(`/api/getActiveEncounters`)
     .then(res => {
       return res.data.encounters;
+    } );
+  }
+}
+
+function getEnountersperMonth() {
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getActiveEncountersperMonth`)
+    .then(res => {
+      return res.data;
     } );
   }
 }

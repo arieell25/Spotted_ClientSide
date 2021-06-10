@@ -159,6 +159,13 @@ a{
   color: aliceblue;
 
 }
-.ct-chart ct-chart{
+#chartdiv{
+  width: 1500px;
+  padding: 10px;
+}
 
+.ct-axis-title{
+  fill: aliceblue;
+  font-size: 1.2em;
+  font-weight: bold;
 }

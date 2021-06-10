@@ -15,6 +15,7 @@ export const PhotoService = {
   updatePhotobyID,
   updatePhotoSide,
   getPhotosCount,
+  getPhotosCountbySides
 }
 
 async function addPhoto(id, url, count) {
@@ -129,6 +130,14 @@ async function uploadPhoto(fd, id) {
         return res.data.count;
       })    
   }
+
+   
+  function getPhotosCountbySides() {
+      return HttpService.get(`/api/getPhotosbySides`)
+      .then(res=> {
+        return res.data;
+      })    
+  } 
 
   function getIdntEncounterProfilePic(ids) {
     console.log(ids);

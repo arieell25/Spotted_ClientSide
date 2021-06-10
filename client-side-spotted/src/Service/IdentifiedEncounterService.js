@@ -1,4 +1,5 @@
 import HttpService from './httpService'
+import {userService} from './UserService';
 
 export const IdntEncService = {
   getIdentifiedEncounters,
@@ -7,8 +8,10 @@ export const IdntEncService = {
   addIdentifiedEncounter,
   deleteIdentified,
   getLifeStages,
-  getIdentifiedEncountersCount
-
+  getIdentifiedEncountersCount,
+  getIdntEnountersperMonth,
+  getIdntEnountersPhotosbySides,
+  getIdntEncounterSites,
 }
 
 async function addIdentifiedEncounter(identifiedEncounter) {
@@ -70,4 +73,34 @@ function getLifeStages() {
   .then(res => {
     return res.data.lifeStage.rows;
   } );
+}
+
+function getIdntEnountersperMonth() {
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getIdentEncountersperMonth`)
+    .then(res => {
+      return res.data;
+    } );
+  }
+}
+
+function getIdntEnountersPhotosbySides() {
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getIdntEncounterPhotosbySides`)
+    .then(res => {
+      return res.data;
+    } );
+  }
+}
+
+function getIdntEncounterSites(id) {
+  if(userService.isLoggedIn()){
+    return  HttpService
+    .get(`/api/getIdntEncounterPhotosSites?id=${id}`)
+    .then(res => {
+      return res.data;
+    } );
+  }
 }

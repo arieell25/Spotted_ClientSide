@@ -166,6 +166,16 @@ const theme = createMuiTheme({
 
         }
     },
+    MuiDialog:{
+        paperWidthSm:{
+            maxWidth: 1500,
+        },
+    },
+    MuiIconButton:{
+        label:{
+            color: "#ffffff"
+        }
+    }
     
   }
 })

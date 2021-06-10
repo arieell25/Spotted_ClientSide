@@ -2,11 +2,10 @@ import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import {DialogTitle, Dialog, Typography, DialogContent, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
+import {DialogTitle, Dialog, DialogContent, RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
 import { blue } from '@material-ui/core/colors';
 
-const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
@@ -67,27 +66,4 @@ SidesMenuDialog.propTypes = {
   value: PropTypes.string.isRequired,
 };
 
-// export default function SimpleDialogDemo() {
-//   const [open, setOpen] = React.useState(false);
-//   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = (value) => {
-//     setOpen(false);
-//     setSelectedValue(value);
-//   };
-
-//   return (
-//     <div>
-//       <Typography variant="subtitle1">Selected: {selectedValue}</Typography>
-//       <br />
-    //   <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-    //     Open simple dialog
-    //   </Button>
-//       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-//     </div>
-//   );
-// }
