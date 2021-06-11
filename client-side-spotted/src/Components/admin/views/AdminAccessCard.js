@@ -6,15 +6,32 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import {userService} from '../../../Service/UserService';
 
 export default function AdminAccessCard(props) {
-  const {open, handleClose} = props;
+  const {open, handleClose, openResponsStatus, setStatus} = props;
   const [email, setEmail] = useState(null);
 
   const handleChange = (e)  => {
     console.log(`chosen side: ${e}`)
     setEmail(e.target.value);
 };
+  const handleSave = () => {
+    userService.setAdmin(email).then(res => {
+      if(res){
+        setStatus('Successfully added admin user')
+        openResponsStatus(true);
+        handleClose();
+      }else{
+        setStatus('User email not found')
+        openResponsStatus(true);
+      }
+
+    }).catch(err => {
+      setStatus('Faild to add admin user, please try again later...')
+      openResponsStatus(true);
+    })
+  }
   return (
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Grant Admin Access</DialogTitle>
@@ -36,11 +53,10 @@ export default function AdminAccessCard(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSave} color="primary">
             Save
           </Button>
         </DialogActions>
       </Dialog>
-
   );
 }

@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
     useEffect(() => {
         const fetchData = async () => {
         //   const boundingBoxData = await PhotoService.getEncounterPhotosBBox(fileNames);
-          const photosData = await PhotoService.getEncounterPhotos(id);
+          const photosData = await PhotoService.getPhotosforIdentification(id);
            var new_arr = photosData.map(image=> {
                let arr_str = (image.src).split("/");
                image.fileName = arr_str[5];

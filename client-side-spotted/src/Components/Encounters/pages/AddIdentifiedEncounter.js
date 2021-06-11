@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormLabel from "@material-ui/core/FormLabel";
 import {IdntEncService} from '../../../Service/IdentifiedEncounterService';
 import { Link } from 'react-router-dom';
-import { useForm, Controller  } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import StatusDialog from '../components/StatusDialog';
 
 export default function AddIdentifiedEncounter() {

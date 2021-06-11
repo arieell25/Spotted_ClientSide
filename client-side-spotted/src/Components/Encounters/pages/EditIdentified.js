@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import { makeStyles } from '@material-ui/core/styles';
 import {RadioGroup, Radio, FormControlLabel} from '@material-ui/core'
 import {TextField, Card} from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
 import {IdntEncService} from '../../../Service/IdentifiedEncounterService';
-import { Link } from 'react-router-dom';
 import { useForm, Controller  } from 'react-hook-form';
 import StatusDialog from '../components/StatusDialog';
 import qs from 'qs';
@@ -31,17 +29,18 @@ export default function EditIdentifiedEncounter(props) {
   const { register, handleSubmit, control } = useForm();
   var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
 
-useEffect(() => {
-  IdntEncService.getLifeStages().then(data => {
-      console.log(data)
-      setstages(data);
-    })
-    .catch(err => {
-      setStatus(err);
-      openRespons(true);
-    });
-    
-}, []);
+  useEffect(() => {
+    IdntEncService.getLifeStages().then(data => {
+        console.log(data)
+        setstages(data);
+      })
+      .catch(err => {
+        setStatus(err);
+        openRespons(true);
+      });
+      
+  }, [openRespons]);
+
   const handleCloseRespons = () => {
     setOpenRespons(false);
   };
@@ -267,7 +266,7 @@ useEffect(() => {
                 open={openRespons}
                 status={status}
                 onClose={handleCloseRespons}
-        />
+              />
           </div>
     );
   }

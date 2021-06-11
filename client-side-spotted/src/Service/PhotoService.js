@@ -15,7 +15,9 @@ export const PhotoService = {
   updatePhotobyID,
   updatePhotoSide,
   getPhotosCount,
-  getPhotosCountbySides
+  getPhotosCountbySides,
+  copyBlobImage,
+  getPhotosforIdentification
 }
 
 async function addPhoto(id, url, count) {
@@ -124,6 +126,13 @@ async function uploadPhoto(fd, id) {
     }
   }
   
+  
+  function getPhotosforIdentification(encounterId) {
+      return HttpService.get(`/api/getEncounterPhotosforIdentification?id=${encounterId}`)
+      .then(res=> {
+        return res.data.photos;
+      })    
+      }
   function getPhotosCount() {
       return HttpService.get(`/api/getAllDetectPhotosCount`)
       .then(res=> {
@@ -173,12 +182,20 @@ async function uploadPhoto(fd, id) {
   }
 
   async function deleteBlobPhoto(id, files) {
-    console.log('photo service delete id: ' + id );
     if (id) {
       const body = {encounterId: id, files: files};
       return HttpService.post(`/api/deletephotofromBlob`,body);
     } else {
-      console.log("no photo data");
-      // return HttpService.post(`api/addEncounter`, encounter);
+      console.log("no files data");
+    }
+  }
+
+  async function copyBlobImage(id, urls) {
+    // console.log('addphoto:  ' + url);
+    if (id && urls) {
+      const body ={ id: id, urlArr: urls};
+      return HttpService.post(`/api/imageBlobCopy`, body)
+    } else {
+      console.log("no data provided");
     }
   }
