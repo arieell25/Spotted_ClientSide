@@ -15,6 +15,10 @@ export const PhotoService = {
   updatePhotobyID,
   updatePhotoSide,
   getPhotosCount,
+  getPhotosCountbySides,
+  copyBlobImage,
+  getPhotosforIdentification,
+  getIdntEncountersPhotos
 }
 
 async function addPhoto(id, url, count) {
@@ -123,12 +127,27 @@ async function uploadPhoto(fd, id) {
     }
   }
   
+  
+  function getPhotosforIdentification(encounterId) {
+      return HttpService.get(`/api/getEncounterPhotosforIdentification?id=${encounterId}`)
+      .then(res=> {
+        return res.data.photos;
+      })    
+      }
   function getPhotosCount() {
       return HttpService.get(`/api/getAllDetectPhotosCount`)
       .then(res=> {
         return res.data.count;
       })    
   }
+
+   
+  function getPhotosCountbySides() {
+      return HttpService.get(`/api/getPhotosbySides`)
+      .then(res=> {
+        return res.data;
+      })    
+  } 
 
   function getIdntEncounterProfilePic(ids) {
     console.log(ids);
@@ -138,6 +157,18 @@ async function uploadPhoto(fd, id) {
         return res.data.identEncounters;
       })    
   }
+
+  function getIdntEncountersPhotos(ids) {
+    console.log(ids);
+    const intArr = ids.map(Number);
+    console.log(intArr);
+    const body ={ individualids: intArr}
+      return HttpService.post(`/api/getIdntEncountersPhotos`, body)
+      .then(res=> {
+        return res.data.identEncounters;
+      })    
+  }
+
   function getIdntEncounterPhotos(id) {
     return HttpService.get(`/api/getIdntEncounterPhotos?id=${id}`)
     .then(res=> {
@@ -164,12 +195,20 @@ async function uploadPhoto(fd, id) {
   }
 
   async function deleteBlobPhoto(id, files) {
-    console.log('photo service delete id: ' + id );
     if (id) {
       const body = {encounterId: id, files: files};
       return HttpService.post(`/api/deletephotofromBlob`,body);
     } else {
-      console.log("no photo data");
-      // return HttpService.post(`api/addEncounter`, encounter);
+      console.log("no files data");
+    }
+  }
+
+  async function copyBlobImage(id, urls) {
+    // console.log('addphoto:  ' + url);
+    if (id && urls) {
+      const body ={ id: id, urlArr: urls};
+      return HttpService.post(`/api/imageBlobCopy`, body)
+    } else {
+      console.log("no data provided");
     }
   }

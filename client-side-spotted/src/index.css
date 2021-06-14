@@ -33,12 +33,14 @@
 h1{
 	font-size: 470%;
   background: -webkit-linear-gradient(45deg,#C5F836, #3AA4D1);
-  -webkit-background-clip: text;
+  /* -webkit-background-clip: text; */
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 h2{
   background: -webkit-linear-gradient(45deg,#C5F836, #3AA4D1);
-  -webkit-background-clip: text;
+  /* -webkit-background-clip: text; */
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 	font-size: 300%;
   font-weight: 300;
@@ -50,11 +52,12 @@ h3{
   padding: 10px;
 	font-size: 270%;
   background: -webkit-linear-gradient(45deg,#C5F836, #3AA4D1);
-  -webkit-background-clip: text;
+  /* -webkit-background-clip: text; */
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 p{
-  margin: 5px;
+  margin: 10px;
 }
 .btn {
   display: flex;
@@ -159,6 +162,13 @@ a{
   color: aliceblue;
 
 }
-.ct-chart ct-chart{
+#chartdiv{
+  width: 1500px;
+  padding: 10px;
+}
 
+.ct-axis-title{
+  fill: aliceblue;
+  font-size: 1.2em;
+  font-weight: bold;
 }

@@ -4,13 +4,16 @@ export const userService = {
   save,
   isLoggedIn,
   isAdmin,
-  isResearcher,
+  // isResearcher,
   login,
   getUserName,
   register,
   logout,
   getLocalStorageUser,
-  getAllUsers
+  getAllUsers,
+  setAdmin,
+  updateUser,
+  changePassword
 }
 
 async function save(user) {
@@ -21,10 +24,71 @@ async function save(user) {
   }
 }
 
+async function setAdmin(email) {
+  if (email) {
+    if(isLoggedIn()){
+    const body = {email};
+    return HttpService.put(`/api/setUserAdmin`, body)
+    .then(res => {
+      if(res.data.user[0]===1)
+        return true;
+    })
+    }
+    else{
+      return false;
+    }
+  } else {
+    return ('no email data');
+  }
+}
+
+async function changePassword(oldpass, newpass) {
+  console.log(oldpass,newpass );
+  if (oldpass && newpass) {
+    const body = {oldPassword: oldpass , newPassword: newpass}
+
+    if(isLoggedIn()){
+    return HttpService.post(`/api/changePassword`, body)
+    .then(res => {
+      console.log(res );
+      if(res.success)
+        return ('Password has changed successfully.');
+      else
+        return('Oops...Somethong went wrong.')
+
+    }).catch(err => {
+      return err.data.errorMessage});
+    }
+    else{
+      return false;
+    }
+  } else {
+    return ('no email data');
+  }
+}
+
+async function updateUser( data) {
+  console.log( data);
+  if (data) {
+    if(isLoggedIn()){
+    const body = {firstName: data.firstName, lastName: data.lastName, email: data.email};
+    return HttpService.put(`/api/updateUser`, body)
+    .then(res => {
+      if(res.data.user[0]===1)
+        return ('New Profile data was saved.');
+    }).catch(err => {
+      return err.data.errorMessage})
+    }
+    else{
+      return ('Please login first');
+    }
+  } else {
+    return ('Please fill in fields first.');
+  }
+}
+
  function isLoggedIn() {
-  //  console.log(localStorage.getItem('user'));
    var user =  JSON.parse(localStorage.getItem('user'));
-  //  console.log(user.firstName);
    return user;
 }
  function isAdmin() {
@@ -35,23 +99,22 @@ async function save(user) {
   }
   return status;
 }
- function isResearcher() {
-  let status = false;
-  if (localStorage.getItem('user') != null) {
-    if( JSON.parse(localStorage.getItem('user')).UserTypeID === 2)
-      status = true;;
-  }
-  return status;
-}
 
 // This method returns the user from the localStorage
 // Be careful, the value is the one when the user logged in for the last time
- function getLocalStorageUser() {
+function getLocalStorageUser() {
   console.log(JSON.parse(localStorage.getItem('user')));
   var user =  JSON.parse(localStorage.getItem('user'));
   console.log(user.firstName);
-  return user.firstName;
+  return user;
 }
+//  function getLocalStorageUserName() {
+//   console.log(JSON.parse(localStorage.getItem('user')));
+//   var user =  JSON.parse(localStorage.getItem('user'));
+//   console.log(user.firstName);
+//   return user.firstName;
+
+// }
 
 // This method signs up and logs in the user
  function register(userInfo) {

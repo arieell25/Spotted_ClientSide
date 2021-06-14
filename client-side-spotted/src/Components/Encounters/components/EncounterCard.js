@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';import {
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+import {
   Card,
   CardActionArea,
   CardActions,
@@ -11,36 +12,34 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';impor
   CardMedia,
   Grid,
   IconButton,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    margin: '30px 25px 10px 0px',
-    padding: '10%'
+    margin: "30px 25px 10px 0px",
+    padding: "10%",
   },
-  linkText:{
-    textDecoration: 'none'
+  linkText: {
+    textDecoration: "none",
   },
   img: {
-    width: '100%',
+    width: "100%",
     paddingTop: 4,
-    borderRadius: 10
+    borderRadius: 10,
   },
   lable: {
-    color: '#e0e0e7',
+    color: "#e0e0e7",
   },
-  checked:{
+  checked: {
     marginLeft: 8,
-    paddingRight: '4px',
+    paddingRight: "4px",
   },
-  cardContainer:{
-    float: 'left',
-
+  cardContainer: {
+    float: "left",
   },
-  verified:{
-    display: 'inline-flex',
-
-  }
+  verified: {
+    display: "inline-flex",
+  },
 }));
 
 export default function EncounterCard(props) {
@@ -55,20 +54,22 @@ export default function EncounterCard(props) {
     // eslint-disable-next-line
   }, [editing]);
 
- 
   return (
-    <Grid item xs={12}  md={3} sm={6} xl={2}>
+    <Grid item xs={12} md={3} sm={6} xl={2}>
       <Card className={classes.root}>
         <NavLink
           className={classes.linkText}
-          to={identFlag? 
-            {
-              pathname: '/IdentifiedProfile',
-              search: '?id=' + index,
-            } : {
-            pathname: '/EncounterProfile',
-            search: '?id=' + index,
-          }}
+          to={
+            identFlag
+              ? {
+                  pathname: "/IdentifiedProfile",
+                  search: "?id=" + index,
+                }
+              : {
+                  pathname: "/EncounterProfile",
+                  search: "?id=" + index,
+                }
+          }
         >
           <CardActionArea>
             <CardMedia
@@ -79,52 +80,56 @@ export default function EncounterCard(props) {
               image={
                 encounter.ProfilePicture
                   ? encounter.ProfilePicture
-                  : 'https://t4.ftcdn.net/jpg/02/07/87/79/360_F_207877921_BtG6ZKAVvtLyc5GWpBNEIlIxsffTtWkv.jpg'
+                  : "https://t4.ftcdn.net/jpg/02/07/87/79/360_F_207877921_BtG6ZKAVvtLyc5GWpBNEIlIxsffTtWkv.jpg"
               }
               title="Contemplative Reptile"
             />
-            <CardContent >
+            <CardContent>
               <div className={classes.cardContainer}>
-              <Typography variant="body2" color="secondary" component="h5">
-                Encounter no.: {encounter.EncounterID}
-              </Typography>
-    
-              <Typography variant="body2" color="secondary" component="h5">
-                Original ID: {encounter.OriginalID}
-              </Typography>
-              {/* <Typography variant="body2" color="secondary" component="h5">
+                <Typography variant="body2" color="secondary" component="h5">
+                  Encounter no.: {encounter.EncounterID}
+                </Typography>
+
+                <Typography variant="body2" color="secondary" component="h5">
+                  Original ID: {encounter.OriginalID}
+                </Typography>
+                {/* <Typography variant="body2" color="secondary" component="h5">
                  {!encounter.Verified ? "Not Verified" : "Verififed"}
               </Typography> */}
-              <Typography variant="body2" color="secondary" component="p">
-              Last encounter date: {date}
-              </Typography>
+                <Typography variant="body2" color="secondary" component="p">
+                  Encounter date: {date}
+                </Typography>
+                <Typography variant="body2" color="secondary" component="p">
+                  {encounter.Site ? `Site: ${encounter.Site.SiteName}` : null}
+                </Typography>
+                <Typography variant="body2" color="secondary" component="p">
+                  {encounter.Photographer? `Site: ${encounter.SiteID}`: null }
+                </Typography>
               </div>
               {/* <div> */}
-              {encounter.Verified &&
-              <div  className={classes.verified}>        
-                <Typography variant="body2" color="secondary" component="p">
-                  Verified
-                 </Typography>
-              <CheckCircleOutlineIcon className={classes.checked} color="secondary" />
-              </div>
-              }
+              {encounter.Verified && (
+                <div className={classes.verified}>
+                  <Typography variant="body2" color="secondary" component="p">
+                    Verified
+                  </Typography>
+                  <CheckCircleOutlineIcon
+                    className={classes.checked}
+                    color="secondary"
+                  />
+                </div>
+              )}
               {/* </div> */}
             </CardContent>
-
           </CardActionArea>
 
-        <CardActions>
-        <button className='btn' >
-          PROFILE
-         </button> 
-          {/* <IconButton className={classes.lable} size="small">
+          <CardActions>
+            <button className="btn">PROFILE</button>
+            {/* <IconButton className={classes.lable} size="small">
             <RateReviewIcon />
           </IconButton> */}
-        </CardActions>
+          </CardActions>
         </NavLink>
-
       </Card>
     </Grid>
   );
 }
-

@@ -45,7 +45,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function ResultsCard(props) {
   const classes = useStyles();
-  const { ids, src, encounterid, setOpen, setstatus, setIdntId } = props;
+  const { data, src, encounterid, setOpen, setstatus, setIdntId } = props;
+  const [ids, setIds] = useState([]);
   const [originalPhoto, setoriginalPhoto] = useState(null);
   const [isDone, setisDone] = useState(false);
   const [doneStatus, setDoneStatus] = useState('');
@@ -55,14 +56,39 @@ export default function ResultsCard(props) {
   const [ originalPhotoData, setOriginalPhotoData] = useState();
   const [openProfile, setOpenProfile] = useState(false);
   const [encounter, setEncounter] = useState([]);
-
+  const [resultPhotos, setResultPhotos] = useState([]);
+  let  arr =[];
   useEffect(() => {
-        console.log(ids);
-        setindevidualIds(ids);
         setoriginalPhoto(src);
+        const idsArr = data.map(item => item.id);
+        const imagesArr = data.map(item => item.image_name);
+        console.log(imagesArr);
+
+        setindevidualIds(idsArr);
         const fetchData = async () => {
             //   const boundingBoxData = await PhotoService.getEncounterPhotosBBox(fileNames);
-              const photosData = await PhotoService.getIdntEncounterProfilePic(ids);
+              const photosData = await PhotoService.getIdntEncountersPhotos(idsArr)
+              .then(res => {
+                const photos = res.map((item)=> {
+                  console.log(`item map ${item}`);
+                  imagesArr.forEach(image => {
+                    item.Photos.filter(photo => {
+                      console.log(photo.src.split('/')[5])
+                      console.log(image)
+
+                       if(image === photo.src.split('/')[5]) 
+                       {
+                        console.log(photo.src)
+                        return photo.src 
+                       }
+                     } )
+
+                  })
+                })
+                console.log(photos);
+                return photos;
+                // setResultPhotos([...resultPhotos, ()=>  ])
+              });
               const srcPhotoData = await PhotoService.getPhotoByUrl(src);
               console.log(srcPhotoData);
               setOriginalPhotoData(srcPhotoData);
@@ -143,7 +169,7 @@ const handleNew = () => {
          setOpen(true);})
 }
   
-if(!photos)return (<div> Loading photos of match</div>)
+if(!photos)return (<div> Loading photos....</div>)
 else{
       return (
         

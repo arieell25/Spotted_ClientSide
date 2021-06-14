@@ -39,10 +39,10 @@ async function connectApi(endpoint, method = 'get', data = null) {
         return res.data;
     } catch (err) {
         console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: ${JSON.stringify(data)}`);
-        console.dir(err);
+        console.dir(err.response);
         if (err.response && err.response.status === 401) {
             window.location.assign('/#/signup');
         }
-        throw err;
+        throw err.response;
     }
 }

@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
-const BASE_URL = 'http://65.52.144.46:5000'
+// const BASE_URL = 'http://65.52.144.46:5000'
+const BASE_URL = 'http://52.136.223.32:5000'
 
 var axios = Axios;
 
