@@ -56,7 +56,7 @@ export default function StatusDialog(props) {
               }}
             >
               <Button onClick={onClose} color="primary">
-                View Encounter Profile
+                Encounter Profile
               </Button>
             </NavLink>
           )}
@@ -81,7 +81,7 @@ export default function StatusDialog(props) {
               }}
             >
               <Button onClick={onClose} color="primary">
-                Go to Profile
+                Individual Profile
               </Button>
             </NavLink>
           )}

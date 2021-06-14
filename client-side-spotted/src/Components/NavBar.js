@@ -148,7 +148,7 @@ const NavBar = () => {
               ref={anchorRef}
               aria-controls={open ? "menu-list-grow" : undefined}
             >
-              {userService.getLocalStorageUser()}
+              {(userService.getLocalStorageUser()).firstName}
             </Button>
             <UserMenu
               open={open}

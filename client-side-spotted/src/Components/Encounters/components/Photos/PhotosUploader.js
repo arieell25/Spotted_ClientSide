@@ -68,7 +68,7 @@ export default function PhotosUploader(props) {
               });
             setId(id);
             handleOpenRespons(
-              `Successfully uploaded ${count} photos and sent for detection`
+              `Successfully uploaded and detected Bluespotted in ${count} photos.`
             );
             setIsReady(true);
           });

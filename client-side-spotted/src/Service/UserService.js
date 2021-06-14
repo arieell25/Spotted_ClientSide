@@ -4,7 +4,7 @@ export const userService = {
   save,
   isLoggedIn,
   isAdmin,
-  isResearcher,
+  // isResearcher,
   login,
   getUserName,
   register,
@@ -99,23 +99,22 @@ async function updateUser( data) {
   }
   return status;
 }
- function isResearcher() {
-  let status = false;
-  if (localStorage.getItem('user') != null) {
-    if( JSON.parse(localStorage.getItem('user')).UserTypeID === 2)
-      status = true;;
-  }
-  return status;
-}
 
 // This method returns the user from the localStorage
 // Be careful, the value is the one when the user logged in for the last time
- function getLocalStorageUser() {
+function getLocalStorageUser() {
   console.log(JSON.parse(localStorage.getItem('user')));
   var user =  JSON.parse(localStorage.getItem('user'));
   console.log(user.firstName);
-  return user.firstName;
+  return user;
 }
+//  function getLocalStorageUserName() {
+//   console.log(JSON.parse(localStorage.getItem('user')));
+//   var user =  JSON.parse(localStorage.getItem('user'));
+//   console.log(user.firstName);
+//   return user.firstName;
+
+// }
 
 // This method signs up and logs in the user
  function register(userInfo) {

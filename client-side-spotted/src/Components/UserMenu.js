@@ -68,7 +68,7 @@ export default function UserMenu(props) {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
                     <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
-                    <MenuItem onClick={handleStatistics}>Statistics</MenuItem>
+                    { userService.getLocalStorageUser().isAdmin ? <MenuItem onClick={handleStatistics}>Statistics</MenuItem> : null}
 
                   </MenuList>
                 </ClickAwayListener>

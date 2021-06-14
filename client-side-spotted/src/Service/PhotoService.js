@@ -17,7 +17,8 @@ export const PhotoService = {
   getPhotosCount,
   getPhotosCountbySides,
   copyBlobImage,
-  getPhotosforIdentification
+  getPhotosforIdentification,
+  getIdntEncountersPhotos
 }
 
 async function addPhoto(id, url, count) {
@@ -156,6 +157,18 @@ async function uploadPhoto(fd, id) {
         return res.data.identEncounters;
       })    
   }
+
+  function getIdntEncountersPhotos(ids) {
+    console.log(ids);
+    const intArr = ids.map(Number);
+    console.log(intArr);
+    const body ={ individualids: intArr}
+      return HttpService.post(`/api/getIdntEncountersPhotos`, body)
+      .then(res=> {
+        return res.data.identEncounters;
+      })    
+  }
+
   function getIdntEncounterPhotos(id) {
     return HttpService.get(`/api/getIdntEncounterPhotos?id=${id}`)
     .then(res=> {
