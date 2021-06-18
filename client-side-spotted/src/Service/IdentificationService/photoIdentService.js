@@ -4,6 +4,7 @@ export const identificationService = {
   identifyPhoto,
   identifyPhotos,
   setIndividualIdentity,
+  setNewIndividualIdentity
 }
 
 async function identifyPhoto(fd, id) {
@@ -41,6 +42,25 @@ async function identifyPhoto(fd, id) {
 
       var body = { 
         individual_ID: item.value,
+        value: arr_str[5],
+        LeftSide: item.LeftSide,
+        RightSide: item.RightSide,
+        TopSide: item.TopSide
+      }
+      return HttpService.post('/setIndividualIdentity', body)
+    } else {
+      return("no individual_ID or src data for setIndividualIdentity");
+      // return HttpService.post(`api/addEncounter`, encounter);
+    }
+  }
+  async function setNewIndividualIdentity(id, item) {
+    console.log(`set New IndividualIdentity data:${item} ` );
+    if (item) {
+      let arr_str = (item.src).split("/");
+      // console.log(arr_str[5]);
+
+      var body = { 
+        individual_ID: id,
         value: arr_str[5],
         LeftSide: item.LeftSide,
         RightSide: item.RightSide,

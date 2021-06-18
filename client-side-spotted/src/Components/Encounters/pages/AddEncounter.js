@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { RadioGroup, Radio, FormControlLabel, InputAdornment  } from "@material-ui/core";
+import {
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+  InputAdornment,
+} from "@material-ui/core";
 import { MenuItem, Card } from "@material-ui/core";
 import { EncounterService } from "../../../Service/EncounterService";
 import { useForm, Controller } from "react-hook-form";
@@ -62,10 +67,9 @@ export default function AddEncounter() {
         setOpenRespons(true);
         setTimeout(() => {
           window.location.href =
-          "/UploadPhoto?id=" +
-          JSON.stringify(result.data.newEncounter.EncounterID)
+            "/UploadPhoto?id=" +
+            JSON.stringify(result.data.newEncounter.EncounterID);
         }, 4000);
-       
       })
       .catch((err) => {
         setStatus("Oops... Somthing went wrong, try again.");
@@ -154,7 +158,7 @@ export default function AddEncounter() {
               </div>
             </div>
             <div className="lowerContainer">
-            <section>
+              <section>
                 <TextField
                   inputRef={register}
                   name="OriginalID"
@@ -173,7 +177,9 @@ export default function AddEncounter() {
                   halfwidth="true"
                   helperText="Please enter DW"
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">m</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">m</InputAdornment>
+                    ),
                   }}
                 />
               </section>
@@ -186,7 +192,9 @@ export default function AddEncounter() {
                   halfwidth="true"
                   helperText="Please enter DL"
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">m</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">m</InputAdornment>
+                    ),
                   }}
                 />
               </section>
@@ -199,7 +207,9 @@ export default function AddEncounter() {
                   halfwidth="true"
                   helperText="Please enter TL"
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">m</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">m</InputAdornment>
+                    ),
                   }}
                 />
               </section>
@@ -212,7 +222,9 @@ export default function AddEncounter() {
                   halfwidth="true"
                   helperText="Please enter diving depth"
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">m</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">m</InputAdornment>
+                    ),
                   }}
                 />
               </section>
@@ -225,7 +237,9 @@ export default function AddEncounter() {
                   halfwidth="true"
                   helperText="Please enter distance"
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">m</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">m</InputAdornment>
+                    ),
                   }}
                 />
               </section>
@@ -238,7 +252,9 @@ export default function AddEncounter() {
                   halfwidth="true"
                   helperText="Please enter water temperature"
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">℃</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">℃</InputAdornment>
+                    ),
                   }}
                 />
               </section>

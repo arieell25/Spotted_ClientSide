@@ -175,8 +175,12 @@ const theme = createMuiTheme({
         label:{
             color: "#ffffff"
         }
+    },
+    MuiDataGrid:{
+        root:{
+            color: "#ffffff"
+        }
     }
-    
   }
 })
 

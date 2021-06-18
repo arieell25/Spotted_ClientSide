@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 12,
     color: "#96a299",
     float: "right",
-    // marginRight: '-20px',
   },
 }));
 
@@ -147,9 +146,8 @@ export default function IdentifiedProfile(props) {
                 }
 
                 <div className="detailsEncounter">
-                  {/* <p>Verified by: {encounter.UpdateBy}</p> */}
                   <p>
-                    {encounter.isAlive
+                    {encounter.IsAlive
                       ? "Considerd as Alive"
                       : "Considerd as Dead"}
                   </p>
@@ -179,7 +177,7 @@ export default function IdentifiedProfile(props) {
                     </IconButton>
                     <p className={classes.update}>
                       {encounter.UpdatedBy
-                        ? "Updated by " + encounter.User.firstName + "on"
+                        ? "Updated by " + encounter.User.firstName + " on "
                         : ""}
                       {encounter.UpdatedAt
                         ? new Date(encounter.UpdatedAt).toLocaleDateString(

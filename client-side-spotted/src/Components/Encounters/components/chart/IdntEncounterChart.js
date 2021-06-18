@@ -52,7 +52,7 @@ export default function IdntEncounterChart(props) {
                   count++;
                 }
                 if (count > 0) {
-                  if (encounterData[i].count > 0) {
+                  if (encounterData[i] && encounterData[i].count > 0) {
                     encounterData[i].count++;
                   } else {
                     encounterData[i] = {
@@ -100,7 +100,7 @@ export default function IdntEncounterChart(props) {
           </CardBody>
           <CardFooter chart>
             <div className={classes.stats}>
-              <AccessTime /> Updated 4 minutes ago
+              <AccessTime /> Updated 2 minutes ago
             </div>
           </CardFooter>
         </Card>
