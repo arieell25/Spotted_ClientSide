@@ -14,8 +14,9 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: "30px 25px 10px 0px",
-    padding: "10%",
+    // margin: "30px 25px 10px 0px",
+    padding: "5% 8%",
+    margin: "10px"
   },
   linkText: {
     textDecoration: "none",

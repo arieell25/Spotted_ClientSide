@@ -1,16 +1,26 @@
-import { useState, useEffect, React } from 'react'
-import { EncounterService } from '../../../Service/EncounterService'
-import EncounterCard from '../components/EncounterCard'
-import GradientCircularProgress from '../components/CircularProgress'
-import StatusDialog from '../components/StatusDialog';
-import EncountersTable from '../components/EncountersTable';
-import {
-  Grid,
-  makeStyles
-} from '@material-ui/core';
+import { useState, useEffect, React } from "react";
+import { EncounterService } from "../../../Service/EncounterService";
+import EncounterCard from "../components/EncounterCard";
+import GradientCircularProgress from "../components/CircularProgress";
+import StatusDialog from "../components/StatusDialog";
+import EncountersTable from "../components/EncountersTable";
+import CardBody from "../../admin/components/Card/CardBody.js";
+import GridOnIcon from "@material-ui/icons/GridOn";
+import csvDownload from "json-to-csv-export";
+import TableChartIcon from "@material-ui/icons/TableChart";
+import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
+import GetAppIcon from "@material-ui/icons/GetApp";
+import { Grid, makeStyles, IconButton } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-
+const useStyles = makeStyles(() => ({
+  csvbtn: {
+    float: "right",
+    right: "2%",
+    margin: 0,
+  },
+  btndiv: {
+    height: "30px",
+  },
 }));
 export default function UserEncountersBoard() {
   const classes = useStyles();
@@ -24,23 +34,24 @@ export default function UserEncountersBoard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        await EncounterService.getEncounters()
-        .then(encounters => setEncounters(encounters))
+        await EncounterService.getEncounters().then((encounters) => {
+          setEncounters(encounters);
+        });
         // .catch(res => console.log(res));
       } catch (err) {
-        console.log('error fetching...:', err);
-        setStatus('Somthing went wrong, please login again...');
+        console.log("error fetching...:", err);
+        setStatus("Somthing went wrong, please login again...");
         setOpen(true);
       }
       setEdit(false);
     }
     fetchData();
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     // eslint-disable-next-line
   }, [edit]);
 
   const showMore = () => {
-    setLimit(prevState => prevState + 8);
+    setLimit((prevState) => prevState + 8);
     setEdit(true);
   };
 
@@ -51,51 +62,68 @@ export default function UserEncountersBoard() {
     )
       showMore();
   }
+
   const handleClose = () => {
     setOpen(false);
   };
 
   const renderEachEncounter = (item, i) => {
-    if(item.IdentifiedEncounterID){
+    if (item.IdentifiedEncounterID) {
       return (
-        <EncounterCard index={item.IdentifiedEncounterID} encounter={item} key={item.EncounterID}></EncounterCard>
+        <EncounterCard
+          index={item.IdentifiedEncounterID}
+          encounter={item}
+          key={item.EncounterID}
+        ></EncounterCard>
+      );
+    } else {
+      return (
+        <EncounterCard
+          index={item.EncounterID}
+          encounter={item}
+          key={item.EncounterID}
+        ></EncounterCard>
       );
     }
-    else{
-    return (
-      <EncounterCard index={item.EncounterID} encounter={item} key={item.EncounterID}></EncounterCard>
-    );
-  }
   };
 
-  if (!encounters) return (
-    <div>
-
-    <StatusDialog
-      open={open}
-      status={status}
-      onClose={handleClose}/>
-      <GradientCircularProgress />
-      </div>
-
-    )
-  else {
-    return(
+  if (!encounters)
+    return (
       <div>
-        
-        {/* {gridView && <div><EncountersTable rows={encounters}/></div>} */}
-        {gridView &&
-        <Grid container className="Encounters">
-
-          {encounters
-            .map(renderEachEncounter)
-            .reverse()
-            .slice(0, limit)
-          }
-        </Grid>
-  }
+        <StatusDialog open={open} status={status} onClose={handleClose} />
+        <GradientCircularProgress />
+      </div>
+    );
+  else {
+    return (
+      <div>
+        <div className={classes.btndiv}>
+          <IconButton
+            className={classes.csvbtn}
+            onClick={() => setGridView(!gridView)}
+          >
+            <TableChartIcon />
+          </IconButton>
+          <IconButton
+            className={classes.csvbtn}
+            onClick={() => setGridView(!gridView)}
+          >
+            <GridOnIcon />
+          </IconButton>
+          {/* <IconButton className={classes.csvbtn}  onClick={() => csvDownload(encounters, "encountersReports.csv")}><GetAppIcon/></IconButton> */}
         </div>
-      
-    )
-        }
-      }
+
+        {!gridView && (
+          <CardBody>
+            <EncountersTable rows={encounters} />
+          </CardBody>
+        )}
+        {gridView && (
+          <Grid container className="Encounters">
+            {encounters.map(renderEachEncounter).reverse().slice(0, limit)}
+          </Grid>
+        )}
+      </div>
+    );
+  }
+}

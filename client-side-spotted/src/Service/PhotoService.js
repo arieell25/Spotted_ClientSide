@@ -31,10 +31,10 @@ async function addPhoto(id, url, count) {
       // return HttpService.post(`api/addPhotos`, encounter); TODO many photos.
     }
   }
-  async function updateDBPhoto(id, url) {
+  async function updateDBPhoto(id, item) {
     // console.log('addphoto:  ' + url);
     if (id) {
-      const body ={ id: id, url: url};
+      const body ={ id: id, url: item.src};
       return HttpService.put(`/api/updateDBphoto`, body)
     } else {
       console.log("no photo data");
