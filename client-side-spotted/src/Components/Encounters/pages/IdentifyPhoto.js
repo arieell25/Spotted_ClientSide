@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import qs from "qs";
 import { SystemResultsService } from "../../../Service/SystemResultsService";

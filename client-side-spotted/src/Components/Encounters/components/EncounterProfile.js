@@ -216,7 +216,7 @@ export default function EncounterProfile(props) {
 
                   <p className={classes.update}>
                     {encounter.UpdatedBy
-                      ? "Last updated by " + encounter.User.firstName + " on "
+                      ? "Last updated on "
                       : "Created on "}
                     {encounter.UpdatedAt
                       ? new Date(encounter.UpdatedAt).toLocaleDateString(

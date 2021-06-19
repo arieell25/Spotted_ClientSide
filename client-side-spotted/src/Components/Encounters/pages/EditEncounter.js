@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "date-fns";
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -34,7 +35,6 @@ export default function EditIdentifiedEncounter(props) {
   const [openRespons, setOpenRespons] = useState(false);
   const [mediatypes, setmediatypes] = useState([]);
   const [media, setmedia] = useState(`1`);
-  // const [count, setcount] = useState([]);
   const [encounter, setencounter] = useState([]);
   const [sites, setsites] = useState([]);
   const [site, setsite] = useState("");
