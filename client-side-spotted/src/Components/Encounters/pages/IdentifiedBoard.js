@@ -21,9 +21,6 @@ export default function IdentifiedBoard() {
   const [edit, setEdit] = useState(null);
   const [limit, setLimit] = useState(8);
 
-  // const [encounterAdd, setencounterAdd] = useState(false)
-  const [flag] = useState(false);
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -52,15 +49,6 @@ export default function IdentifiedBoard() {
     )
       showMore();
   }
-  // useEffect(() => {
-  //   getEncounters();
-  // }, [flag])
-
-  // const getEncounters = async () => {
-  //   const data = await EncounterService.getEncounters()
-  //   console.log(data)
-  //   setEncounters(data)
-  // }
 
   const renderEachEncounter = (item, i) => {
     return (

@@ -4,8 +4,7 @@ import Axios from 'axios';
 const NODE_ENV = 'development';
 const BASE_URL = NODE_ENV === 'development' ?
     '//localhost:8081' :
-    '//spotted-server.azurewebsites.net'
-    // '//localhost:8081'
+    '//spotted-server.azurewebsites.net';
 
 var axios = Axios;
 

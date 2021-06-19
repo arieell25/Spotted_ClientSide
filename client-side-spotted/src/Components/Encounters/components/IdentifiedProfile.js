@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ChartistGraph from "react-chartist";
-
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import StatusDialog from "./StatusDialog";
@@ -58,7 +56,6 @@ export default function IdentifiedProfile(props) {
   const classes = useStyles();
   const [status, setStatus] = useState([]);
   const [open, setOpen] = useState(false);
-  const [edit, setEdit] = useState(false);
   const [openPhotos, setOpenPhotos] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [encounter, setEncounter] = useState([]);
@@ -79,10 +76,9 @@ export default function IdentifiedProfile(props) {
     PhotoService.getIdntEncounterPhotos(id)
       .then((photos) => setPhotos(photos))
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   const handleClose = () => {
-    setEdit(false);
     setOpen(false);
   };
 
