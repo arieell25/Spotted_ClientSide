@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { RadioGroup, Radio, FormControlLabel } from "@material-ui/core";
@@ -22,9 +23,9 @@ export default function EditIdentifiedEncounter(props) {
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
   const [lifeStage, setstage] = useState(1);
-  const [alivevalue, setalivevalue] = useState('');
+  // const [alivevalue, setalivevalue] = useState('');
   const [stages, setstages] = useState([]);
-  const [sex, setsex] = useState("female");
+  // const [sex, setsex] = useState("female");
 
   const { register, handleSubmit, control, reset} = useForm();
   var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
@@ -58,7 +59,7 @@ export default function EditIdentifiedEncounter(props) {
         setStatus(err);
         openRespons(true);
       });
-  }, [openRespons]);
+  }, [openRespons, id]);
 
   const handleCloseRespons = () => {
     setOpenRespons(false);

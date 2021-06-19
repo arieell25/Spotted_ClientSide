@@ -44,7 +44,7 @@ function IdentifyPhoto(props) {
   const [resultsReady, setResultsReady] = useState(false);
   const [fileNames, setfileNames] = useState([]);
   const [status, setStatus] = useState("");
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
   const [openRespons, setOpenRespons] = useState(false);
   const [newId, setId] = useState(null);
   const [image, setimage] = useState(null);
@@ -97,7 +97,7 @@ function IdentifyPhoto(props) {
     console.log(image);
     console.log(fileNames);
     const photosArr = [];
-    const photosData = await PhotoService.getEncounterPhotos(id).then((res) => {
+    await PhotoService.getEncounterPhotos(id).then((res) => {
       setPhotos(res);
       console.log(res);
       for (let i = 0; i < image.length; i += 1) {
@@ -134,7 +134,7 @@ function IdentifyPhoto(props) {
             .catch((err) => {
               setStatus(err);
               setOpenRespons(true);
-              setError(true);
+              // setError(true);
             });
         })
         .catch((err) => {

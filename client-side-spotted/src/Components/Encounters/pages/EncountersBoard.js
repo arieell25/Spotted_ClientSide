@@ -6,11 +6,9 @@ import StatusDialog from "../components/StatusDialog";
 import EncountersTable from "../components/EncountersTable";
 import CardBody from "../../admin/components/Card/CardBody.js";
 import GridOnIcon from "@material-ui/icons/GridOn";
-import csvDownload from "json-to-csv-export";
 import TableChartIcon from "@material-ui/icons/TableChart";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
-import GetAppIcon from "@material-ui/icons/GetApp";
 import { Grid, makeStyles, IconButton } from "@material-ui/core";
+import { userService } from "../../../Service/UserService";
 
 const useStyles = makeStyles(() => ({
   csvbtn: {
@@ -97,21 +95,22 @@ export default function UserEncountersBoard() {
   else {
     return (
       <div>
+        {userService.isAdmin() &&
         <div className={classes.btndiv}>
-          <IconButton
-            className={classes.csvbtn}
-            onClick={() => setGridView(!gridView)}
-          >
-            <TableChartIcon />
-          </IconButton>
-          <IconButton
-            className={classes.csvbtn}
-            onClick={() => setGridView(!gridView)}
-          >
-            <GridOnIcon />
-          </IconButton>
-          {/* <IconButton className={classes.csvbtn}  onClick={() => csvDownload(encounters, "encountersReports.csv")}><GetAppIcon/></IconButton> */}
-        </div>
+        <IconButton
+          className={classes.csvbtn}
+          onClick={() => setGridView(!gridView)}
+        >
+          <TableChartIcon />
+        </IconButton>
+        <IconButton
+          className={classes.csvbtn}
+          onClick={() => setGridView(!gridView)}
+        >
+          <GridOnIcon />
+        </IconButton>
+      </div>
+        }
 
         {!gridView && (
           <CardBody>

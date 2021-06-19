@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import { HashRouter as Router } from 'react-router-dom';
 
 
-
 ReactDOM.render(
   <Provider store={store}>
     <Router>

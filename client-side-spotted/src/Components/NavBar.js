@@ -1,4 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+
 import {
   AppBar,
   Toolbar,
@@ -11,11 +14,11 @@ import UserMenu from "./UserMenu";
 import Menu from "@material-ui/core/Menu";
 import { userService } from "../Service/UserService";
 import { makeStyles } from "@material-ui/core";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import Signup from "./Signup";
 import Login from "./Login";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((them) => ({
   logo: {
     fontSize: `24px`,
     textDecoration: `none`,
@@ -29,28 +32,69 @@ const useStyles = makeStyles({
     textDecoration: `none`,
     textTransform: `uppercase`,
   },
-});
+}));
 
 const navLinksPub = [
-  { title: `Report Encounter`, path: `/AddEncounter` },
-  { title: `Encounters`, path: `/EncountersBoard` },
+  { key: "1", title: `Report Encounter`, path: `/AddEncounter` },
+  { key: "2", title: `Encounters`, path: `/EncountersBoard` },
 ];
 const navLinksUser = [
-  { title: `Report Encounter`, path: `/AddEncounter` },
-  { title: `My Encounters`, path: `/UserEncountersBoard` },
-  { title: `Encounters`, path: `/EncountersBoard` },
-  { title: `Individuals `, path: `/IdentifiedBoard` },
+  { key: "1", title: `Report Encounter`, path: `/AddEncounter` },
+  { key: "2", title: `Encounters`, path: `/EncountersBoard` },
+  { key: "3", title: `My Encounters`, path: `/UserEncountersBoard` },
+  { key: "4", title: `Individuals `, path: `/IdentifiedBoard` },
 ];
 
 const NavBar = () => {
+  const classes = useStyles();
+  const location = useLocation();
+  const history = useHistory();
+  const [selectedKey, setSelectedKey] = useState(
+    navLinksUser.find((item) => window.location.pathname.startsWith(item.path))
+      ? navLinksUser.find((item) =>
+          window.location.pathname.startsWith(item.path)
+        ).key
+      : 0
+  );
   const [anchorElL, setAnchorElL] = useState(null);
   const [anchorSignup, setAnchorSignup] = useState(null);
   const [open, setOpen] = useState(false);
+  const [navLinks, setNavLinks] = useState([]);
   const [islogin, setislogin] = useState(null);
   const anchorRef = useRef(null);
 
-  const classes = useStyles();
-  useEffect(() => {}, [islogin]);
+  useEffect(() => {
+    console.log(history);
+    if (userService.isLoggedIn()) {
+      setNavLinks(navLinksUser);
+    } else {
+      setNavLinks(navLinksPub);
+    }
+
+    if (window.location.pathname.startsWith(`/UploadPhoto`)) {
+      setSelectedKey(navLinksUser[1].key);
+    } else if (window.location.pathname.startsWith(`/IdentifyPhoto`)) {
+      setSelectedKey(navLinksUser[1].key);
+    } else if (window.location.pathname.startsWith(`/IdentifiedProfile`)) {
+      setSelectedKey(navLinksUser[3].key);
+    } else {
+      setSelectedKey(
+        navLinksUser.find((item) =>
+          window.location.pathname.startsWith(item.path)
+        )
+          ? navLinksUser.find((item) =>
+              window.location.pathname.startsWith(item.path)
+            ).key
+          : setSelectedKey(navLinksUser[1].key)
+
+      );
+    }
+  }, [location, islogin]);
+
+  const onClickMenu = (item) => {
+    const clicked = navLinksUser.find((_item) => _item.key === item.key);
+    history.push(clicked.path);
+  };
 
   const handleClickL = (event) => {
     setAnchorElL(event.currentTarget);
@@ -80,44 +124,53 @@ const NavBar = () => {
     }
     setOpen(false);
   };
-  // const handleDrawerToggle = () => {
-  //   setdrawrOpen(!drawrOpen);
-  // };
 
   return (
     <AppBar position="static" style={{ backgroundColor: `#252529` }}>
       <Toolbar className="toolBar">
-        <NavLink to="/Home" exact>
+        <a href="/EncountersBoard" >
           <img
             src="logo192.png"
             alt="logo"
             style={{ height: 50, margin: 10, width: 245 }}
           />
-        </NavLink>
-        {
+        </a>
+        <div className={classes.root}>
           <List
             component="nav"
             aria-labelledby="main navigation"
             className={classes.navDisplayFlex}
           >
-            {userService.isLoggedIn() &&
-              navLinksUser.map(({ title, path }) => (
-                <a href={path} key={title} className={classes.linkText}>
-                  <ListItem button>
-                    <ListItemText primary={title} />
+            {navLinks.map((item) => (
+              <a href={item.path} key={item.key} className={classes.linkText}>
+                <ListItem
+                  button
+                  // selected={selectedKey === item.key}
+                  selected={selectedKey === item.key}
+                  onClick={(event) => onClickMenu(item)}
+                >
+                  <ListItemText primary={item.title} />
+                </ListItem>
+              </a>
+            ))}
+            {/* {!userServi.isLoggedIn() &&
+              navLinksUser.map((item) => 
+                
+                <a href={item.path} key={item.key} className={classes.linkText}>
+                  <ListItem
+                    button
+                    selected={selectedKey === item.key}
+                    onClick={(event) => onClickMenu(item)}
+                  >
+                    <ListItemText primary={item.title} />
                   </ListItem>
                 </a>
-              ))}
-            {!userService.isLoggedIn() &&
-              navLinksPub.map(({ title, path }) => (
-                <a href={path} key={title} className={classes.linkText}>
-                  <ListItem button>
-                    <ListItemText primary={title} />
-                  </ListItem>
-                </a>
-              ))}
+                  
+              
+              )
+              } */}
           </List>
-        }
+        </div>
         {!userService.isLoggedIn() && (
           <div className="logindiv">
             <Button
@@ -133,7 +186,6 @@ const NavBar = () => {
               aria-haspopup="true"
               onClick={handleClickS}
               size="small"
-              // style={{left: '25%'}}
             >
               Signup
             </Button>
@@ -148,7 +200,7 @@ const NavBar = () => {
               ref={anchorRef}
               aria-controls={open ? "menu-list-grow" : undefined}
             >
-              {(userService.getLocalStorageUser()).firstName}
+              {userService.getLocalStorageUser().firstName}
             </Button>
             <UserMenu
               open={open}

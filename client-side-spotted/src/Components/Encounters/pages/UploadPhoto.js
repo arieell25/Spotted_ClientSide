@@ -34,11 +34,6 @@ function UploadPhoto(props) {
     setExpanded(!expanded);
   };
 
-  // const onDrop = (picture) => {
-  //     console.log(picture);
-  //     setPictures(prevState=>[picture, ...prevState]);
-  // }
-
   const handleCloseRespons = () => {
     setOpenRespons(false);
     setInfo();

@@ -65,7 +65,6 @@ export default function EncounterProfile(props) {
   const [open, setOpen] = useState(false);
   const [linkpath, setlinkpath] = useState("");
   const [videoPath, setVideoPath] = useState();
-  // const [edit, setEdit] = useState(false);
   const [date, setDate] = useState("");
   const [openPhotos, setOpenPhotos] = useState(false);
   const [photos, setPhotos] = useState([]);
@@ -92,7 +91,7 @@ export default function EncounterProfile(props) {
       setVideoPath(videoData);
     };
     fetchData();
-  }, []);
+  }, [id]);
 
   const handleDelete = (e) => {
     console.log("deleting");
@@ -166,7 +165,6 @@ export default function EncounterProfile(props) {
                   Encounter no. {encounter.EncounterID}
                 </Typography>
                 <CardActions className={classes.actions}>
-                  {/* edit event listner */}
                   <p>{photos.length}</p>
                   <IconButton
                     color="secondary"
@@ -192,24 +190,16 @@ export default function EncounterProfile(props) {
                       <AddToPhotosIcon />
                     </IconButton>
                   )}
-
-                  {/* <IconButton color="secondary" onClick={ handleDelete }><DeleteIcon  /></IconButton>  */}
                 </CardActions>
                 <div className="detailsEncounter">
                   <p>Date: {date}</p>
                   <p>Encounter no.: {encounter.EncounterID}</p>
-                  <p>SII ID: {encounter.OriginalID}</p>
+                  {encounter.OriginalID ? <p>SII ID: {encounter.OriginalID}</p> : null}
                   <p>
                     Total Bluespotted reported: {encounter.SpottedCountReported}
                   </p>
                   <p>
-                    Bluespotted Count:{" "}
-                    {encounter.SpottedCount
-                      ? encounter.SpottedCount
-                      : "Not verified yet"}
-                  </p>
-                  <p>
-                    MediaType: {encounter.MediaType === 1 ? "Photos" : "Video"}
+                    MediaType: {encounter.MediaType === 2 ? "Video" : "Photos" }
                   </p>
                   <p>Reporter: {encounter.ReporterEmail}</p>
                   {encounter.ReportType ? <p>Report type: {encounter.ReportType.Title}</p> : null}

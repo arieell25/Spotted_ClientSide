@@ -33,8 +33,8 @@ export default function EditIdentifiedEncounter(props) {
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
   const [mediatypes, setmediatypes] = useState([]);
-  const [media, setmedia] = useState("");
-  const [count, setcount] = useState([]);
+  const [media, setmedia] = useState(`1`);
+  // const [count, setcount] = useState([]);
   const [encounter, setencounter] = useState([]);
   const [sites, setsites] = useState([]);
   const [site, setsite] = useState("");
@@ -86,7 +86,7 @@ export default function EditIdentifiedEncounter(props) {
           Link: res.Link,
         });
         setSelectedDate(new Date(res.EncounterDate));
-        setmedia(res.MediaType);
+        setmedia(res.MediaTypeID);
         setsite(res.SiteID > 0 ? res.SiteID : "");
       });
       console.log(selectedDate);
@@ -272,8 +272,8 @@ export default function EditIdentifiedEncounter(props) {
                 name="SpottedCount"
                 label="Bluespotted count"
                 margin="normal"
-                defaultValue={count}
-                helperText={`${count} Bluespotted reported`}
+                defaultValue={values.SpottedCount}
+                helperText={`Number of Bluespotted reported`}
                 style={{ width: 250 }}
                 InputLabelProps={{
                   shrink: true,
@@ -288,7 +288,7 @@ export default function EditIdentifiedEncounter(props) {
                 label="Original ID"
                 margin="normal"
                 InputLabelProps={{
-                  shrink: true,
+                  shrink: values? true : false,
                 }}
               />
             </div>
@@ -313,6 +313,9 @@ export default function EditIdentifiedEncounter(props) {
                   margin="normal"
                   halfwidth="true"
                   helperText="Please enter DW"
+                  InputLabelProps={{
+                    shrink: values ? true : false,
+                  }}
                   InputProps={{
                     endAdornment: <InputAdornment position="start">cm</InputAdornment>,
                   }}
@@ -326,6 +329,9 @@ export default function EditIdentifiedEncounter(props) {
                   margin="normal"
                   halfwidth="true"
                   helperText="Please enter DL"
+                  InputLabelProps={{
+                    shrink: values ? true : false,
+                  }}
                   InputProps={{
                     endAdornment: <InputAdornment position="start">cm</InputAdornment>,
                   }}
@@ -339,6 +345,9 @@ export default function EditIdentifiedEncounter(props) {
                   margin="normal"
                   halfwidth="true"
                   helperText="Please enter TL"
+                  InputLabelProps={{
+                    shrink: values ? true : false,
+                  }}
                   InputProps={{
                     endAdornment: <InputAdornment position="start">cm</InputAdornment>,
                   }}
