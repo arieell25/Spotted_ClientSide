@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -23,17 +23,6 @@ const columns = [
   { field: "SpottedCountReported", headerName: "Reported",  width: 110 },
   { field: "ReporterEmail", headerName: "Email", width: 120 },
   { field: "OriginalID", headerName: "SII ID", width: 100 },
-
-  // {
-  //   field: "EncounterDate",
-  //   headerName: "Encounter Date",
-  //   description: "This column has a value getter and is not sortable.",
-  //   // sortable: false,
-  //   type: "date",
-  //   width: 160,
-  //   //   valueGetter: (params) =>
-  //   //     `${params.getValue('EncounterDate') || ''}`,
-  // },
 ];
 
 function CustomToolbar() {
@@ -46,11 +35,8 @@ function CustomToolbar() {
 
 export default function EncountersTable(props) {
   const { rows } = props;
-  // const [data, setData] = useState();
 
   useEffect(() => {
-    // setData(rows)
-    // console.log(data);
 
   }, []);
 

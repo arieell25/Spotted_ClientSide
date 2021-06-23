@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // ##############################
 // // // javascript library for creating charts
 // #############################

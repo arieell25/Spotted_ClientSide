@@ -54,7 +54,7 @@ async function identifyPhoto(fd, id) {
     }
   }
   async function setNewIndividualIdentity(id, item) {
-    console.log(`set New IndividualIdentity data:${item} ` );
+    console.log(`set New IndividualIdentity data:${id} ` );
     if (item) {
       let arr_str = (item.src).split("/");
       // console.log(arr_str[5]);

@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect, useState } from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
@@ -42,13 +43,11 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
-  // const [sites, setSites] = useState([]);
   const [encountersCount, setEncountersCount] = useState(0);
   const [identCount, setIdentCount] = useState(0);
   const [photosCount, setPhotosCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
   const [usersData, setUsersData] = useState([]);
-  // const [update, setUpdate] = useState(false);
   const [maxh, setmaxh] = useState(15);
   const [open, setOpen] = React.useState(false);
   const [status, setStatus] = useState("");
@@ -62,7 +61,6 @@ export default function Dashboard() {
             return item.SiteName;
           });
           homeRangeChart.data.labels = sitesData;
-          // setSites(sitesData);
           EncounterService.getEncountersCount().then((res) => {
             setEncountersCount(res.count);
             let encounterperSite = [];
@@ -87,7 +85,7 @@ export default function Dashboard() {
       await EncounterService.getEnountersperMonth().then((res) => {
         EncounterReportsChart.data.series = [res.encMonthData];
         EncounterReportsChart.data.labels = res.monthsString;
-        EncounterReportsChart.options.high = Math.max(...res.encMonthData) + 2;
+        EncounterReportsChart.options.high = Math.max(...res.encMonthData) + 10;
       });
       await IdntEncService.getIdntEnountersperMonth().then((res) => {
         EncountersIdentChart.data.series = [res.encMonthData];
@@ -107,6 +105,9 @@ export default function Dashboard() {
       );
       userService.getAllUsers(1).then((res) => {
         setUserCount(res.count);
+      })
+
+      userService.allUsersEncounters(1).then((res) => {
         const users = res.rows.map((row) => {
           let item = [];
           item = [

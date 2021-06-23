@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import ImagePicker from "react-image-picker";
 import "react-image-picker/dist/index.css";
@@ -41,13 +40,12 @@ const useStyles = makeStyles((theme) => ({
 export default function ResultsCard(props) {
   const classes = useStyles();
   const { data, src, encounterid, setOpen, setstatus, setIdntId } = props;
-  const [ids, setIds] = useState([]);
   const [originalPhoto, setoriginalPhoto] = useState(null);
   const [isDone, setisDone] = useState(false);
   const [doneStatus, setDoneStatus] = useState("");
   const [item, setitem] = useState(null);
   const [photos, setPhotos] = useState([]);
-  const [indevidualIds, setindevidualIds] = useState([]);
+  // const [indevidualIds, setindevidualIds] = useState([]);
   const [originalPhotoData, setOriginalPhotoData] = useState();
   const [openProfile, setOpenProfile] = useState(false);
   const [encounter, setEncounter] = useState([]);
@@ -59,10 +57,10 @@ export default function ResultsCard(props) {
     const imagesArr = data.map((item) => item.image_name);
     console.log(imagesArr);
 
-    setindevidualIds(idsArr);
+    // setindevidualIds(idsArr);
     const fetchData = async () => {
       //   const boundingBoxData = await PhotoService.getEncounterPhotosBBox(fileNames);
-      const photosData = await PhotoService.getIdntEncountersPhotos(
+      await PhotoService.getIdntEncountersPhotos(
         idsArr
       ).then((res) => {
         setResultIndividuals(res);
@@ -168,7 +166,7 @@ export default function ResultsCard(props) {
         PhotoService.updateDBPhoto(res.IdentifiedEncounterID, originalPhoto);
         identificationService.setNewIndividualIdentity(
           res.IdentifiedEncounterID,
-          originalPhoto
+          originalPhotoData, //send photo data
         );
         SystemResultsService.addManualResult(
           originalPhoto,

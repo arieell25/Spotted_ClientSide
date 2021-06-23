@@ -1,5 +1,6 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-loop-func */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import RUG, { Card, DragArea } from "react-upload-gallery";
 
 import "react-upload-gallery/dist/style.css";
@@ -48,8 +49,6 @@ export default function PhotosUploader(props) {
         .detectSpeciesPhotos(imagesData)
         .then((res) => {
           res.map((result) => {
-            console.log(`in results map: ${JSON.stringify(result)}`);
-
             if (result.counts > 1) {
               setInfo(`Detected more than one Bluespotted in file ${result.filename}, indevidual identification supports only photos with single item.`)
             }
@@ -88,7 +87,7 @@ export default function PhotosUploader(props) {
     <div>
       {!isReady && <GradientCircularProgress />}
       <RUG
-        action={`http://spotted-server.azurewebsites.net/pub/uploadrawphoto?id=${id}`}
+        action={`https://spotted-server.azurewebsites.net/pub/uploadrawphoto?id=${id}`}
         source={(response) => response} // response image source
         onChange={(images) => {
           setImages(images); // save current component

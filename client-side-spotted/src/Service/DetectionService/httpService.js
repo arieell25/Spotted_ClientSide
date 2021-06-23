@@ -1,7 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import Axios from 'axios';
 
-// const BASE_URL = 'http://40.91.223.174:5000'
 const BASE_URL = 'https://spotted-detect-component.azurewebsites.net';
 
 var axios = Axios;

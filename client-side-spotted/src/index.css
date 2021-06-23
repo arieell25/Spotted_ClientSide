@@ -17,7 +17,6 @@
 .container {
   /* max-width: 85%; */
   position: relative;
-
   margin: 2px 80px auto;
   overflow: auto;
   min-height: 300px;
@@ -171,4 +170,24 @@ a{
   fill: aliceblue;
   font-size: 1.2em;
   font-weight: bold;
+}
+
+/*scroll bar*/
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

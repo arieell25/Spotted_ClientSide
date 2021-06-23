@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ChartistGraph from "react-chartist";
-
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import StatusDialog from "./StatusDialog";
@@ -56,9 +54,7 @@ const useStyles = makeStyles((theme) => ({
 export default function IdentifiedProfile(props) {
   //   const { index } = props;
   const classes = useStyles();
-  const [status, setStatus] = useState([]);
   const [open, setOpen] = useState(false);
-  const [edit, setEdit] = useState(false);
   const [openPhotos, setOpenPhotos] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [encounter, setEncounter] = useState([]);
@@ -79,10 +75,9 @@ export default function IdentifiedProfile(props) {
     PhotoService.getIdntEncounterPhotos(id)
       .then((photos) => setPhotos(photos))
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   const handleClose = () => {
-    setEdit(false);
     setOpen(false);
   };
 
@@ -99,7 +94,7 @@ export default function IdentifiedProfile(props) {
       <div className="animated slideInUpTiny animation-duration-3">
         <div className="m-5">
           <div className="d-flex justify-content-center title">
-            <StatusDialog open={open} status={status} onClose={handleClose} />
+            <StatusDialog open={open} onClose={handleClose} />
             <div>
               <h2>Identified Encounter Profile</h2>
             </div>

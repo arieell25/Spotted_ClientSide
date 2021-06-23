@@ -32,9 +32,9 @@ async function addPhoto(id, url, count) {
     }
   }
   async function updateDBPhoto(id, item) {
-    // console.log('addphoto:  ' + url);
+    console.log('addphoto:  ' + JSON.stringify(item));
     if (id) {
-      const body ={ id: id, url: item.src};
+      const body ={ id: id, url: item};
       return HttpService.put(`/api/updateDBphoto`, body)
     } else {
       console.log("no photo data");

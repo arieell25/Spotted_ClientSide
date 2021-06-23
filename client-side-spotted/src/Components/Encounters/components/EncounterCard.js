@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,8 +16,7 @@ import {
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: "5% 8%",
-    margin: "10px"
-
+    margin: "10px",
   },
   linkText: {
     textDecoration: "none",
@@ -44,14 +44,11 @@ const useStyles = makeStyles((theme) => ({
 export default function EncounterCard(props) {
   const classes = useStyles();
   const { index, encounter, identFlag } = props;
-  const [editing, setEditing] = useState(false);
   const [date, setDate] = useState();
   useEffect(() => {
     let date = new Date(encounter.EncounterDate);
     setDate(date.toLocaleDateString("he-IL"));
-
-    // eslint-disable-next-line
-  }, [editing]);
+  }, []);
 
   return (
     <Grid item xs={12} md={3} sm={6} xl={2}>
@@ -88,13 +85,11 @@ export default function EncounterCard(props) {
                 <Typography variant="body2" color="secondary" component="h5">
                   Encounter no.: {encounter.EncounterID}
                 </Typography>
-
-                <Typography variant="body2" color="secondary" component="h5">
-                  Original ID: {encounter.OriginalID}
-                </Typography>
-                {/* <Typography variant="body2" color="secondary" component="h5">
-                 {!encounter.Verified ? "Not Verified" : "Verififed"}
-              </Typography> */}
+                {encounter.OriginalID ? (
+                  <Typography variant="body2" color="secondary" component="h5">
+                    SII ID: {encounter.OriginalID}
+                  </Typography>
+                ) : null}
                 <Typography variant="body2" color="secondary" component="p">
                   Encounter date: {date}
                 </Typography>
@@ -102,11 +97,10 @@ export default function EncounterCard(props) {
                   {encounter.Site ? `Site: ${encounter.Site.SiteName}` : null}
                 </Typography>
                 <Typography variant="body2" color="secondary" component="p">
-                  {encounter.Photographer? `Site: ${encounter.SiteID}`: null }
+                  {encounter.Photographer ? `Photographer: ${encounter.Photographer}` : null}
                 </Typography>
               </div>
-              {/* <div> */}
-              {encounter.Verified && (
+              {/* {encounter.Verified && (
                 <div className={classes.verified}>
                   <Typography variant="body2" color="secondary" component="p">
                     Verified
@@ -116,16 +110,11 @@ export default function EncounterCard(props) {
                     color="secondary"
                   />
                 </div>
-              )}
-              {/* </div> */}
+              )} */}
             </CardContent>
           </CardActionArea>
-
           <CardActions>
             <button className="btn">PROFILE</button>
-            {/* <IconButton className={classes.lable} size="small">
-            <RateReviewIcon />
-          </IconButton> */}
           </CardActions>
         </NavLink>
       </Card>

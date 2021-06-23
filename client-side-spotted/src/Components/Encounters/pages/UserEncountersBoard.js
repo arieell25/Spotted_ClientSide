@@ -1,41 +1,32 @@
-import { useState, useEffect, React } from 'react'
-import { EncounterService } from '../../../Service/EncounterService'
-// import Encounter from './Encounter'
-import EncounterCard from '../components/EncounterCard'
-import GradientCircularProgress from '../components/CircularProgress'
-import {
-  Grid,
-  makeStyles
-} from '@material-ui/core';
-
-const useStyles = makeStyles((theme) => ({
-
-}));
+import { useState, useEffect, React } from "react";
+import { EncounterService } from "../../../Service/EncounterService";
+import EncounterCard from "../components/EncounterCard";
+import GradientCircularProgress from "../components/CircularProgress";
+import { Grid } from "@material-ui/core";
 
 export default function EncountersBoard() {
-  // const classes = useStyles();
-
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
   const [limit, setLimit] = useState(13);
-  // const [flag] = useState(false) 
 
   useEffect(() => {
     async function fetchData() {
       try {
-        await EncounterService.getUserEncounters().then(encounters => setEncounters(encounters));
+        await EncounterService.getUserEncounters().then((encounters) =>
+          setEncounters(encounters)
+        );
       } catch (err) {
-        console.log('error fetching...:', err);
+        console.log("error fetching...:", err);
       }
       setEdit(false);
     }
     fetchData();
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     // eslint-disable-next-line
   }, [edit]);
 
   const showMore = () => {
-    setLimit(prevState => prevState + 8);
+    setLimit((prevState) => prevState + 8);
     setEdit(true);
   };
 
@@ -48,30 +39,31 @@ export default function EncountersBoard() {
   }
 
   const renderEachEncounter = (item, i) => {
-    if(item.IdentifiedEncounterID){
+    if (item.IdentifiedEncounterID) {
       return (
-        <EncounterCard index={item.IdentifiedEncounterID} encounter={item} key={item.EncounterID}></EncounterCard>
+        <EncounterCard
+          index={item.IdentifiedEncounterID}
+          encounter={item}
+          key={item.EncounterID}
+        ></EncounterCard>
+      );
+    } else {
+      return (
+        <EncounterCard
+          index={item.EncounterID}
+          encounter={item}
+          key={item.EncounterID}
+        ></EncounterCard>
       );
     }
-    else{
-    return (
-      <EncounterCard index={item.EncounterID} encounter={item} key={item.EncounterID}></EncounterCard>
-    );
-  }
   };
 
-  if (!encounters) return (
-      <GradientCircularProgress />
-    )
+  if (!encounters) return <GradientCircularProgress />;
   else {
-    return(
-        <Grid container className="Encounters">
-          {encounters
-            .map(renderEachEncounter)
-            .reverse()
-            .slice(0, limit)
-          }
-        </Grid>
-        )
-        }
-      }
+    return (
+      <Grid container className="Encounters">
+        {encounters.map(renderEachEncounter).reverse().slice(0, limit)}
+      </Grid>
+    );
+  }
+}

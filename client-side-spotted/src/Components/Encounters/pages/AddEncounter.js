@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import GradientCircularProgress from "../components/CircularProgress";
+
 import {
   RadioGroup,
   Radio,
@@ -9,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { MenuItem, Card } from "@material-ui/core";
 import { EncounterService } from "../../../Service/EncounterService";
+import { userService } from "../../../Service/UserService";
 import { useForm, Controller } from "react-hook-form";
 import StatusDialog from "../components/StatusDialog";
 import DateFnsUtils from "@date-io/date-fns";
@@ -29,6 +33,7 @@ const useStyles = makeStyles(() => ({
 export default function AddEncounter() {
   const classes = useStyles();
   const [value, setValue] = useState("unknown");
+  const[ loading, setLoading] = useState(false);
   const [pValue, setpValue] = useState(true);
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
@@ -59,25 +64,26 @@ export default function AddEncounter() {
   };
   const onSubmit = (data) => {
     console.log(data);
+    setLoading(true);
     data.SiteID = site;
     data.EncounterDate = selectedDate;
     EncounterService.addEncounter(data)
       .then((result) => {
         setStatus("Encounter was added successfuly!");
-        setOpenRespons(true);
+        // setOpenRespons(true);
         setTimeout(() => {
           window.location.href =
             "/UploadPhoto?id=" +
             JSON.stringify(result.data.newEncounter.EncounterID);
-        }, 4000);
+        }, 2000);
       })
       .catch((err) => {
         setStatus("Oops... Somthing went wrong, try again.");
         setOpenRespons(true);
       });
   };
-
-  return (
+ if(loading) return <GradientCircularProgress />;
+ else return (
     <div className="m-5">
       <Card className={classes.root}>
         <div className="d-flex justify-content-center title">
@@ -113,7 +119,7 @@ export default function AddEncounter() {
               <section>
                 <TextField
                   inputRef={register}
-                  name="Photographed by"
+                  name="Photographer"
                   label="Photographer name"
                   margin="normal"
                   halfwidth="true"
@@ -128,6 +134,7 @@ export default function AddEncounter() {
                         label="Site*"
                         name="Site"
                         value={site}
+                        id="filled-required"
                         onChange={handleChange}
                         helperText="Please select site of encounter"
                         {...field}
@@ -158,16 +165,18 @@ export default function AddEncounter() {
               </div>
             </div>
             <div className="lowerContainer">
-              <section>
-                <TextField
-                  inputRef={register}
-                  name="OriginalID"
-                  label="SII ID"
-                  margin="normal"
-                  halfwidth="true"
-                  helperText="Researchers only"
-                />
-              </section>
+              {userService.isAdmin() && (
+                <section>
+                  <TextField
+                    inputRef={register}
+                    name="OriginalID"
+                    label="SII ID"
+                    margin="normal"
+                    halfwidth="true"
+                    helperText="Researchers only"
+                  />
+                </section>
+              )}
               <section>
                 <TextField
                   inputRef={register}
@@ -178,7 +187,7 @@ export default function AddEncounter() {
                   helperText="Please enter DW"
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="start">m</InputAdornment>
+                      <InputAdornment position="start">cm</InputAdornment>
                     ),
                   }}
                 />
@@ -193,7 +202,7 @@ export default function AddEncounter() {
                   helperText="Please enter DL"
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="start">m</InputAdornment>
+                      <InputAdornment position="start">cm</InputAdornment>
                     ),
                   }}
                 />
@@ -208,7 +217,7 @@ export default function AddEncounter() {
                   helperText="Please enter TL"
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="start">m</InputAdornment>
+                      <InputAdornment position="start">cm</InputAdornment>
                     ),
                   }}
                 />

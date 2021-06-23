@@ -70,7 +70,6 @@ function getUserEncounters() {
 
 
 function updateEncounter(id, data) {
-  console.log(data);
   return HttpService
   .put(`/api/updateEncounter?id=${id}`, data)
   .then(res => {
@@ -80,22 +79,12 @@ function updateEncounter(id, data) {
 
 function updateEncounterPic(id, data) {
   if(data){
-    const body ={ ProfilePicture: data};
-    // if(userService.isLoggedIn()){
-    //   return HttpService
-    // .put(`/api/updateEncounter?id=${id}`, body)
-    // .then(res => {
-    //   return res;
-    // } );
-    // }
-    // else{
+    const body ={ ProfilePicture: data, Verified: false};
       return HttpService
       .put(`/pub/updateEncounter?id=${id}`, body)
       .then(res => {
         return res;
-      } );
-    // }
-    
+      } );    
   }else{
     return ("No data was provided");
   }
