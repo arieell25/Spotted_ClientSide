@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import "date-fns";
 import React, { useState, useEffect } from "react";
@@ -34,8 +35,7 @@ export default function EditIdentifiedEncounter(props) {
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
   const [mediatypes, setmediatypes] = useState([]);
-  const [media, setmedia] = useState(`1`);
-  const [encounter, setencounter] = useState([]);
+  const [media, setmedia] = useState('');
   const [sites, setsites] = useState([]);
   const [site, setsite] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -55,6 +55,7 @@ export default function EditIdentifiedEncounter(props) {
     Temp: "",
     Description: "",
     Link: "",
+    Photographer: "",
   });
 
   useEffect(() => {
@@ -64,7 +65,6 @@ export default function EditIdentifiedEncounter(props) {
       });
       await EncounterService.getMediatypes().then((res) => setmediatypes(res));
       await EncounterService.getEncounterById(id).then((res) => {
-        setencounter(res);
         reset({
           Gender:
             res.Gender === "unknown"
@@ -84,9 +84,10 @@ export default function EditIdentifiedEncounter(props) {
           Temp: res.Temp,
           Description: res.Description,
           Link: res.Link,
+          Photographer: res.Photographer,
         });
         setSelectedDate(new Date(res.EncounterDate));
-        setmedia(res.MediaTypeID);
+        setmedia(res.MediaTypeID ? res.MediaTypeID : "");
         setsite(res.SiteID > 0 ? res.SiteID : "");
       });
       console.log(selectedDate);
@@ -297,6 +298,18 @@ export default function EditIdentifiedEncounter(props) {
                 inputRef={register}
                 name="ProfilePicture"
                 label="Profile picture link"
+                margin="normal"
+                halfwidth="true"
+                InputLabelProps={{
+                  shrink: values ? true : false,
+                }}
+              />
+            </div>
+            <div className="row">
+              <TextField
+                inputRef={register}
+                name="Photographer"
+                label="Photographer"
                 margin="normal"
                 halfwidth="true"
                 InputLabelProps={{

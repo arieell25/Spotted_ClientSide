@@ -63,7 +63,6 @@ const NavBar = () => {
   const anchorRef = useRef(null);
 
   useEffect(() => {
-    console.log(history);
     if (userService.isLoggedIn()) {
       setNavLinks(navLinksUser);
     } else {
@@ -76,6 +75,8 @@ const NavBar = () => {
       setSelectedKey(navLinksUser[1].key);
     } else if (window.location.pathname.startsWith(`/IdentifiedProfile`)) {
       setSelectedKey(navLinksUser[3].key);
+    }else if (window.location.pathname.startsWith(`/EncounterProfile`)) {
+      setSelectedKey(navLinksUser[1].key);
     } else {
       setSelectedKey(
         navLinksUser.find((item) =>

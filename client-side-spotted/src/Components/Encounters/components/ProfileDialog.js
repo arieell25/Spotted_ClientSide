@@ -3,7 +3,6 @@ import React, { Fragment, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import PhotosGrid from "./Photos/PhotosGrid";
 import GradientCircularProgress from "./CircularProgress";
-import { userService } from "../../../Service/UserService";
 import { PhotoService } from "../../../Service/PhotoService";
 import PhotoLibraryIcon from "@material-ui/icons/PhotoLibrary";
 
@@ -16,7 +15,6 @@ import {
   IconButton,
   CardMedia,
 } from "@material-ui/core";
-// import { StyledButton } from '../Theme/Button.styled';
 
 const useStyles = makeStyles((theme) => ({
   root: {

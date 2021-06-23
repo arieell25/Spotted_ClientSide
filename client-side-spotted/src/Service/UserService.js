@@ -40,14 +40,12 @@ async function setAdmin(email) {
 }
 
 async function changePassword(oldpass, newpass) {
-  console.log(oldpass, newpass);
   if (oldpass && newpass) {
     const body = { oldPassword: oldpass, newPassword: newpass };
 
     if (isLoggedIn()) {
       return HttpService.post(`/api/changePassword`, body)
         .then((res) => {
-          console.log(res);
           if (res.success) return "Password has changed successfully.";
           else return "Oops...Somethong went wrong.";
         })
@@ -63,7 +61,6 @@ async function changePassword(oldpass, newpass) {
 }
 
 async function updateUser(data) {
-  console.log(data);
   if (data) {
     if (isLoggedIn()) {
       const body = {
@@ -98,23 +95,11 @@ function isAdmin() {
   return status;
 }
 
-// This method returns the user from the localStorage
-// Be careful, the value is the one when the user logged in for the last time
 function getLocalStorageUser() {
-  console.log(JSON.parse(localStorage.getItem("user")));
   var user = JSON.parse(localStorage.getItem("user"));
-  console.log(user.firstName);
   return user;
 }
-//  function getLocalStorageUserName() {
-//   console.log(JSON.parse(localStorage.getItem('user')));
-//   var user =  JSON.parse(localStorage.getItem('user'));
-//   console.log(user.firstName);
-//   return user.firstName;
 
-// }
-
-// This method signs up and logs in the user
 function register(userInfo) {
   const body = {
     email: userInfo.email,
@@ -123,10 +108,7 @@ function register(userInfo) {
     lastName: userInfo.lastName,
   };
   return HttpService.post("/pub/register", body).then((res) => {
-    console.log(res);
     login(userInfo.email, userInfo.password);
-    // If we have localStorage.getItem('user') saved, the application will consider we are loggedin
-    // localStorage.setItem('user', JSON.stringify(res.data));
     return res.data;
   });
 }
@@ -136,8 +118,6 @@ function login(email, password) {
     email,
     password,
   }).then((res) => {
-    console.log("log in respons:" + res);
-    // If we have localStorage.getItem('user') saved, the application will consider we are loggedin
     localStorage.setItem("user", JSON.stringify(res.data.user));
     localStorage.setItem("token", res.data.token);
 
@@ -148,14 +128,12 @@ function login(email, password) {
 function getUserName(id) {
   const body = { id: id };
   return HttpService.put(`/api/user`, body).then((res) => {
-    console.log(res);
     return res.data.user;
   });
 }
 
 function getAllUsers(count) {
   return HttpService.get(`/api/getAllUsers`).then((res) => {
-    console.log(res);
     if (count) {
       return res.data.users;
     } else {
@@ -171,7 +149,6 @@ async function logout() {
 
 function allUsersEncounters(count) {
   return HttpService.get(`/api/allUsersEncounters`).then((res) => {
-    console.log(res);
     if (count) {
       return res.data.users;
     } else {

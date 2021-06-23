@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
@@ -118,7 +119,7 @@ export default function AddEncounter() {
               <section>
                 <TextField
                   inputRef={register}
-                  name="Photographed by"
+                  name="Photographer"
                   label="Photographer name"
                   margin="normal"
                   halfwidth="true"

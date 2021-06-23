@@ -173,6 +173,12 @@ const theme = createMuiTheme({
         color: "#ffffff",
       },
     },
+    MuiDataGridPanel:{
+      paper:{
+        backgroundColor:"#333337eb"
+
+      }
+    }
   },
 });
 

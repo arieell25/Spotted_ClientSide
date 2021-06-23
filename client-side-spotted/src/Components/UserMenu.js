@@ -42,7 +42,6 @@ export default function UserMenu(props) {
       e.preventDefault();
     userService.logout();  
     window.location.href=`/EncountersBoard`
-    // window.location.reload();
   }
   function handleStatistics(e) {
     e.preventDefault();
@@ -50,7 +49,6 @@ export default function UserMenu(props) {
   }
   function handleProfileClick(e) {
     e.preventDefault();
-    // handleClose
     window.location.href=`/EditUserProfile`
   }
 

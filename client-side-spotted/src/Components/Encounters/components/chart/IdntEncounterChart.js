@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import React, { useEffect } from "react";
 // react plugin for creating charts
 import ChartistGraph from "react-chartist";
@@ -48,7 +49,6 @@ export default function IdntEncounterChart(props) {
               let count = 0;
               res.photos.rows.map((row) => {
                 if (row.Encounter.Site.SiteName === sitesData[i]) {
-                  console.log(`site: ${sitesData[i]} `);
                   count++;
                 }
                 if (count > 0) {
@@ -64,7 +64,6 @@ export default function IdntEncounterChart(props) {
               });
             }
             IdentEnocunterHomeRangeChart.data.series = [encounterData];
-            console.log(IdentEnocunterHomeRangeChart.data.series);
             // IdentEnocunterHomeRangeChart.options.high = Math.max(...encounterperSite)+2;
           })
           .catch((err) => console.log(err));

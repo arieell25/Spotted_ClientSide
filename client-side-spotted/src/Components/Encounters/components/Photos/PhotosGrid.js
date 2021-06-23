@@ -7,7 +7,7 @@ export default function PhotosGrid(props) {
     const {photos} = props;
     const [isOpen, setIsOpen] = useState(false);
     const [currImage, setCurrImage] = useState(0);
-    const [photosArr, setphotosArr] = useState([]);
+    // const [photosArr, setphotosArr] = useState([]);
 
     const closeImgsViewer = () => {
         setCurrImage(0)
@@ -19,11 +19,11 @@ export default function PhotosGrid(props) {
     const gotoNext = () => {
         setCurrImage(currImage + 1)
     }
-    const onimgClick = (e) =>{
-        console.log(e);
-        photosArr.push(e.target);
-        // console.log(photosArr);
-    }
+    // const onimgClick = (e) =>{
+    //     console.log(e);
+    //     photosArr.push(e.target);
+    //     // console.log(photosArr);
+    // }
 
 
   if (!photos) return <GradientCircularProgress />

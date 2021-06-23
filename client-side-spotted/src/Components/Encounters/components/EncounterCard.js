@@ -97,10 +97,10 @@ export default function EncounterCard(props) {
                   {encounter.Site ? `Site: ${encounter.Site.SiteName}` : null}
                 </Typography>
                 <Typography variant="body2" color="secondary" component="p">
-                  {encounter.Photographer ? `Site: ${encounter.SiteID}` : null}
+                  {encounter.Photographer ? `Photographer: ${encounter.Photographer}` : null}
                 </Typography>
               </div>
-              {encounter.Verified && (
+              {/* {encounter.Verified && (
                 <div className={classes.verified}>
                   <Typography variant="body2" color="secondary" component="p">
                     Verified
@@ -110,7 +110,7 @@ export default function EncounterCard(props) {
                     color="secondary"
                   />
                 </div>
-              )}
+              )} */}
             </CardContent>
           </CardActionArea>
           <CardActions>

@@ -47,7 +47,7 @@ function IdentifyPhoto(props) {
   const [status, setStatus] = useState("");
   // const [error, setError] = useState(false);
   const [openRespons, setOpenRespons] = useState(false);
-  const [newId, setId] = useState(null);
+  // const [newId, setId] = useState(null);
   const [image, setimage] = useState(null);
   const [idntId, setidntId] = useState(null);
   const [idntResults, setidntResults] = useState();
@@ -69,11 +69,8 @@ function IdentifyPhoto(props) {
       .catch((err) => {
         setStatus("Failed to set photo side. Try again.");
       });
-    // setImagesSides(image);
     setOpen(false);
     console.log(image);
-
-    // PhotoService.updateDBPhoto()
   };
 
   useEffect(() => {
@@ -179,29 +176,6 @@ function IdentifyPhoto(props) {
     }
   };
 
-  // const renderEachResult = (item, i) => {
-  //   console.log("item" + JSON.stringify(item));
-  //   console.log("lenght item: " + item.length)
-  //   for(let i =0 ; i< item.length; i++) {
-  //     // if(item[i].individuals_ID){
-  //       console.log(`item #${i} is: ###`);
-  //       console.log(JSON.stringify(item[i]));
-  //       return renderInnerItemResult(item[i]);
-  //       // return (
-  //       //   <ResultsCard index={i}
-  //       //   src={item[i].src}
-  //       //   key={i}
-  //       //   ids={item[i].individuals_ID}
-  //       //   encounterid={id}
-  //       //   setOpen={setOpenRespons}
-  //       //   setstatus={setStatus}
-  //       //   setIdntId={setidntId}
-  //       //   />
-  //       // );
-  //     }
-  //   // }
-  //   };
-
   if (!photos || loading) return <GradientCircularProgress />;
   else if (resultsReady) {
     return (
@@ -272,7 +246,6 @@ function IdentifyPhoto(props) {
             <StatusDialog
               open={openRespons}
               status={status}
-              id={newId}
               onClose={handleCloseRespons}
             />
           </div>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import clsx from 'clsx';
 import { useForm} from 'react-hook-form';
@@ -62,7 +63,6 @@ export default function EditUserProfile(props) {
 
     useEffect( () => {
         const user = userService.isLoggedIn();
-        console.log(profile);
          userService.getUserName(user.id)
         .then(res => {
             setProfile(res)

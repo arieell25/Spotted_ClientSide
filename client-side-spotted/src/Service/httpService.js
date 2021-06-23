@@ -1,11 +1,11 @@
 /* eslint-disable import/no-anonymous-default-export */
 import Axios from 'axios';
 
-const NODE_ENV = 'development';
-const BASE_URL = NODE_ENV === 'development' ?
-    '//localhost:8081' :
-    '//spotted-server.azurewebsites.net';
-
+// const NODE_ENV = 'development';
+// const BASE_URL = NODE_ENV === 'development' ?
+//     '//localhost:8081' :
+//     '//spotted-server.azurewebsites.net'
+const BASE_URL = '//spotted-server.azurewebsites.net';
 var axios = Axios;
 
 export default {

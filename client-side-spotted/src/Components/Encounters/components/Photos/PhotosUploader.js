@@ -87,7 +87,7 @@ export default function PhotosUploader(props) {
     <div>
       {!isReady && <GradientCircularProgress />}
       <RUG
-        action={`http://spotted-server.azurewebsites.net/pub/uploadrawphoto?id=${id}`}
+        action={`https://spotted-server.azurewebsites.net/pub/uploadrawphoto?id=${id}`}
         source={(response) => response} // response image source
         onChange={(images) => {
           setImages(images); // save current component

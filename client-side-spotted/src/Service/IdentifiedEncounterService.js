@@ -15,13 +15,11 @@ export const IdntEncService = {
 }
 
 async function addIdentifiedEncounter(identifiedEncounter) {
-  console.log(`Adding new identety:  ${identifiedEncounter}`);
-
   if (identifiedEncounter) {
     return HttpService.post(`/api/addIdentifiedEncounter`, identifiedEncounter)
     .then(res => res.data.newIdentifiedEncounter)
   } else {
-    console.log("no identifiedEncounter data");
+    return("no identifiedEncounter data");
   }
 }
 
@@ -44,14 +42,11 @@ function getIdentifiedEncounter(id) {
   return HttpService
   .get(`/api/getIdentifiedEncounter?id=${id}`)
   .then(res => {
-    console.log( res.data.identifiedEncounter);
     return res.data.identifiedEncounter;
   } );
 }
 
 function updateIdentified(id, data) {
-  console.log(data);
-  const body ={}
   return HttpService
   .put(`/api/updateIdentifiedEncounter?id=${id}`, data)
   .then(res => {

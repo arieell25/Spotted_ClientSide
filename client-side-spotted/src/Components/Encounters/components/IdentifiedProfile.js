@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme) => ({
 export default function IdentifiedProfile(props) {
   //   const { index } = props;
   const classes = useStyles();
-  const [status, setStatus] = useState([]);
   const [open, setOpen] = useState(false);
   const [openPhotos, setOpenPhotos] = useState(false);
   const [photos, setPhotos] = useState([]);
@@ -95,7 +94,7 @@ export default function IdentifiedProfile(props) {
       <div className="animated slideInUpTiny animation-duration-3">
         <div className="m-5">
           <div className="d-flex justify-content-center title">
-            <StatusDialog open={open} status={status} onClose={handleClose} />
+            <StatusDialog open={open} onClose={handleClose} />
             <div>
               <h2>Identified Encounter Profile</h2>
             </div>
