@@ -34,7 +34,7 @@ export default function PhotosUploader(props) {
       return PhotoService.uploadPhoto(data, id)
         .then((res) => {
           console.log(data);
-          count += 1;
+          // count += 1;
           console.log(res);
           return res;
         })

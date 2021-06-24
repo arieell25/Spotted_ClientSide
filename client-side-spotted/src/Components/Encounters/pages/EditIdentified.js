@@ -71,7 +71,7 @@ export default function EditIdentifiedEncounter(props) {
   };
   const onSubmit = (data) => {
     console.log(data);
-    data.lifeStage = lifeStage;
+    data.LifeStageID = lifeStage;
     IdntEncService.updateIdentified(id, data)
       .then((result) => {
         setStatus(`Updated succesfully identified encounter #${id}!`);
@@ -117,7 +117,7 @@ export default function EditIdentifiedEncounter(props) {
                   </TextField>
                 )}
                 control={control}
-                name="lifeStage"
+                name="LifeStageID"
                 defaultValue={lifeStage}
               />
             </div>
