@@ -45,7 +45,6 @@ export default function AddEncounter() {
   useEffect(() => {
     EncounterService.getIsraelSites()
       .then((data) => {
-        console.log(data);
         setSites(data);
       })
       .catch((err) => console.log(err));
@@ -53,7 +52,6 @@ export default function AddEncounter() {
 
   const handleDateChange = (date) => {
     setSelectedDate(new Date(date));
-    console.log(selectedDate);
   };
 
   const handleChange = (event) => {
@@ -63,7 +61,6 @@ export default function AddEncounter() {
     setOpenRespons(false);
   };
   const onSubmit = (data) => {
-    console.log(data);
     setLoading(true);
     data.SiteID = site;
     data.EncounterDate = selectedDate;

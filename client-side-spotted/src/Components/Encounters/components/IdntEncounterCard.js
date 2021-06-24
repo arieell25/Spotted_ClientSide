@@ -81,7 +81,7 @@ export default function IdntEncounterCard(props) {
                 Identity created at {date}
               </Typography>
               <Typography variant="body2" color="secondary" component="p">
-                {encounter.isAlive ? "Considerd as Alive" : "Considerd as Dead"}
+                {encounter.IsAlive === null || true ? "Considerd as Alive" : null}
               </Typography>
               <Typography variant="body2" color="secondary" component="p">
                 {encounter.Gender
