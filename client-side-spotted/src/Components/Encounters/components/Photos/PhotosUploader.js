@@ -49,6 +49,9 @@ export default function PhotosUploader(props) {
         .detectSpeciesPhotos(imagesData)
         .then((res) => {
           res.map((result) => {
+            if (result.counts > 0 ) {
+              count += 1;
+            }
             if (result.counts > 1) {
               setInfo(`Detected more than one Bluespotted in file ${result.filename}, indevidual identification supports only photos with single item.`)
             }
