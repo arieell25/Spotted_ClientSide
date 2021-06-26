@@ -3,9 +3,8 @@ import { IdntEncService } from "../../../Service/IdentifiedEncounterService";
 import GradientCircularProgress from "../components/CircularProgress";
 import IdntEncounterCard from "../components/IdntEncounterCard";
 import csvDownload from "json-to-csv-export";
-import CloudDownloadIcon from "@material-ui/icons/CloudDownload";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import { Grid, IconButton, makeStyles, Button } from "@material-ui/core";
+import { Grid, IconButton, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   csvbtn: {

@@ -61,16 +61,15 @@ function IdentifyPhoto(props) {
     setOpen(false);
   };
   const handleSaveSide = () => {
-    console.log(`selected values for save: ${selectedValue}`);
-    console.log(image);
-    console.log(lastClicked);
+    // console.log(`selected values for save: ${selectedValue}`);
+    // console.log(image);
+    // console.log(lastClicked);
     PhotoService.updatePhotoSide(lastClicked, selectedValue)
       .then(setUpdate(!update))
       .catch((err) => {
         setStatus("Failed to set photo side. Try again.");
       });
     setOpen(false);
-    console.log(image);
   };
 
   useEffect(() => {
@@ -92,31 +91,29 @@ function IdentifyPhoto(props) {
   const onClick = async () => {
     // setUpdate(!update);
     setLoading(true);
-    console.log(image);
-    console.log(fileNames);
+    // console.log(image);
+    // console.log(fileNames);
     const photosArr = [];
     await PhotoService.getEncounterPhotos(id).then((res) => {
       setPhotos(res);
-      console.log(res);
+      // console.log(res);
       for (let i = 0; i < image.length; i += 1) {
         let photo = res.filter((item) => item.src === image[i].src);
         if (photo !== undefined) {
-          console.log(photo);
+          // console.log(photo);
           let str = photo[0].src.split("/");
           photo[0].value = str[5];
           photosArr.push(photo[0]);
         }
       }
-      console.log(photosArr);
+      // console.log(photosArr);
       PhotoService.getEncounterPhotosBBox(fileNames)
         .then((res) => {
           console.log(res);
           identificationService
             .identifyPhotos(photosArr, res)
             .then((res) => {
-              console.log(res);
               setidntResults(res);
-              console.log(idntResults);
 
               SystemResultsService.addSecondSystemResults(res)
                 .then((res) => {
@@ -130,6 +127,7 @@ function IdentifyPhoto(props) {
                 });
             })
             .catch((err) => {
+              console.log(err);
               setStatus(err);
               setOpenRespons(true);
               // setError(true);

@@ -199,7 +199,7 @@ export default function EncounterProfile(props) {
                     Total Bluespotted reported: {encounter.SpottedCountReported}
                   </p>
                   <p>
-                    MediaType: {encounter.MediaType === 2 ? "Video" : "Photos" }
+                    Media type: {encounter.MediaTypeID === 2 ? "Video" : "Photos" }
                   </p>
                   <p>Reporter: {encounter.ReporterEmail}</p>
                   {encounter.ReportType ? <p>Report type: {encounter.ReportType.Title}</p> : null}
