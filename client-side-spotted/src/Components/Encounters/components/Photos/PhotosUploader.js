@@ -33,9 +33,6 @@ export default function PhotosUploader(props) {
       imagesData.append("image", image.file);
       return PhotoService.uploadPhoto(data, id)
         .then((res) => {
-          console.log(data);
-          // count += 1;
-          console.log(res);
           return res;
         })
         .catch((err) =>
@@ -56,7 +53,6 @@ export default function PhotosUploader(props) {
               setInfo(`Detected more than one Bluespotted in file ${result.filename}, indevidual identification supports only photos with single item.`)
             }
           });
-          console.log(res);
           SystemResultsService.addFirstSystemResults(
             res,
             id,
@@ -99,13 +95,11 @@ export default function PhotosUploader(props) {
           window.confirm("Are you sure you want to delete?")
         }
         onDeleted={(deletedImage, images) => {
-          console.log(deletedImage, images);
           if (deletedImage.selected && images.length) {
             images[0].select();
           }
         }}
         onUpload={(images) => {
-          console.log(images);
         }}
       >
         <DragArea className="rug-items __card">
