@@ -1,6 +1,5 @@
 import Axios from 'axios';
 
-// const BASE_URL = 'http://65.52.144.46:5000'
 // const BASE_URL = 'https://52.136.223.32:5000'
 const BASE_URL = 'http://52.136.223.32:5000'
 
@@ -29,7 +28,7 @@ async function connectApi(endpoint, method = 'get', data = null) {
             url: `${BASE_URL}${endpoint}`,
             method,
             headers:{
-                // 'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Origin': '*',
                 'Content-Type': 'multipart/form-data',
                 // 'Accept': '*/*',
             } ,
