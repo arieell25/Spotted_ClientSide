@@ -24,9 +24,9 @@ import {
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
-    padding: 50,
+    // padding: 50,
     margin: `2px auto`,
-    width: 800,
+    maxWidth: 800,
   },
 }));
 
