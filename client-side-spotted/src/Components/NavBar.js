@@ -34,11 +34,11 @@ const useStyles = makeStyles((them) => ({
 }));
 
 const navLinksPub = [
-  { key: "1", title: `Report Encounter`, path: `/AddEncounter` },
+  { key: "1", title: `Report`, path: `/AddEncounter` },
   { key: "2", title: `Encounters`, path: `/EncountersBoard` },
 ];
 const navLinksUser = [
-  { key: "1", title: `Report Encounter`, path: `/AddEncounter` },
+  { key: "1", title: `Report`, path: `/AddEncounter` },
   { key: "2", title: `Encounters`, path: `/EncountersBoard` },
   { key: "3", title: `My Encounters`, path: `/UserEncountersBoard` },
   { key: "4", title: `Individuals `, path: `/IdentifiedBoard` },

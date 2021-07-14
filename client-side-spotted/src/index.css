@@ -63,12 +63,12 @@ p{
 	background:linear-gradient(45deg,#C5F836, #3AA4D1);
   color: #ffff;
   border: none;
-  padding: 10px 60px;
+  padding: 10px 35px;
   margin: 5px auto;
   border-radius: 30px;
   cursor: pointer;
   text-decoration: none;
-  font-size: 15px;
+  /* font-size: 15px; */
   text-transform: uppercase;
   font-family: Montserrat, 'sans-serif';
   font-weight: bold;
