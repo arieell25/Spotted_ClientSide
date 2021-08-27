@@ -3,11 +3,14 @@ import { EncounterService } from "../../../Service/EncounterService";
 import EncounterCard from "../components/EncounterCard";
 import GradientCircularProgress from "../components/CircularProgress";
 import { Grid } from "@material-ui/core";
+import StatusDialog from "../components/StatusDialog";
 
 export default function EncountersBoard() {
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
   const [limit, setLimit] = useState(13);
+  const [status, setStatus] = useState("");
+  const [openRespons, setOpenRespons] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,7 +19,8 @@ export default function EncountersBoard() {
           setEncounters(encounters)
         );
       } catch (err) {
-        console.log("error fetching...:", err);
+        setStatus("Faild loading data...please try again");
+        setOpenRespons(true);
       }
       setEdit(false);
     }
@@ -28,6 +32,10 @@ export default function EncountersBoard() {
   const showMore = () => {
     setLimit((prevState) => prevState + 8);
     setEdit(true);
+  };
+
+  const handleCloseRespons = () => {
+    setOpenRespons(false);
   };
 
   function handleScroll() {
@@ -61,9 +69,16 @@ export default function EncountersBoard() {
   if (!encounters) return <GradientCircularProgress />;
   else {
     return (
-      <Grid container className="Encounters">
-        {encounters.map(renderEachEncounter).reverse().slice(0, limit)}
-      </Grid>
+      <div>
+        <StatusDialog
+          open={openRespons}
+          status={status}
+          onClose={handleCloseRespons}
+        />
+        <Grid container className="Encounters">
+          {encounters.map(renderEachEncounter).reverse().slice(0, limit)}
+        </Grid>
+      </div>
     );
   }
 }

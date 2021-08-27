@@ -120,7 +120,7 @@ const homeRangeChart = {
 };
 
 // ##############################
-// // // Encounters reports per month 
+// // // Encounters reports per month
 // #############################
 
 const EncounterReportsChart = {
@@ -133,7 +133,7 @@ const EncounterReportsChart = {
       tension: 0,
     }),
     low: 0,
-    high: 30, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    high: 30,
     chartPadding: {
       top: 0,
       right: 0,
@@ -231,21 +231,16 @@ const PhotosSidesChart = {
 const IdentEnocunterHomeRangeChart = {
   data: {
     labels: [],
-    series: [ ]
-    // labels: ["test1", "test2"],
-    // series: [1/2, 2/5],
+    series: [],
   },
   options: {
-    height: '300px',
-
-    // reverseData: true,
-    // horizontalBars: true,
+    height: "300px",
     showLine: false,
     lineSmooth: Chartist.Interpolation.cardinal({
       tension: 0,
     }),
     low: 0,
-    high: 5, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+    high: 5,
     chartPadding: {
       top: 0,
       right: 0,
@@ -256,29 +251,28 @@ const IdentEnocunterHomeRangeChart = {
       Chartist.plugins.tooltip(),
       Chartist.plugins.ctAxisTitle({
         axisX: {
-          axisTitle: 'Site ',
-          axisClass: 'ct-axis-title',
+          axisTitle: "Site ",
+          axisClass: "ct-axis-title",
           offset: {
             x: 0,
-            y: 50
+            y: 50,
           },
-          textAnchor: 'middle',
-          color: 'white'
+          textAnchor: "middle",
+          color: "white",
         },
         axisY: {
-          axisTitle: 'Reports',
-          axisClass: 'ct-axis-title',
+          axisTitle: "Reports",
+          axisClass: "ct-axis-title",
           offset: {
             x: 0,
-            y: 0
+            y: 0,
           },
-          textAnchor: 'middle',
-          textColor: 'white',
-          flipTitle: false
-        }
-      })
-    ]
-   
+          textAnchor: "middle",
+          textColor: "white",
+          flipTitle: false,
+        },
+      }),
+    ],
   },
 
   // for animation
@@ -311,12 +305,12 @@ const IdentEnocunterHomeRangeChart = {
       }
     },
   },
-}
+};
 
 module.exports = {
   EncountersIdentChart,
   homeRangeChart,
   EncounterReportsChart,
   PhotosSidesChart,
-  IdentEnocunterHomeRangeChart
+  IdentEnocunterHomeRangeChart,
 };

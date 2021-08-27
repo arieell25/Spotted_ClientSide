@@ -11,8 +11,6 @@ import "react-image-picker/dist/index.css";
 import { PhotoService } from "../../../Service/PhotoService";
 import ResultsCard from "../components/ResultsCard";
 import SidesMenuDialog from "../components/SidesMenuCard";
-
-// import { Link, useLocation, BrowserRouter } from "react-router-dom";
 import StatusDialog from "../components/StatusDialog";
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//ids of photo sides
 const photoSides = [
   { title: "Right profile ", value: "1" },
   { title: "Right front ", value: "2" },
@@ -45,25 +44,21 @@ function IdentifyPhoto(props) {
   const [resultsReady, setResultsReady] = useState(false);
   const [fileNames, setfileNames] = useState([]);
   const [status, setStatus] = useState("");
-  // const [error, setError] = useState(false);
   const [openRespons, setOpenRespons] = useState(false);
-  // const [newId, setId] = useState(null);
   const [image, setimage] = useState(null);
   const [idntId, setidntId] = useState(null);
   const [idntResults, setidntResults] = useState();
-  var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
   const [lastClicked, setLastClicked] = useState();
   const [open, setOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState(photoSides[0].title);
   const [update, setUpdate] = useState(false);
 
+  var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
+
   const handleClose = () => {
     setOpen(false);
   };
   const handleSaveSide = () => {
-    // console.log(`selected values for save: ${selectedValue}`);
-    // console.log(image);
-    // console.log(lastClicked);
     PhotoService.updatePhotoSide(lastClicked, selectedValue)
       .then(setUpdate(!update))
       .catch((err) => {
@@ -74,14 +69,12 @@ function IdentifyPhoto(props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      //   const boundingBoxData = await PhotoService.getEncounterPhotosBBox(fileNames);
       const photosData = await PhotoService.getPhotosforIdentification(id);
       var new_arr = photosData.map((image) => {
         let arr_str = image.src.split("/");
         image.fileName = arr_str[5];
         return image;
       });
-      //  console.log(`new Photos arr ${new_arr}`);
       setPhotos(new_arr);
     };
     fetchData();
@@ -89,27 +82,21 @@ function IdentifyPhoto(props) {
   }, [update]);
 
   const onClick = async () => {
-    // setUpdate(!update);
     setLoading(true);
-    // console.log(image);
-    // console.log(fileNames);
     const photosArr = [];
     await PhotoService.getEncounterPhotos(id).then((res) => {
       setPhotos(res);
-      // console.log(res);
       for (let i = 0; i < image.length; i += 1) {
         let photo = res.filter((item) => item.src === image[i].src);
+
         if (photo !== undefined) {
-          // console.log(photo);
           let str = photo[0].src.split("/");
           photo[0].value = str[5];
           photosArr.push(photo[0]);
         }
       }
-      // console.log(photosArr);
       PhotoService.getEncounterPhotosBBox(fileNames)
         .then((res) => {
-          console.log(res);
           identificationService
             .identifyPhotos(photosArr, res)
             .then((res) => {
@@ -117,20 +104,17 @@ function IdentifyPhoto(props) {
 
               SystemResultsService.addSecondSystemResults(res)
                 .then((res) => {
-                  console.log(res);
-
                   setResultsReady(true);
                   setLoading(false);
                 })
                 .catch((err) => {
-                  console.log(err);
+                  setStatus(err);
+                  setOpenRespons(true);
                 });
             })
             .catch((err) => {
-              console.log(err);
               setStatus(err);
               setOpenRespons(true);
-              // setError(true);
             });
         })
         .catch((err) => {
@@ -141,13 +125,9 @@ function IdentifyPhoto(props) {
   };
   const onPick = (item) => {
     let length = item.length;
-    console.log(item);
     setimage(item);
     setLastClicked(item[length - 1]);
     setfileNames(item.map((item) => item.value));
-    console.log(fileNames);
-    // console.log(image);
-
     setOpen(true);
   };
 
@@ -156,14 +136,12 @@ function IdentifyPhoto(props) {
   };
 
   const renderInnerItemResult = (item, i) => {
-    console.log("inner: " + JSON.stringify(item.Similar_individuals));
     if (item.Similar_individuals) {
       return (
         <ResultsCard
           index={i}
           src={item.src}
           key={i}
-          // ids={item.individuals_ID}
           data={item.Similar_individuals}
           encounterid={id}
           setOpen={setOpenRespons}
@@ -183,8 +161,6 @@ function IdentifyPhoto(props) {
             <h2>Individual Identification Results</h2>
             <div className={classes.results}>
               {idntResults && idntResults.map(renderInnerItemResult)}
-              {/* {idntResults[1] && idntResults[1].map(renderInnerItemResult)}
-              {idntResults[2] && idntResults[2].map(renderInnerItemResult)} */}
             </div>
           </div>
           <StatusDialog

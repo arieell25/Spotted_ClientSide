@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from "react";
-// import { MuiThemeProvider } from '@material-ui/core/styles';
 import { makeStyles } from "@material-ui/core/styles";
 import PhotosGrid from "./Photos/PhotosGrid";
 import GradientCircularProgress from "./CircularProgress";

@@ -1,5 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 
+//Defenition of MUI elemnts styles
 const theme = createMuiTheme({
   palette: {
     secondary: {
@@ -111,13 +112,11 @@ const theme = createMuiTheme({
     MuiListItem: {
       button: {},
       root: {
-        "&$selected:hover": {
-
-        },
+        "&$selected:hover": {},
         "&$selected": {
-            borderBottom: "solid",
-            borderImageSlice: 1,
-            borderImageSource: "linear-gradient(to left, #C5F836, #3AA4D1)"
+          borderBottom: "solid",
+          borderImageSlice: 1,
+          borderImageSource: "linear-gradient(to left, #C5F836, #3AA4D1)",
         },
       },
     },
@@ -173,12 +172,11 @@ const theme = createMuiTheme({
         color: "#ffffff",
       },
     },
-    MuiDataGridPanel:{
-      paper:{
-        backgroundColor:"#333337eb"
-
-      }
-    }
+    MuiDataGridPanel: {
+      paper: {
+        backgroundColor: "#333337eb",
+      },
+    },
   },
 });
 

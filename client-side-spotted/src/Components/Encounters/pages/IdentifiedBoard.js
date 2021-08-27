@@ -5,6 +5,7 @@ import IdntEncounterCard from "../components/IdntEncounterCard";
 import csvDownload from "json-to-csv-export";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import { Grid, IconButton, makeStyles } from "@material-ui/core";
+import StatusDialog from "../components/StatusDialog";
 
 const useStyles = makeStyles(() => ({
   csvbtn: {
@@ -19,6 +20,8 @@ export default function IdentifiedBoard() {
   const [encounters, setEncounters] = useState(null);
   const [edit, setEdit] = useState(null);
   const [limit, setLimit] = useState(8);
+  const [status, setStatus] = useState("");
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -27,7 +30,8 @@ export default function IdentifiedBoard() {
           setEncounters(encounters)
         );
       } catch (err) {
-        console.log("error fetching...:", err);
+        setStatus("Somthing went wrong, please login again...");
+        setOpen(true);
       }
       setEdit(false);
     }
@@ -39,6 +43,10 @@ export default function IdentifiedBoard() {
   const showMore = () => {
     setLimit((prevState) => prevState + 8);
     setEdit(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   function handleScroll() {
@@ -64,13 +72,7 @@ export default function IdentifiedBoard() {
   else {
     return (
       <div>
-        {/* <Button
-        variant="contained"
-        className={classes.button}
-        startIcon={<GetAppIcon />}
-      >
-        Export
-      </Button> */}
+        <StatusDialog open={open} status={status} onClose={handleClose} />
         <IconButton
           className={classes.csvbtn}
           onClick={() => csvDownload(encounters, "individualsData.csv")}

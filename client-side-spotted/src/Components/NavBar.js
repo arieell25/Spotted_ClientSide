@@ -1,7 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-
+import UserMenu from "./UserMenu";
+import Menu from "@material-ui/core/Menu";
+import { userService } from "../Service/UserService";
+import { makeStyles } from "@material-ui/core";
+import Signup from "./Signup";
+import Login from "./Login";
 import {
   AppBar,
   Toolbar,
@@ -10,12 +15,6 @@ import {
   ListItemText,
   Button,
 } from "@material-ui/core";
-import UserMenu from "./UserMenu";
-import Menu from "@material-ui/core/Menu";
-import { userService } from "../Service/UserService";
-import { makeStyles } from "@material-ui/core";
-import Signup from "./Signup";
-import Login from "./Login";
 
 const useStyles = makeStyles((them) => ({
   logo: {
@@ -33,10 +32,13 @@ const useStyles = makeStyles((them) => ({
   },
 }));
 
+//public nav bar tabs
 const navLinksPub = [
   { key: "1", title: `Report`, path: `/AddEncounter` },
   { key: "2", title: `Encounters`, path: `/EncountersBoard` },
 ];
+
+//registered user nav bar tabs
 const navLinksUser = [
   { key: "1", title: `Report`, path: `/AddEncounter` },
   { key: "2", title: `Encounters`, path: `/EncountersBoard` },
@@ -75,7 +77,7 @@ const NavBar = () => {
       setSelectedKey(navLinksUser[1].key);
     } else if (window.location.pathname.startsWith(`/IdentifiedProfile`)) {
       setSelectedKey(navLinksUser[3].key);
-    }else if (window.location.pathname.startsWith(`/EncounterProfile`)) {
+    } else if (window.location.pathname.startsWith(`/EncounterProfile`)) {
       setSelectedKey(navLinksUser[1].key);
     } else {
       setSelectedKey(
@@ -86,7 +88,6 @@ const NavBar = () => {
               window.location.pathname.startsWith(item.path)
             ).key
           : setSelectedKey(navLinksUser[1].key)
-
       );
     }
   }, [location, islogin]);
@@ -128,7 +129,7 @@ const NavBar = () => {
   return (
     <AppBar position="static" style={{ backgroundColor: `#252529` }}>
       <Toolbar className="toolBar">
-        <a href="/EncountersBoard" >
+        <a href="/EncountersBoard">
           <img
             src="logo192.png"
             alt="logo"
@@ -145,7 +146,6 @@ const NavBar = () => {
               <a href={item.path} key={item.key} className={classes.linkText}>
                 <ListItem
                   button
-                  // selected={selectedKey === item.key}
                   selected={selectedKey === item.key}
                   onClick={(event) => onClickMenu(item)}
                 >
@@ -153,22 +153,6 @@ const NavBar = () => {
                 </ListItem>
               </a>
             ))}
-            {/* {!userServi.isLoggedIn() &&
-              navLinksUser.map((item) => 
-                
-                <a href={item.path} key={item.key} className={classes.linkText}>
-                  <ListItem
-                    button
-                    selected={selectedKey === item.key}
-                    onClick={(event) => onClickMenu(item)}
-                  >
-                    <ListItemText primary={item.title} />
-                  </ListItem>
-                </a>
-                  
-              
-              )
-              } */}
           </List>
         </div>
         {!userService.isLoggedIn() && (

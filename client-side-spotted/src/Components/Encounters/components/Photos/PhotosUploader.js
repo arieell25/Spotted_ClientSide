@@ -2,7 +2,6 @@
 /* eslint-disable no-loop-func */
 import React, { useState } from "react";
 import RUG, { Card, DragArea } from "react-upload-gallery";
-
 import "react-upload-gallery/dist/style.css";
 import { PhotoService } from "../../../../Service/PhotoService";
 import { useLocation } from "react-router-dom";
@@ -26,7 +25,6 @@ export default function PhotosUploader(props) {
     let photoUrl;
     let count = 0;
     let photosBlboData = [];
-    console.log(images);
     var uploaders = images.map((image) => {
       const data = new FormData();
       data.append("image", image.file);
@@ -39,18 +37,19 @@ export default function PhotosUploader(props) {
           handleOpenRespons(`Upload failed, please try again...${err}`)
         );
     });
-    console.log(Promise.all(uploaders));
     Promise.all(uploaders).then((res) => {
       photosBlboData = res;
       speciesDetectionService
         .detectSpeciesPhotos(imagesData)
         .then((res) => {
           res.map((result) => {
-            if (result.counts > 0 ) {
+            if (result.counts > 0) {
               count += 1;
             }
             if (result.counts > 1) {
-              setInfo(`Detected more than one Bluespotted in file ${result.filename}, indevidual identification supports only photos with single item.`)
+              setInfo(
+                `Detected more than one Bluespotted in file ${result.filename}, indevidual identification supports only photos with single item.`
+              );
             }
           });
           SystemResultsService.addFirstSystemResults(
@@ -73,7 +72,6 @@ export default function PhotosUploader(props) {
         })
         .catch((err) => {
           handleOpenRespons("Species detection failed... try again");
-          console.log(err);
         });
     });
   };
@@ -99,8 +97,7 @@ export default function PhotosUploader(props) {
             images[0].select();
           }
         }}
-        onUpload={(images) => {
-        }}
+        onUpload={(images) => {}}
       >
         <DragArea className="rug-items __card">
           {(image) => (

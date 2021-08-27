@@ -1,19 +1,19 @@
-import React from 'react';
+import React from "react";
 import { CircularProgress, makeStyles } from "@material-ui/core";
-//test
+
 const useStyles = makeStyles(() => ({
   circle: {
     stroke: "url(#linearColors)",
   },
-  progress:{
-    display: 'flex',
-    justifyContent: 'center',
-    paddingTop: '10%'
-  }
+  progress: {
+    display: "flex",
+    justifyContent: "center",
+    paddingTop: "10%",
+  },
 }));
 
 export default function GradientCircularProgress() {
-  const classes = useStyles({});
+  const classes = useStyles();
 
   return (
     <div className={classes.progress}>
@@ -23,10 +23,7 @@ export default function GradientCircularProgress() {
           <stop offset="90%" stopColor="#3AA4D1" />
         </linearGradient>
       </svg>
-      <CircularProgress
-        thickness={4}
-        classes={{ circle: classes.circle }}
-      />
+      <CircularProgress thickness={4} classes={{ circle: classes.circle }} />
     </div>
   );
 }

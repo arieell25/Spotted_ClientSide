@@ -5,7 +5,6 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import StatusDialog from "./StatusDialog";
 import GradientCircularProgress from "./CircularProgress";
 import { IdntEncService } from "../../../Service/IdentifiedEncounterService";
-// import {userService} from '../../../Service/UserService';
 import BarChartIcon from "@material-ui/icons/BarChart";
 import { PhotoService } from "../../../Service/PhotoService";
 import PhotosGrid from "./Photos/PhotosGrid";
@@ -52,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function IdentifiedProfile(props) {
-  //   const { index } = props;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openPhotos, setOpenPhotos] = useState(false);
@@ -60,6 +58,7 @@ export default function IdentifiedProfile(props) {
   const [encounter, setEncounter] = useState([]);
   const [date, setDate] = useState();
   const [openChart, setopenChart] = useState(false);
+  const [status, setStatus] = useState("");
 
   var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
 
@@ -70,11 +69,17 @@ export default function IdentifiedProfile(props) {
         setDate(date.toLocaleDateString("he-IL"));
         setEncounter(encounter);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setStatus("Faild loading data, please try again.");
+        setOpen(true);
+      });
 
     PhotoService.getIdntEncounterPhotos(id)
       .then((photos) => setPhotos(photos))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setStatus("Faild loading photos, please try again.");
+        setOpen(true);
+      });
   }, [id]);
 
   const handleClose = () => {
@@ -94,7 +99,7 @@ export default function IdentifiedProfile(props) {
       <div className="animated slideInUpTiny animation-duration-3">
         <div className="m-5">
           <div className="d-flex justify-content-center title">
-            <StatusDialog open={open} onClose={handleClose} />
+            <StatusDialog status={status} open={open} onClose={handleClose} />
             <div>
               <h2>Identified Encounter Profile</h2>
             </div>
@@ -103,7 +108,7 @@ export default function IdentifiedProfile(props) {
                 <CardMedia
                   className={classes.media}
                   image={encounter.ProfilePicture}
-                  title="Contemplative Reptile"
+                  title="Inividual profile"
                 />
               ) : (
                 <GradientCircularProgress />

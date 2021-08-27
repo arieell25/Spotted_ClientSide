@@ -1,7 +1,6 @@
 import HttpService from "./httpService";
 
 export const userService = {
-  save,
   isLoggedIn,
   isAdmin,
   allUsersEncounters,
@@ -15,14 +14,6 @@ export const userService = {
   updateUser,
   changePassword,
 };
-
-async function save(user) {
-  if (user.id) {
-    return HttpService.put(`users/${user.id}`, user);
-  } else {
-    return HttpService.post(`users`, user);
-  }
-}
 
 async function setAdmin(email) {
   if (email) {

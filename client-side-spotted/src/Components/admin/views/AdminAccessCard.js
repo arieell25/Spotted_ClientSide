@@ -13,7 +13,6 @@ export default function AdminAccessCard(props) {
   const [email, setEmail] = useState(null);
 
   const handleChange = (e) => {
-    console.log(`chosen side: ${e}`);
     setEmail(e.target.value);
   };
   const handleSave = () => {

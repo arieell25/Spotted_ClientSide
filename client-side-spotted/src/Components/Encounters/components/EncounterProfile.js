@@ -79,9 +79,10 @@ export default function EncounterProfile(props) {
       const photosData = await PhotoService.getEncounterPhotos(id);
       const videoData = await EncounterService.getEncounterVideo(id);
       let date = new Date(encounterData.EncounterDate);
-      if ( userService.isLoggedIn() &&
+      if (
+        userService.isLoggedIn() &&
         (encounterData.ReportedBy === userService.getLocalStorageUser().id ||
-        userService.isAdmin())
+          userService.isAdmin())
       ) {
         setuploadAuthorized(true);
       }
@@ -94,23 +95,19 @@ export default function EncounterProfile(props) {
   }, [id]);
 
   const handleDelete = (e) => {
-    console.log("deleting");
     try {
       EncounterService.deactivateEncounter(id).then((response) => {
-        console.log(response);
         setStatus("Deleted Successfully.");
         setlinkpath("EncountersBoard");
         setOpen(true);
       });
     } catch (err) {
-      console.log("error fetching...:", err);
-      setStatus("Something went wrong... try again");
+      setStatus("Encounter delete faild... try again");
       setOpen(true);
     }
   };
 
   const handleClose = () => {
-    // setEdit(false);
     setOpen(false);
     setOpenPhotos(false);
   };
@@ -121,7 +118,6 @@ export default function EncounterProfile(props) {
         "_blank",
         "noopener,noreferrer"
       );
-      console.log(videoPath);
       if (newWindow) newWindow.opener = null;
     }
   };
@@ -194,30 +190,45 @@ export default function EncounterProfile(props) {
                 <div className="detailsEncounter">
                   <p>Date: {date}</p>
                   <p>Encounter no.: {encounter.EncounterID}</p>
-                  {encounter.OriginalID ? <p>SII ID: {encounter.OriginalID}</p> : null}
+                  {encounter.OriginalID ? (
+                    <p>SII ID: {encounter.OriginalID}</p>
+                  ) : null}
                   <p>
                     Total Bluespotted reported: {encounter.SpottedCountReported}
                   </p>
                   <p>
-                    Media type: {encounter.MediaTypeID === 2 ? "Video" : "Photos" }
+                    Media type:{" "}
+                    {encounter.MediaTypeID === 2 ? "Video" : "Photos"}
                   </p>
                   <p>Reporter: {encounter.ReporterEmail}</p>
-                  {encounter.ReportType ? <p>Report type: {encounter.ReportType.Title}</p> : null}
-                  {encounter.Photographer ? <p>Photographer: {encounter.Photographer}</p> : null}
-                  {encounter.Link ? <p>Source link: {encounter.Link} </p> : null}
-                  {encounter.MaxDepth ?<p> Maximum depth: {encounter.MaxDepth} m</p>: null}
-                  {encounter.Distance ? <p>Distance: {encounter.Distance} m</p>: null}
-                  {encounter.Temp ? <p>Water temperature: {encounter.Temp} ℃</p>: null}
-                  {encounter.DW ? <p>Disc width: {encounter.DW} cm</p>: null}
-                  {encounter.DL ? <p>Disc length: {encounter.DL} cm</p>: null}
-                  {encounter.TL ? <p>Total length: {encounter.TL} cm</p>: null}
+                  {encounter.ReportType ? (
+                    <p>Report type: {encounter.ReportType.Title}</p>
+                  ) : null}
+                  {encounter.Photographer ? (
+                    <p>Photographer: {encounter.Photographer}</p>
+                  ) : null}
+                  {encounter.Link ? (
+                    <p>Source link: {encounter.Link} </p>
+                  ) : null}
+                  {encounter.MaxDepth ? (
+                    <p> Maximum depth: {encounter.MaxDepth} m</p>
+                  ) : null}
+                  {encounter.Distance ? (
+                    <p>Distance: {encounter.Distance} m</p>
+                  ) : null}
+                  {encounter.Temp ? (
+                    <p>Water temperature: {encounter.Temp} ℃</p>
+                  ) : null}
+                  {encounter.DW ? <p>Disc width: {encounter.DW} cm</p> : null}
+                  {encounter.DL ? <p>Disc length: {encounter.DL} cm</p> : null}
+                  {encounter.TL ? <p>Total length: {encounter.TL} cm</p> : null}
 
-                  {encounter.Description ? <p>Additional information: {encounter.Description} </p>: null}
+                  {encounter.Description ? (
+                    <p>Additional information: {encounter.Description} </p>
+                  ) : null}
 
                   <p className={classes.update}>
-                    {encounter.UpdatedBy
-                      ? "Last updated on "
-                      : "Created on "}
+                    {encounter.UpdatedBy ? "Last updated on " : "Created on "}
                     {encounter.UpdatedAt
                       ? new Date(encounter.UpdatedAt).toLocaleDateString(
                           "he-IL"

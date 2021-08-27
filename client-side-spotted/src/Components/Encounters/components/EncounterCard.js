@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-// import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
+
 import {
   Card,
   CardActionArea,
@@ -78,7 +78,7 @@ export default function EncounterCard(props) {
                   ? encounter.ProfilePicture
                   : "https://t4.ftcdn.net/jpg/02/07/87/79/360_F_207877921_BtG6ZKAVvtLyc5GWpBNEIlIxsffTtWkv.jpg"
               }
-              title="Contemplative Reptile"
+              title="Encounter profile"
             />
             <CardContent>
               <div className={classes.cardContainer}>
@@ -97,20 +97,11 @@ export default function EncounterCard(props) {
                   {encounter.Site ? `Site: ${encounter.Site.SiteName}` : null}
                 </Typography>
                 <Typography variant="body2" color="secondary" component="p">
-                  {encounter.Photographer ? `Photographer: ${encounter.Photographer}` : null}
+                  {encounter.Photographer
+                    ? `Photographer: ${encounter.Photographer}`
+                    : null}
                 </Typography>
               </div>
-              {/* {encounter.Verified && (
-                <div className={classes.verified}>
-                  <Typography variant="body2" color="secondary" component="p">
-                    Verified
-                  </Typography>
-                  <CheckCircleOutlineIcon
-                    className={classes.checked}
-                    color="secondary"
-                  />
-                </div>
-              )} */}
             </CardContent>
           </CardActionArea>
           <CardActions>

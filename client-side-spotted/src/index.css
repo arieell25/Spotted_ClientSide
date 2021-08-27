@@ -1,17 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&display=swap");
 
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: Montserrat;
-  }
+}
 
-.body{
+.body {
   position: absolute;
   width: 100%;
   min-height: 100vh;
-	background: #252529
+  background: #252529;
 }
 /******************** MAIN ********************/
 .container {
@@ -25,42 +25,40 @@
 
 /******************** TITLE ********************/
 .title {
-	text-align: center;
-	position:relative;
+  text-align: center;
+  position: relative;
   margin-top: 2%;
 }
-h1{
-	font-size: 470%;
-  background: -webkit-linear-gradient(45deg,#C5F836, #3AA4D1);
+h1 {
+  font-size: 470%;
+  background: -webkit-linear-gradient(45deg, #c5f836, #3aa4d1);
   /* -webkit-background-clip: text; */
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-h2{
-  background: -webkit-linear-gradient(45deg,#C5F836, #3AA4D1);
-  /* -webkit-background-clip: text; */
+h2 {
+  background: -webkit-linear-gradient(45deg, #c5f836, #3aa4d1);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-	font-size: 300%;
+  font-size: 300%;
   font-weight: 300;
   text-transform: uppercase;
   margin-bottom: 20px;
 }
 
-h3{
+h3 {
   padding: 10px;
-	font-size: 270%;
-  background: -webkit-linear-gradient(45deg,#C5F836, #3AA4D1);
-  /* -webkit-background-clip: text; */
+  font-size: 270%;
+  background: -webkit-linear-gradient(45deg, #c5f836, #3aa4d1);
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-p{
+p {
   margin: 10px;
 }
 .btn {
   display: flex;
-	background:linear-gradient(45deg,#C5F836, #3AA4D1);
+  background: linear-gradient(45deg, #c5f836, #3aa4d1);
   color: #ffff;
   border: none;
   padding: 10px 35px;
@@ -68,25 +66,18 @@ p{
   border-radius: 30px;
   cursor: pointer;
   text-decoration: none;
-  /* font-size: 15px; */
   text-transform: uppercase;
-  font-family: Montserrat, 'sans-serif';
+  font-family: Montserrat, "sans-serif";
   font-weight: bold;
   margin-top: 30px;
+}
+.custom-file-label {
+  margin: 10px 60px;
+}
+a {
+  text-decoration: none;
+}
 
-}
-.custom-file-label{
-    margin: 10px 60px
-}
-a{
-  text-decoration:none;
-}
-
-/* .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
-} */
 .lowerContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -96,7 +87,7 @@ a{
 .iconbtn {
   justify-content: space-evenly;
   display: flex;
-	background:linear-gradient(45deg,#C5F836, #3AA4D1);
+  background: linear-gradient(45deg, #c5f836, #3aa4d1);
   color: #ffff;
   border: none;
   padding: 9px 30px 1px 0px;
@@ -111,62 +102,62 @@ a{
 /******************** NAVBAR ********************/
 .linkHomePage {
   text-decoration: none;
-  color: #CBCFD4;
+  color: #cbcfd4;
   position: relative;
   top: 10px;
 }
 
-.name{
-  position:absolute;
+.name {
+  position: absolute;
   bottom: 70px;
-  float:left;
+  float: left;
   width: 100%;
   font-size: small;
   left: 80px;
-
 }
 
-.Login{
+.Login {
   width: 400px;
   padding: 20px;
 }
 
-.logindiv{
+.logindiv {
   position: absolute;
   right: 50px;
-  color: #CBCFD4;
+  color: #cbcfd4;
 }
-.logOut{
-  position:absolute;
+.logOut {
+  position: absolute;
   font-size: small;
   left: 80px;
   bottom: 40px;
 }
 
-.FilePath{
+.FilePath {
   padding: 10px 30px;
-
 }
 
-.detailsEncounter{
+.detailsEncounter {
   text-align: left;
 }
 
 /* Charts */
-.ct-series-a .ct-bar, .ct-series-a .ct-line, .ct-series-a .ct-point, .ct-series-a .ct-slice-donut{
+.ct-series-a .ct-bar,
+.ct-series-a .ct-line,
+.ct-series-a .ct-point,
+.ct-series-a .ct-slice-donut {
   stroke: #a6d9c4;
 }
-.ct-label{
+.ct-label {
   font-weight: bold;
   color: aliceblue;
-
 }
-#chartdiv{
+#chartdiv {
   width: 1500px;
   padding: 10px;
 }
 
-.ct-axis-title{
+.ct-axis-title {
   fill: aliceblue;
   font-size: 1.2em;
   font-weight: bold;

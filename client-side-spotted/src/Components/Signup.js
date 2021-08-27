@@ -20,7 +20,6 @@ const Signup = forwardRef((props, ref) => {
   };
 
   return (
-    // <MuiThemeProvider >
     <div className="Login">
       <form className="form_login" onSubmit={handleSubmit(onSubmit)}>
         <h2>Signup</h2>
