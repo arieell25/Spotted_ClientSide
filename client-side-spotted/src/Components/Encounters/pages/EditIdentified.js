@@ -24,11 +24,9 @@ export default function EditIdentifiedEncounter(props) {
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
   const [lifeStage, setstage] = useState(1);
-  // const [alivevalue, setalivevalue] = useState('');
   const [stages, setstages] = useState([]);
-  // const [sex, setsex] = useState("female");
 
-  const { register, handleSubmit, control, reset} = useForm();
+  const { register, handleSubmit, control, reset } = useForm();
   var id = qs.parse(props.location.search, { ignoreQueryPrefix: true }).id;
   const [values, setValues] = useState({
     Gender: "unknown",
@@ -37,21 +35,20 @@ export default function EditIdentifiedEncounter(props) {
   });
 
   useEffect(() => {
-    IdntEncService.getIdentifiedEncounter(id)
-    .then(res => {
-      reset ({
-      IsAlive: res.IsAlive ? 'yes' : 'no',
-      Gender: res.Gender === "unknown"
-      ? "unknown"
-      : res.Gender === "female"
-      ? "female"
-      : "male",
-      ProfilePicture: res.ProfilePicture,
+    IdntEncService.getIdentifiedEncounter(id).then((res) => {
+      reset({
+        IsAlive: res.IsAlive ? "yes" : "no",
+        Gender:
+          res.Gender === "unknown"
+            ? "unknown"
+            : res.Gender === "female"
+            ? "female"
+            : "male",
+        ProfilePicture: res.ProfilePicture,
+      });
+      setstage(res.LifeStageID);
+    });
 
-    })
-    setstage(res.LifeStageID);
-  })
-  
     IdntEncService.getLifeStages()
       .then((data) => {
         setstages(data);
@@ -70,7 +67,6 @@ export default function EditIdentifiedEncounter(props) {
     setstage(event.target.value);
   };
   const onSubmit = (data) => {
-    console.log(data);
     data.LifeStageID = lifeStage;
     IdntEncService.updateIdentified(id, data)
       .then((result) => {
@@ -80,7 +76,6 @@ export default function EditIdentifiedEncounter(props) {
       .catch((err) => {
         setStatus("Oops... Somthing went wrong, try again.");
         setOpenRespons(true);
-        console.log(err);
       });
   };
 
@@ -100,7 +95,6 @@ export default function EditIdentifiedEncounter(props) {
                   <TextField
                     select
                     label="Life Stage"
-                    // name="lifeStage"
                     value={lifeStage}
                     onChange={handleChange}
                     helperText="Please select life stage"
@@ -172,34 +166,6 @@ export default function EditIdentifiedEncounter(props) {
                 />
               </section>
             </div>
-            {/* <div className="row">
-              <TextField
-                inputRef={register}
-                name="TL"
-                label="TL"
-                margin="normal"
-              />
-            </div>
-
-            <div className="row">
-              <TextField
-                inputRef={register}
-                name="DL"
-                label="DL"
-                margin="normal"
-              />
-            </div>
-
-            <div className="row">
-              <TextField
-                inputRef={register}
-                name="DW"
-                label="DW"
-                margin="normal"
-                halfwidth="true"
-              />
-            </div>
- */}
             <div className="row">
               <TextField
                 inputRef={register}
@@ -212,7 +178,7 @@ export default function EditIdentifiedEncounter(props) {
                 }}
               />
             </div>
-             <button className="btn" type="submit">
+            <button className="btn" type="submit">
               SAVE
             </button>
           </form>

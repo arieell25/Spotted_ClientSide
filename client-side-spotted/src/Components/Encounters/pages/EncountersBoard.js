@@ -35,9 +35,7 @@ export default function UserEncountersBoard() {
         await EncounterService.getEncounters().then((encounters) => {
           setEncounters(encounters);
         });
-        // .catch(res => console.log(res));
       } catch (err) {
-        console.log("error fetching...:", err);
         setStatus("Somthing went wrong, please login again...");
         setOpen(true);
       }
@@ -95,22 +93,22 @@ export default function UserEncountersBoard() {
   else {
     return (
       <div>
-        {userService.isAdmin() &&
-        <div className={classes.btndiv}>
-        <IconButton
-          className={classes.csvbtn}
-          onClick={() => setGridView(!gridView)}
-        >
-          <TableChartIcon />
-        </IconButton>
-        <IconButton
-          className={classes.csvbtn}
-          onClick={() => setGridView(!gridView)}
-        >
-          <GridOnIcon />
-        </IconButton>
-      </div>
-        }
+        {userService.isAdmin() && (
+          <div className={classes.btndiv}>
+            <IconButton
+              className={classes.csvbtn}
+              onClick={() => setGridView(!gridView)}
+            >
+              <TableChartIcon />
+            </IconButton>
+            <IconButton
+              className={classes.csvbtn}
+              onClick={() => setGridView(!gridView)}
+            >
+              <GridOnIcon />
+            </IconButton>
+          </div>
+        )}
 
         {!gridView && (
           <CardBody>

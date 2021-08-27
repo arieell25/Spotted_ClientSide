@@ -21,10 +21,10 @@ const useStyles = makeStyles(() => ({
     width: "400px",
     margin: "10px",
   },
-  cardtitle:{
+  cardtitle: {
     fontSize: 25,
     paddingBottom: 20,
-  }
+  },
 }));
 
 const UploadVideo = (props) => {
@@ -53,11 +53,6 @@ const UploadVideo = (props) => {
     formData.append("id", encounterid);
 
     try {
-      // const res =
-      // await speciesDetectionService
-      // .detectSpeciesVideos(formData)
-      // .then(res => console.log(res))
-      // await axios.post(`http://40.91.223.174:5000`, formData, {
       await axios
         .post(
           `https://spotted-detect-component.azurewebsites.net/uploadVideo`,
@@ -74,15 +69,14 @@ const UploadVideo = (props) => {
                 )
               );
               setLoading(true);
-              // Clear percentage
-              // setTimeout(() => setUploadPercentage(0), 40000);
             },
           }
         )
         .then((res) => {
-          VideoService.addVideo(encounterid, filename).catch((err) =>
-            console.log(err)
-          );
+          VideoService.addVideo(encounterid, filename).catch(() => {
+            setStatus("Faild saving video...please upload again.");
+            setOpenRespons(true);
+          });
           SystemResultsService.addVideoFirstSystemResults(res, encounterid)
             .then((res) => {
               const data = {
@@ -95,21 +89,14 @@ const UploadVideo = (props) => {
                   setOpenRespons(true);
                   setLoading(false);
                 })
-                .catch(() => {
-                  setStatus(`Failed updating encounter profile pic...`);
-                  setOpenRespons(true);
-                });
             })
-            .catch((err) => console.log(err));
         });
-
     } catch (err) {
       if (err.response) {
         if (err.response.status === 500) {
           setStatus("There was a problem with the server");
           setOpenRespons(true);
         } else if (err.response.status === 404) {
-          // setMessage('There was a problem ....Try again');
           setStatus("Video upload faild....Try again");
           setOpenRespons(true);
         } else {

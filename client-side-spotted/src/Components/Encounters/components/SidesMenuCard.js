@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import PropTypes from "prop-types";
-// import { makeStyles } from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import {
   DialogTitle,
@@ -11,12 +10,7 @@ import {
   Radio,
 } from "@material-ui/core";
 
-// const useStyles = makeStyles({
-
-// });
-
 export default function SidesMenuDialog(props) {
-  // const classes = useStyles();
   const { onClose, onSave, setSelectedValue, open, sidesData, value } = props;
   const radioGroupRef = useRef(null);
 
@@ -25,11 +19,9 @@ export default function SidesMenuDialog(props) {
   };
 
   const handleChange = (event) => {
-    console.log(`chosen side: ${event}`);
     setSelectedValue(event.target.value);
   };
   const handleClickSave = (value) => {
-    // setSelectedValue(value.value);
     onSave(value.value);
   };
 

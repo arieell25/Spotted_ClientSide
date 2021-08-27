@@ -25,10 +25,7 @@ const useStyles = makeStyles(styles);
 
 export default function IdntEncounterChart(props) {
   const { onClose, id, open } = props;
-
   const classes = useStyles();
-  // const [sites, setSites] = useState([]);
-
   const handleClose = () => {
     onClose();
   };
@@ -40,11 +37,9 @@ export default function IdntEncounterChart(props) {
           return item.SiteName;
         });
         IdentEnocunterHomeRangeChart.data.labels = sitesData;
-        // setSites(sitesData);
         IdntEncService.getIdntEncounterSites(id)
           .then((res) => {
             let encounterData = [];
-            // let date = [];
             for (let i = 0; i < sitesData.length; i++) {
               let count = 0;
               res.photos.rows.map((row) => {
@@ -64,7 +59,6 @@ export default function IdntEncounterChart(props) {
               });
             }
             IdentEnocunterHomeRangeChart.data.series = [encounterData];
-            // IdentEnocunterHomeRangeChart.options.high = Math.max(...encounterperSite)+2;
           })
           .catch((err) => console.log(err));
       });

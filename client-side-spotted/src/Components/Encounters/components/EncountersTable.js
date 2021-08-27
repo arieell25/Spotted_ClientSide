@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -8,7 +8,12 @@ import CardBody from "../../admin/components/Card/CardBody.js";
 
 const columns = [
   { field: "EncounterID", headerName: "ID", type: "number", width: 70 },
-  { field: "EncounterDate", headerName: "Encounter Date", type: "date", width: 170 },
+  {
+    field: "EncounterDate",
+    headerName: "Encounter Date",
+    type: "date",
+    width: 170,
+  },
 
   { field: "Gender", headerName: "Gender", width: 120 },
   { field: "IsPregnant", headerName: "Pregnancy", width: 130 },
@@ -19,8 +24,8 @@ const columns = [
   },
   { field: "ReportedBy", headerName: "Reporter", width: 120 },
   { field: "MediaTypeID", headerName: "Media", width: 110 },
-  { field: "SpottedCount", headerName: "Count ", width:110 },
-  { field: "SpottedCountReported", headerName: "Reported",  width: 110 },
+  { field: "SpottedCount", headerName: "Count ", width: 110 },
+  { field: "SpottedCountReported", headerName: "Reported", width: 110 },
   { field: "ReporterEmail", headerName: "Email", width: 120 },
   { field: "OriginalID", headerName: "SII ID", width: 100 },
 ];
@@ -36,10 +41,6 @@ function CustomToolbar() {
 export default function EncountersTable(props) {
   const { rows } = props;
 
-  useEffect(() => {
-
-  }, []);
-
   return (
     <CardBody>
       <div style={{ height: 670, width: "100%" }}>
@@ -53,6 +54,6 @@ export default function EncountersTable(props) {
           }}
         />
       </div>
-      </CardBody>
+    </CardBody>
   );
 }

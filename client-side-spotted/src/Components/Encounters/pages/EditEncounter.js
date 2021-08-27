@@ -35,7 +35,7 @@ export default function EditIdentifiedEncounter(props) {
   const [status, setStatus] = useState([]);
   const [openRespons, setOpenRespons] = useState(false);
   const [mediatypes, setmediatypes] = useState([]);
-  const [media, setmedia] = useState('');
+  const [media, setmedia] = useState("");
   const [sites, setsites] = useState([]);
   const [site, setsite] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -90,7 +90,6 @@ export default function EditIdentifiedEncounter(props) {
         setmedia(res.MediaTypeID ? res.MediaTypeID : "");
         setsite(res.SiteID > 0 ? res.SiteID : "");
       });
-      console.log(selectedDate);
     };
     fetchData();
   }, []);
@@ -107,12 +106,9 @@ export default function EditIdentifiedEncounter(props) {
   };
 
   const handleDateChange = (date) => {
-    console.log(new Date(date).toLocaleDateString());
     setSelectedDate(date);
-    // setValues({ ...values, EncounterDate: new Date(date).toLocaleDateString()});
   };
   const onSubmit = (data) => {
-    console.log(data);
     data.EncounterDate = selectedDate;
     data.MediaType = media;
     data.SiteID = site;
@@ -124,7 +120,6 @@ export default function EditIdentifiedEncounter(props) {
       .catch((err) => {
         setStatus("Oops... Somthing went wrong, try again.");
         setOpenRespons(true);
-        console.log(err);
       });
   };
 
@@ -190,7 +185,6 @@ export default function EditIdentifiedEncounter(props) {
                   <TextField
                     select
                     label="Media Type"
-                    // name="MediaTypeID"
                     value={media}
                     onChange={handleMediaChange}
                     helperText="Update type of media"
@@ -289,7 +283,7 @@ export default function EditIdentifiedEncounter(props) {
                 label="Original ID"
                 margin="normal"
                 InputLabelProps={{
-                  shrink: values? true : false,
+                  shrink: values ? true : false,
                 }}
               />
             </div>
@@ -330,7 +324,9 @@ export default function EditIdentifiedEncounter(props) {
                     shrink: values ? true : false,
                   }}
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">cm</InputAdornment>
+                    ),
                   }}
                 />
               </section>
@@ -346,7 +342,9 @@ export default function EditIdentifiedEncounter(props) {
                     shrink: values ? true : false,
                   }}
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">cm</InputAdornment>
+                    ),
                   }}
                 />
               </section>
@@ -362,7 +360,9 @@ export default function EditIdentifiedEncounter(props) {
                     shrink: values ? true : false,
                   }}
                   InputProps={{
-                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                    endAdornment: (
+                      <InputAdornment position="start">cm</InputAdornment>
+                    ),
                   }}
                 />
               </section>

@@ -14,9 +14,8 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // margin: "30px 25px 10px 0px",
     padding: "5% 8%",
-    margin: "10px"
+    margin: "10px",
   },
   linkText: {
     textDecoration: "none",
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 export default function IdntEncounterCard(props) {
   const classes = useStyles();
   const { index, encounter, identFlag } = props;
-  // const [editing, setEditing] = useState(false);
   const [date, setDate] = useState();
   useEffect(() => {
     let date = new Date(encounter.CreatedAt);
@@ -81,7 +79,9 @@ export default function IdntEncounterCard(props) {
                 Identity created at {date}
               </Typography>
               <Typography variant="body2" color="secondary" component="p">
-                {encounter.IsAlive === null || true ? "Considerd as Alive" : null}
+                {encounter.IsAlive === null || true
+                  ? "Considerd as Alive"
+                  : null}
               </Typography>
               <Typography variant="body2" color="secondary" component="p">
                 {encounter.Gender
@@ -90,12 +90,8 @@ export default function IdntEncounterCard(props) {
               </Typography>
             </CardContent>
           </CardActionArea>
-
           <CardActions>
             <button className="btn">PROFILE</button>
-            {/* <IconButton className={classes.lable} size="small">
-            <RateReviewIcon />
-          </IconButton> */}
           </CardActions>
         </NavLink>
       </Card>

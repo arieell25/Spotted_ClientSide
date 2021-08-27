@@ -38,6 +38,7 @@ function UploadPhoto(props) {
     setOpenRespons(false);
     setInfo();
   };
+  
   const handleOpenRespons = (status) => {
     setStatus(status);
     setOpenRespons(true);
